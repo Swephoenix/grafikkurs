@@ -5,375 +5,377 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kursflöde – Kreativ AI</title>
 <style>
-    /* FÄRGTEORI (Mörk & Varm, Hög Kontrast, Inga Gradients) */
+    /* DESIGN SYSTEM - Modern Dark Mode (Inga Gradients) */
     :root {
-    /* Bas */
-    --bg-color: #161b22;       /* Mörk neutral bakgrund */
-    --text-light: #f5f7fb;     /* Ljus text */
-    --text-dark: #1e2a36;      /* Mörk text */
-    --connector: #4c5d70;      /* Blågrå linje */
+        --bg-body: #0a0a0c;        
+        --bg-card: #141417;        
+        --bg-card-hover: #1c1c21;  
+        
+        --text-main: #f4f4f5;      
+        --text-muted: #a1a1aa;     
+        
+        --border-color: #27272a;   
+        
+        --accent-lecture: #3b82f6; 
+        --accent-example: #f59e0b; 
+        --accent-exercise: #10b981;
+    }
 
-    /* Nod-färger */
-    --color-lecture: #2b5f8a;  /* Blå */
-    --color-example: #e8872f;  /* Orange */
-    --color-exercise: #2f8a47; /* Grön för övningar */
-    --color-quiz: #e8872f;     /* Orange */
-}
+    * {
+        box-sizing: border-box;
+    }
 
     body {
         margin: 0;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background-color: var(--bg-color);
-        color: var(--text-light);
-        padding-bottom: 100px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background-color: var(--bg-body);
+        color: var(--text-muted);
+        padding-bottom: 150px;
+        line-height: 1.6;
+        overflow-x: hidden;
     }
 
-    /* Header & Instruktioner */
+    /* Header */
     header {
         text-align: center;
-        padding: 40px 20px 20px;
+        padding: 80px 20px 60px;
     }
 
     h1 {
-        margin: 0 0 10px 0;
-        font-size: 32px;
-        font-weight: 600;
-        color: var(--text-light);
+        margin: 0 0 20px 0;
+        font-size: 3rem;
+        font-weight: 800;
+        color: var(--text-main);
+        letter-spacing: -1px;
     }
 
     .instructions {
-        font-size: 14px;
-        color: #a3928b;
-        background: #2a2220;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--text-main);
+        background: #27272a;
         display: inline-block;
         padding: 8px 16px;
-        border-radius: 20px;
+        border-radius: 4px;
+        font-weight: 600;
     }
 
-    /* Flödes-container */
+    /* Flöde */
     .flow-container {
         display: flex;
         flex-direction: column;
         align-items: center;
-        position: relative;
-        padding: 20px;
+        padding: 0 20px;
     }
 
-    /* Noder */
+    /* Huvudnoder (Föreläsningar etc) */
     .node {
         width: 100%;
-        max-width: 920px;
-        padding: 30px;
-        border-radius: 8px;
+        max-width: 1000px;
+        background-color: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 40px;
         margin: 0;
         position: relative;
-        opacity: 0.3; /* Låg kognitiv belastning - dimma inaktiva */
-        transform: scale(0.95);
-        transition: opacity 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+        
+        opacity: 0.25;
+        transform: scale(0.92);
+        transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
         cursor: pointer;
     }
 
     .node.active {
         opacity: 1;
         transform: scale(1);
-        box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-        outline: 2px solid #fff;
-        outline-offset: 4px;
-        z-index: 2;
+        background-color: var(--bg-card-hover);
+        box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+        border-color: #3f3f46;
+        z-index: 10;
     }
 
+    .lecture { border-top: 4px solid var(--accent-lecture); }
+    .example { border-top: 4px solid var(--accent-example); }
+    .exercise { border-top: 4px solid var(--accent-exercise); }
+
+    .badge {
+        display: inline-block;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+    }
+    .lecture .badge { background: rgba(59, 130, 246, 0.15); color: var(--accent-lecture); }
+    .example .badge { background: rgba(245, 158, 11, 0.15); color: var(--accent-example); }
+    .exercise .badge { background: rgba(16, 185, 129, 0.15); color: var(--accent-exercise); }
+
     .node h2 {
-        margin-top: 0;
-        font-size: 20px;
-        margin-bottom: 12px;
+        margin: 0 0 20px 0;
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--text-main);
+        line-height: 1.2;
+        letter-spacing: -0.5px;
     }
 
     .node p {
-        font-size: 16px;
-        line-height: 1.6;
-        margin: 0;
+        font-size: 1.1rem;
+        margin: 0 0 16px 0;
+        color: var(--text-muted);
     }
 
-    .node p + p {
-        margin-top: 12px;
+    .node strong {
+        color: var(--text-main);
+        font-weight: 600;
     }
 
-    /* Färgteman för de olika nodtyperna */
-    .lecture {
-        background-color: var(--color-lecture);
-        color: var(--text-light);
+    .content-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr; 
+        gap: 50px;
+        align-items: start;
     }
 
-    .example {
-        background-color: var(--color-example);
-        color: var(--text-dark);
-    }
-
-    .exercise {
-        background-color: var(--color-exercise);
-        color: var(--text-light);
-    }
-
-    .quiz {
-        background-color: var(--color-quiz);
-        color: var(--text-light);
-    }
-
-    /* Specifik styling för Exempel-nod */
-    .example img {
-        width: 100%;
-        height: auto;
-        border-radius: 4px;
-        margin: 15px 0;
-        display: block;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    }
-
-    .example .caption {
-        font-size: 13px;
-        font-style: italic;
-        opacity: 0.8;
-        border-left: 3px solid var(--text-dark);
-        padding-left: 10px;
-    }
-
-    /* Specifik styling för Quiz */
-    .quiz-options {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        margin-top: 15px;
-    }
-
-    .quiz-btn {
-        background-color: rgba(255,255,255,0.1);
-        color: var(--text-light);
-        border: 2px solid rgba(255,255,255,0.3);
-        padding: 12px;
-        border-radius: 4px;
-        font-size: 15px;
-        cursor: pointer;
-        text-align: left;
-        transition: background 0.2s, border-color 0.2s;
-    }
-
-    .quiz-btn:hover {
-        background-color: rgba(255,255,255,0.2);
-    }
-
-    .quiz-btn.correct {
-        background-color: #4CAF50 !important; /* Grön vid rätt */
-        border-color: #4CAF50 !important;
-        color: #fff;
-    }
-
-    .quiz-btn.wrong {
-        background-color: #F44336 !important; /* Röd vid fel */
-        border-color: #F44336 !important;
-        color: #fff;
-    }
-
-    .profile-slide { max-width: 920px; }
-
-    .slide-with-image {
-        max-width: 920px;
-    }
-
-    .slide-layout {
-        display: flex;
-        gap: 24px;
-        align-items: flex-start;
-    }
-
-    .slide-text {
-        flex: 1;
+    .content-text {
         min-width: 0;
     }
 
-    .slide-visual {
-        width: 280px;
-        max-width: 32%;
-        min-width: 220px;
+    .content-media {
+        width: 100%;
         border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid var(--border-color);
+        background: #000;
+    }
+
+    .content-media img,
+    .content-media video {
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 4 / 3; 
         object-fit: cover;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.35);
-        margin: 0;
-        flex-shrink: 0;
+        display: block;
+    }
+
+    .profile-media img {
+        aspect-ratio: 3 / 4;
+        object-fit: contain;
+        background: #111;
     }
 
     .intro-slide {
+        padding: 20px;
         max-width: 900px;
-        padding: 12px;
-        background-color: #0f0d0d;
+        background: #000;
+        border-color: #222;
     }
-
-    .intro-video {
+    .intro-slide video {
         width: 100%;
-        height: auto;
+        border-radius: 8px;
+        aspect-ratio: 16 / 9;
         display: block;
-        border-radius: 6px;
-        box-shadow: 0 10px 24px rgba(0,0,0,0.45);
-    }
-
-    .profile-content {
-        display: flex;
-        gap: 28px;
-        align-items: flex-start;
-    }
-
-    .profile-text {
-        flex: 1;
-        min-width: 0;
-    }
-
-    .profile-image {
-        width: 260px;
-        border-radius: 8px;
-        object-fit: cover;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.35);
-        flex-shrink: 0;
-    }
-
-    .skills-slide { max-width: 920px; }
-
-    .skills-content {
-        display: flex;
-        gap: 28px;
-        align-items: flex-start;
-    }
-
-    .skills-text {
-        flex: 1;
-        min-width: 0;
-    }
-
-    .skills-image {
-        width: 260px;
-        border-radius: 8px;
-        object-fit: cover;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.35);
-        flex-shrink: 0;
-    }
-
-    .exercises-slide { max-width: 920px; }
-
-    .tasks-accordion {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .task-dropdown {
-        background: rgba(0, 0, 0, 0.16);
-        border: 1px solid rgba(255, 255, 255, 0.22);
-        border-radius: 8px;
-        padding: 0 14px;
-    }
-
-    .task-dropdown summary {
-        cursor: pointer;
-        font-weight: 600;
-        font-size: 17px;
-        padding: 14px 0;
-    }
-
-    .task-dropdown[open] summary {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        margin-bottom: 12px;
-    }
-
-    .task-dropdown p {
-        font-size: 15px;
-        line-height: 1.55;
-        margin-bottom: 10px;
-    }
-
-    .task-dropdown ul {
-        margin: 8px 0 12px 20px;
-        padding: 0;
-    }
-
-    .task-dropdown li {
-        margin-bottom: 8px;
-        font-size: 15px;
-        line-height: 1.45;
-    }
-
-    @media (max-width: 780px) {
-        .profile-content {
-            flex-direction: column;
-        }
-
-        .profile-image {
-            width: 100%;
-            max-width: 320px;
-            align-self: center;
-        }
-
-        .skills-content {
-            flex-direction: column;
-        }
-
-        .skills-image {
-            width: 100%;
-            max-width: 320px;
-            align-self: center;
-        }
-
-        .slide-layout {
-            flex-direction: column;
-        }
-
-        .slide-visual {
-            width: 100%;
-            max-width: 360px;
-            min-width: 0;
-            align-self: center;
-        }
     }
 
     /* Bindestreck mellan noder */
     .connector {
-        width: 6px;
+        width: 2px;
         height: 50px;
-        background-color: var(--connector);
+        background-color: var(--border-color);
+        margin: 10px 0;
     }
 
+    /* --- NYA ÖVNINGSKORTEN (3D Flip Grid) --- */
+    
+    /* Layout för korten - 3 kolumner på stora skärmar */
+    .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        margin-top: 30px;
+    }
+
+    .scene {
+        perspective: 1200px; /* Skapar 3D-djupet */
+    }
+
+    .flip-card {
+        width: 100%;
+        height: 420px; /* Fast höjd på korten */
+        position: relative;
+        transform-style: preserve-3d;
+        transition: transform 0.8s cubic-bezier(.25,.8,.25,1);
+        cursor: pointer;
+    }
+
+    /* Själva snurrandet - med ett litet lyft uppåt */
+    .flip-card.is-flipped {
+        transform: translateY(-15px) rotateY(180deg);
+    }
+
+    /* Skugga som ligger under kortet */
+    .card-shadow {
+        position: absolute;
+        inset: 0;
+        border-radius: 12px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        transition: box-shadow 0.8s;
+        z-index: -1;
+    }
+    .flip-card.is-flipped .card-shadow {
+        box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+    }
+
+    /* Framsida och baksida av kortet */
+    .face {
+        position: absolute;
+        inset: 0;
+        border-radius: 12px;
+        backface-visibility: hidden;
+        border: 1px solid var(--border-color);
+        overflow: hidden;
+    }
+
+    /* "Omslaget" - Det du ser innan klick */
+    .face-cover {
+        background-color: #18181b; /* Mörk solid färg */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 30px;
+        border: 2px dashed rgba(16, 185, 129, 0.4); /* Grön streckad ram */
+    }
+
+    .face-cover h3 {
+        color: var(--text-main);
+        font-size: 1.6rem;
+        margin: 0 0 10px 0;
+    }
+
+    .face-cover span {
+        color: var(--accent-exercise);
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* Innehållet - Det du ser efter klick */
+    .face-content {
+        background-color: #101014;
+        transform: rotateY(180deg); /* Måste vara vänd från början */
+        padding: 24px;
+        overflow-y: auto; /* Tillåter skroll på långa texter */
+        border-top: 4px solid var(--accent-exercise);
+    }
+
+    /* Skrollbar-styling för korten */
+    .face-content::-webkit-scrollbar {
+        width: 6px;
+    }
+    .face-content::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    .face-content::-webkit-scrollbar-thumb {
+        background: #27272a;
+        border-radius: 4px;
+    }
+
+    .face-content h4 {
+        color: var(--text-main);
+        font-size: 1.2rem;
+        margin: 0 0 15px 0;
+        line-height: 1.3;
+    }
+
+    .face-content p {
+        font-size: 0.95rem;
+        margin-bottom: 12px;
+        line-height: 1.5;
+    }
+
+    .face-content ul {
+        margin: 0 0 15px 20px;
+        padding: 0;
+    }
+
+    .face-content li {
+        font-size: 0.95rem;
+        margin-bottom: 8px;
+        color: var(--text-muted);
+    }
+
+    /* Responsivitet */
+    @media (max-width: 900px) {
+        .content-grid {
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+        
+        /* Gå till 2 kolumner för korten på surfplatta */
+        .cards-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .content-media img,
+        .content-media video {
+            aspect-ratio: 16 / 9;
+        }
+        
+        .node { padding: 30px 20px; }
+        h1 { font-size: 2.2rem; }
+    }
+
+    @media (max-width: 650px) {
+        /* Gå till 1 kolumn för korten på mobil */
+        .cards-grid {
+            grid-template-columns: 1fr;
+        }
+    }
 </style>
 </head>
 <body>
 
 <header>
     <h1>Kreativ AI</h1>
-    <div class="instructions">Använd piltangenterna (↓ / ↑) för att navigera</div>
+    <div class="instructions">Använd pilarna (↓ / ↑) för att navigera</div>
 </header>
 
 <div class="flow-container">
 
     <!-- 1. INTROVIDEO -->
     <div class="node lecture active intro-slide">
-        <video class="intro-video" src="intro.mp4" autoplay muted loop playsinline preload="auto"></video>
+        <video src="intro.mp4" autoplay muted loop playsinline preload="auto"></video>
     </div>
     <div class="connector"></div>
 
-    <!-- 2. FÖRELÄSNING -->
-    <div class="node lecture profile-slide">
-        <div class="profile-content">
-            <div class="profile-text">
+    <!-- 2. PROFIL -->
+    <div class="node lecture">
+        <span class="badge">Föreläsning</span>
+        <div class="content-grid">
+            <div class="content-text">
                 <h2>Andreas Jansson</h2>
                 <p>Civilekonom i grunden med långvarigt teknikintresse. De senaste åren har jag satsat fullt ut på AI och arbetat praktiskt med allt från finjustering av modeller till produktion av grafiskt material och texter.</p>
                 <p>Arbetar i dag med IT och AI-konsultation samt med att hjälpa organisationer att använda AI för kodning, grafik, analys, artikelskrivande och filmskapande. Brinner för folkbildning och för att lära ut det jag själv tycker är roligt och användbart.</p>
                 <p>Har tidigare föreläst hos bl.a. ALMI Företagspartner, Folkuniversitetet, Medborgarskolan och Vuxenskolan.</p>
             </div>
-            <img class="profile-image" src="Andreas.png" alt="Porträtt av Andreas Jansson">
+            <div class="content-media profile-media">
+                <img src="Andreas.png" alt="Porträtt av Andreas Jansson">
+            </div>
         </div>
     </div>
     <div class="connector"></div>
 
-    <!-- 2. KURSENS UPPLÄGG -->
-    <div class="node example slide-with-image">
-        <div class="slide-layout">
-            <div class="slide-text">
+    <!-- 3. KURSENS UPPLÄGG -->
+    <div class="node example">
+        <span class="badge">Upplägg</span>
+        <div class="content-grid">
+            <div class="content-text">
                 <h2>Kursens upplägg</h2>
                 <p>Kursen består av två tillfällen à 1,5 timme, klockan 19.00-20.30, med 10 minuters paus mellan 19.50 och 20.00.</p>
                 <p>Ställ frågor löpande under kursen. Ju fler frågor, desto bättre. Kursen är tänkt att vara levande och dialogbaserad.</p>
@@ -381,17 +383,20 @@
                 <p>Det finns även möjlighet att frivilligt lämna in en hemuppgift där ni skapar olika bilder för att öva vidare på det ni lärt er under kursen.</p>
                 <p>Ni är alltid välkomna att mejla mig frågor under kursens gång.</p>
                 <p>Jag har designat den här kursen som om det vore en kurs jag själv hade velat ge till mig själv.</p>
-                <p>Målet är att lyfta er till nästa nivå.</p>
+                <p><strong>Målet är att lyfta er till nästa nivå.</strong></p>
             </div>
-            <img class="slide-visual" src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=800&auto=format&fit=crop" alt="Kursdeltagare i gemensam workshop">
+            <div class="content-media">
+                <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=800&auto=format&fit=crop" alt="Kursdeltagare i gemensam workshop">
+            </div>
         </div>
     </div>
     <div class="connector"></div>
 
-    <!-- 3. KUNSKAPER OCH FÄRDIGHETER -->
-    <div class="node exercise skills-slide">
-        <div class="skills-content">
-            <div class="skills-text">
+    <!-- 4. KUNSKAPER OCH FÄRDIGHETER -->
+    <div class="node exercise">
+        <span class="badge">Målsättning</span>
+        <div class="content-grid">
+            <div class="content-text">
                 <h2>Vad ni kommer att få för kunskaper och färdigheter efter kursen</h2>
                 <p>Efter kursen kommer ni att kunna skapa grafik och redigera bilder med hjälp av AI. Det gör att ni kan bli en extra tillgång på er arbetsplats eller stärka er roll som företagare. Förhoppningsvis kan det leda till högre lön, bättre uppdrag eller större avkastning över tid.</p>
                 <p>Driver ni eget bolag får ni verktyg som gör det möjligt att nå fler kunder. Grafik kan skapa en wow-effekt och bidra till att kunder får större förtroende för ert företag. Samtidigt kan ni arbeta mer effektivt och minska kostnader för reklam, marknadsföring och grafisk produktion.</p>
@@ -399,67 +404,80 @@
                 <p>Ni får dessutom verktyg och trygghet att använda AI på ett lekfullt och tillgängligt sätt, så att ni kan skapa roliga och kreativa bilder utan krav på förkunskaper. Kunskapen går också enkelt att dela vidare till familj och vänner för gemensamt skapande.</p>
                 <p>Ni kommer även att kunna förmedla tankegods genom grafik som ni annars kanske inte haft tid eller ork att ta fram, men som är desto viktigare att kommunicera.</p>
                 <p>Som helhet ger kursen er större uttrycksfrihet, bättre verktyg och ökad handlingsförmåga.</p>
-                <p>Men oavsett vad jag tycker så är det ni som styr kursens riktning.</p>
-                <p>Det är ni som styr kursen dock så ni bestämmer vad det är vi ska fokusera på.</p>
-                <p><strong>Vad vill ni lära er?</strong></p>
+                <p>Men oavsett vad jag tycker så är det ni som styr kursens riktning. Det är ni som styr kursen dock så ni bestämmer vad det är vi ska fokusera på.</p>
+                <p style="font-size: 1.3rem; margin-top: 20px;"><strong>Vad vill ni lära er?</strong></p>
             </div>
-            <img class="skills-image" src="teamwork.png" alt="Teamwork illustration">
-        </div>
-    </div>
-    <div class="connector"></div>
-
-    <!-- 4. FÖRELÄSNING -->
-    <div class="node lecture slide-with-image">
-        <div class="slide-layout">
-            <div class="slide-text">
-                <h2>Vad är en AI?</h2>
-                <p>AI kan beskrivas som vikter i ett neuralt nätverk som tränats för att känna igen, replikera och slutföra mönster, med viss variation.</p>
-                <p>En AI bygger på neurala nätverk som lär sig mönster i data. En LLM, Large Language Model, arbetar med next token prediction, vilket innebär att den beräknar vilket tecken, eller token, som sannolikt kommer härnäst utifrån tidigare mönster. Text delas upp i tokens och bilder omvandlas till numeriska matriser som beskriver färg, ljus och position. För modellen finns det därför inga ord eller bilder i mänsklig mening, utan endast tal. Genom att justera vikter under träning försöker modellen göra pattern completion, alltså fylla i fortsättningen på ett mönster. Varje generering innehåller ett visst mått av slump, vilket gör att resultaten kan variera. I grunden kan allt som kan representeras symboliskt tränas på, och bildgenerering bygger på att modellen lärt sig visuella mönster och relationer i numerisk form.</p>
+            <div class="content-media">
+                <img src="teamwork.png" alt="Teamwork illustration">
             </div>
-            <img class="slide-visual" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=800&auto=format&fit=crop" alt="Abstrakt visualisering av artificiell intelligens">
         </div>
     </div>
     <div class="connector"></div>
 
     <!-- 5. FÖRELÄSNING -->
-    <div class="node lecture slide-with-image">
-        <div class="slide-layout">
-            <div class="slide-text">
-                <h2>Hur vi ser på AI i kursen</h2>
-                <p>AI ska ses som ett verktyg, inte som något som ersätter människan. Precis som en grävmaskin inte ersätter grävmaskinisten, utan förstärker dennes förmåga att forma och skapa, är AI ett redskap som hjälper er att skulptera fram era idéer snabbare och mer precist.</p>
-                <p>Det är fortfarande ni som står för kreativiteten, intentionen och omdömet. AI är kraften som gör det möjligt att genomföra det ni redan kan föreställa er.</p>
+    <div class="node lecture">
+        <span class="badge">Föreläsning</span>
+        <div class="content-grid">
+            <div class="content-text">
+                <h2>Vad är en AI?</h2>
+                <p>AI kan beskrivas som vikter i ett neuralt nätverk som tränats för att känna igen, replikera och slutföra mönster, med viss variation.</p>
+                <p>En AI bygger på neurala nätverk som lär sig mönster i data. En LLM, Large Language Model, arbetar med next token prediction, vilket innebär att den beräknar vilket tecken, eller token, som sannolikt kommer härnäst utifrån tidigare mönster. Text delas upp i tokens och bilder omvandlas till numeriska matriser som beskriver färg, ljus och position. För modellen finns det därför inga ord eller bilder i mänsklig mening, utan endast tal. Genom att justera vikter under träning försöker modellen göra pattern completion, alltså fylla i fortsättningen på ett mönster. Varje generering innehåller ett visst mått av slump, vilket gör att resultaten kan variera. I grunden kan allt som kan representeras symboliskt tränas på, och bildgenerering bygger på att modellen lärt sig visuella mönster och relationer i numerisk form.</p>
             </div>
-            <img class="slide-visual" src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=800&auto=format&fit=crop" alt="Människa och digitalt verktyg i samarbete">
+            <div class="content-media">
+                <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=800&auto=format&fit=crop" alt="Abstrakt visualisering av artificiell intelligens">
+            </div>
         </div>
     </div>
     <div class="connector"></div>
 
     <!-- 6. FÖRELÄSNING -->
-    <div class="node lecture slide-with-image">
-        <div class="slide-layout">
-            <div class="slide-text">
-                <h2>7. Grundläggande prompting</h2>
-                <p>En prompt är den instruktion du ger till en AI för att få den att utföra något. Det kan handla om att skriva text, skapa bilder eller redigera material. Prompten fungerar ungefär som att ge en grävmaskinist tydliga instruktioner om hur en grop ska grävas och med vilka mått. Ju tydligare instruktionen är, desto större är chansen att resultatet blir som du tänkt dig.</p>
-                <p>AI:n försöker alltid utföra det du ber den om, utifrån hur du formulerar din instruktion. Små skillnader i formulering kan därför ge stora skillnader i resultat.</p>
-                <p>Vi ska titta på två exempel.</p>
-                <p><strong>Prompt för att generera en artikel</strong></p>
-                <p>Här ser vi skillnaden mellan en vag och en tydlig instruktion.</p>
-                <p>Dåligt exempel som kommer ge mycket varierande resultat: "Skriv en artikel om AI."</p>
-                <p>Bra exempel som kommer ge mer förutsägbart resultat: "Du är en erfaren journalist. Skriv en lättläst artikel om kreativ AI för nybörjare, cirka 400 ord, med ett pedagogiskt språk och ett tydligt avslut. Nämn Nvidia planer på datacenter i rymden"</p>
-                <p><strong>Prompt för att generera en bild</strong></p>
-                <p>Här beskriver du istället vad som ska synas, hur det ska se ut och vilken känsla eller stil bilden ska ha.</p>
-                <p>Dåligt exempel som kommer ge mycket varierande resultat: "En hund."</p>
-                <p>Bra exempel som kommer ge mer förutsägbart resultat: "En glad golden retriever-valp som springer i en solig park, mjukt ljus, fotorealistisk stil."</p>
+    <div class="node lecture">
+        <span class="badge">Föreläsning</span>
+        <div class="content-grid">
+            <div class="content-text">
+                <h2>Hur vi ser på AI i kursen</h2>
+                <p>AI ska ses som ett verktyg, inte som något som ersätter människan. Precis som en grävmaskin inte ersätter grävmaskinisten, utan förstärker dennes förmåga att forma och skapa, är AI ett redskap som hjälper er att skulptera fram era idéer snabbare och mer precist.</p>
+                <p>Det är fortfarande ni som står för kreativiteten, intentionen och omdömet. AI är kraften som gör det möjligt att genomföra det ni redan kan föreställa er.</p>
             </div>
-            <img class="slide-visual" src="https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=800&auto=format&fit=crop" alt="Anteckningar och textarbete för prompting">
+            <div class="content-media">
+                <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=800&auto=format&fit=crop" alt="Människa och digitalt verktyg i samarbete">
+            </div>
         </div>
     </div>
     <div class="connector"></div>
 
     <!-- 7. FÖRELÄSNING -->
-    <div class="node lecture slide-with-image">
-        <div class="slide-layout">
-            <div class="slide-text">
+    <div class="node lecture">
+        <span class="badge">Föreläsning</span>
+        <div class="content-grid">
+            <div class="content-text">
+                <h2>7. Grundläggande prompting</h2>
+                <p>En prompt är den instruktion du ger till en AI för att få den att utföra något. Det kan handla om att skriva text, skapa bilder eller redigera material. Prompten fungerar ungefär som att ge en grävmaskinist tydliga instruktioner om hur en grop ska grävas och med vilka mått. Ju tydligare instruktionen är, desto större är chansen att resultatet blir som du tänkt dig.</p>
+                <p>AI:n försöker alltid utföra det du ber den om, utifrån hur du formulerar din instruktion. Små skillnader i formulering kan därför ge stora skillnader i resultat.</p>
+                <p>Vi ska titta på två exempel.</p>
+                <br>
+                <p><strong>Prompt för att generera en artikel</strong><br>
+                Här ser vi skillnaden mellan en vag och en tydlig instruktion.</p>
+                <p><em>Dåligt exempel:</em> "Skriv en artikel om AI."</p>
+                <p><em>Bra exempel:</em> "Du är en erfaren journalist. Skriv en lättläst artikel om kreativ AI för nybörjare, cirka 400 ord, med ett pedagogiskt språk och ett tydligt avslut. Nämn Nvidia planer på datacenter i rymden"</p>
+                <br>
+                <p><strong>Prompt för att generera en bild</strong><br>
+                Här beskriver du istället vad som ska synas, hur det ska se ut och vilken känsla eller stil bilden ska ha.</p>
+                <p><em>Dåligt exempel:</em> "En hund."</p>
+                <p><em>Bra exempel:</em> "En glad golden retriever-valp som springer i en solig park, mjukt ljus, fotorealistisk stil."</p>
+            </div>
+            <div class="content-media">
+                <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=800&auto=format&fit=crop" alt="Anteckningar och textarbete för prompting">
+            </div>
+        </div>
+    </div>
+    <div class="connector"></div>
+
+    <!-- 8. FÖRELÄSNING -->
+    <div class="node lecture">
+        <span class="badge">Föreläsning</span>
+        <div class="content-grid">
+            <div class="content-text">
                 <h2>6. Våra första verktyg</h2>
                 <p>Chatgpt.com erbjuder gratiskonton, ni kan registrera er på chatgpt.com. Där kommer ni kunna generera texter och bilder gratis.</p>
                 <p>Som komplement till detta och på grund av mångfalden av möjligheter kommer vi också använda plattformen <strong>https://arena.ai/</strong>. Det är en webbplats som erbjuder en begränsad men kostnadsfri möjlighet att testa de senaste AI-modellerna. Syftet är att samla in data för att kunna skapa en ranking över vilka modeller som presterar bäst inom olika kategorier.</p>
@@ -468,128 +486,217 @@
                 <p>Vi ska nu lära oss att navigera på plattformen, eftersom vi kommer att använda den som ett centralt verktyg under kursen för att skapa bilder.</p>
                 <p><strong>Vill att alla surfar in på denna nu om ni har möjlighet så ska ni få göra tester själva sen.</strong></p>
             </div>
-            <img class="slide-visual" src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800&auto=format&fit=crop" alt="Laptop med AI-verktyg och dashboards">
+            <div class="content-media">
+                <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800&auto=format&fit=crop" alt="Laptop med AI-verktyg och dashboards">
+            </div>
         </div>
     </div>
     <div class="connector"></div>
 
-    <!-- 8. ÖVNINGAR -->
-    <div class="node exercise exercises-slide">
-        <h2>Övningar - klicka för att öppna</h2>
-        <div class="tasks-accordion">
-            <details class="task-dropdown">
-                <summary>Övning 1 - Prompting och textskapande</summary>
-                <p><strong>Syfte:</strong> Lära sig styra AI genom text, förstå iteration och efterredigering.</p>
-                <p>Deltagarna får uppdraget: Ni har blivit anlitade att skriva artiklar åt Torekovsmagasinet.</p>
-                <ul>
-                    <li>Skriv en prompt i ChatGPT där AI ska skriva en artikel om grundlagsbytet i Sverige på 1970-talet.</li>
-                    <li>Läs igenom texten som skapas.</li>
-                    <li>Skriv en ny prompt där ni ber AI skriva om samma innehåll, men kortare och i klarspråk, anpassat för en bred allmänhet.</li>
-                    <li>Observera hur AI använder tidigare text och hur ni kan förändra innehållet steg för steg utan att börja om.</li>
-                    <li>Testa att justera tonen ytterligare, till exempel mer pedagogisk eller mer journalistisk.</li>
-                </ul>
-            </details>
+    <!-- 9. ÖVNINGAR (3D Flip Grid) -->
+    <div class="node exercise">
+        <span class="badge">Praktik</span>
+        <h2>Praktiska övningar</h2>
+        <p>Klicka på ett kort för att vända på det och se instruktionerna.</p>
+        
+        <div class="cards-grid">
+            
+            <!-- Kort 1 -->
+            <div class="scene">
+                <div class="flip-card">
+                    <div class="card-shadow"></div>
+                    <!-- Framsida -->
+                    <div class="face face-cover">
+                        <h3>Övning 1</h3>
+                        <span>Klicka för att visa</span>
+                    </div>
+                    <!-- Baksida (Innehåll) -->
+                    <div class="face face-content">
+                        <h4>Prompting och textskapande</h4>
+                        <p><strong>Syfte:</strong> Lära sig styra AI genom text, förstå iteration och efterredigering.</p>
+                        <p>Deltagarna får uppdraget: Ni har blivit anlitade att skriva artiklar åt Torekovsmagasinet.</p>
+                        <ul>
+                            <li>Skriv en prompt i ChatGPT där AI ska skriva en artikel om grundlagsbytet i Sverige på 1970-talet.</li>
+                            <li>Läs igenom texten som skapas.</li>
+                            <li>Skriv en ny prompt där ni ber AI skriva om samma innehåll, men kortare och i klarspråk, anpassat för en bred allmänhet.</li>
+                            <li>Observera hur AI använder tidigare text och hur ni kan förändra innehållet steg för steg utan att börja om.</li>
+                            <li>Testa att justera tonen ytterligare, till exempel mer pedagogisk eller mer journalistisk.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
-            <details class="task-dropdown">
-                <summary>Övning 2 - Bildskapande genom successiv prompting</summary>
-                <p><strong>Syfte:</strong> Förstå hur bilder byggs upp genom stegvisa instruktioner och hur promptformeln används.</p>
-                <ul>
-                    <li>Skapa en bild av en åker.</li>
-                    <li>Be AI ändra åkern till gräs.</li>
-                    <li>Lägg till en röd stuga på gräset.</li>
-                    <li>Lägg till glada människor som står utanför stugan och hälsar mot oss.</li>
-                    <li>Be att människorna ska bära rosa kepsar.</li>
-                    <li>Lägg till en bil utanför stugan.</li>
-                    <li>Ändra perspektivet så att bilden ses uppifrån, snett från höger.</li>
-                    <li>Byt färg på bilen.</li>
-                    <li>Be att bilden ska bli fotorealistisk.</li>
-                    <li>Ändra tid på dygnet till kväll.</li>
-                    <li>Ändra stilen till tecknad.</li>
-                    <li>Ändra stilen till målad i Picassos stil.</li>
-                    <li>Flytta hela scenen till en Mars-miljö.</li>
-                    <li>Lägg till text i guldig font med orden: "Boka din rymdsemester".</li>
-                </ul>
-                <p><strong>Avslutande genomgång av promptformeln:</strong> Subjekt, Handling, Miljö, Ljus och kamera, Stil.</p>
-            </details>
+            <!-- Kort 2 -->
+            <div class="scene">
+                <div class="flip-card">
+                    <div class="card-shadow"></div>
+                    <div class="face face-cover">
+                        <h3>Övning 2</h3>
+                        <span>Klicka för att visa</span>
+                    </div>
+                    <div class="face face-content">
+                        <h4>Bildskapande successiv prompting</h4>
+                        <p><strong>Syfte:</strong> Förstå hur bilder byggs upp stegvis och hur promptformeln används.</p>
+                        <ul>
+                            <li>Skapa en bild av en åker.</li>
+                            <li>Be AI ändra åkern till gräs.</li>
+                            <li>Lägg till en röd stuga på gräset.</li>
+                            <li>Lägg till glada människor utanför stugan.</li>
+                            <li>Be att människorna ska bära rosa kepsar.</li>
+                            <li>Lägg till en bil utanför stugan.</li>
+                            <li>Ändra perspektivet (uppifrån, snett höger).</li>
+                            <li>Byt färg på bilen.</li>
+                            <li>Gör bilden fotorealistisk.</li>
+                            <li>Ändra tid på dygnet till kväll.</li>
+                            <li>Ändra stilen till tecknad.</li>
+                            <li>Ändra stilen till Picassos stil.</li>
+                            <li>Flytta scenen till Mars.</li>
+                            <li>Lägg till guldig text: "Boka din rymdsemester".</li>
+                        </ul>
+                        <p><strong>Promptformel:</strong> Subjekt, Handling, Miljö, Ljus/Kamera, Stil.</p>
+                    </div>
+                </div>
+            </div>
 
-            <details class="task-dropdown">
-                <summary>Övning 3 - Kommersiellt uppdrag: skapa en poster</summary>
-                <p><strong>Syfte:</strong> Träna på att arbeta metodiskt i ett betalt uppdrag.</p>
-                <p><strong>Scenario:</strong> Ni har fått i uppdrag att skapa en poster till en båtmässa som heter Allt för sjön.</p>
-                <ul>
-                    <li>Skapa först en bild utan någon text.</li>
-                    <li>När ni är nöjda med bilden, be AI lägga till mässans namn.</li>
-                    <li>Lägg därefter till mer text stegvis, till exempel datum eller plats, utan att förändra resten av bilden.</li>
-                    <li>Reflektera över varför det är viktigt att arbeta stegvis i kommersiella uppdrag.</li>
-                </ul>
-            </details>
+            <!-- Kort 3 -->
+            <div class="scene">
+                <div class="flip-card">
+                    <div class="card-shadow"></div>
+                    <div class="face face-cover">
+                        <h3>Övning 3</h3>
+                        <span>Klicka för att visa</span>
+                    </div>
+                    <div class="face face-content">
+                        <h4>Kommersiell poster</h4>
+                        <p><strong>Syfte:</strong> Träna på att arbeta metodiskt i ett betalt uppdrag.</p>
+                        <p><strong>Scenario:</strong> Ni har fått i uppdrag att skapa en poster till en båtmässa som heter "Allt för sjön".</p>
+                        <ul>
+                            <li>Skapa först en bild utan någon text.</li>
+                            <li>När ni är nöjda med bilden, be AI lägga till mässans namn.</li>
+                            <li>Lägg därefter till mer text stegvis, till exempel datum eller plats, utan att förändra resten av bilden.</li>
+                            <li>Reflektera över varför det är viktigt att arbeta stegvis i kommersiella uppdrag.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
-            <details class="task-dropdown">
-                <summary>Övning 4 - Bildredigering och förbättring</summary>
-                <p><strong>Syfte:</strong> Visa hur AI används för att justera befintligt material.</p>
-                <p><strong>Del A: Objekt och miljö</strong></p>
-                <ul>
-                    <li>Utgå från bilden med bilen från tidigare övning.</li>
-                    <li>Be AI ändra färg på bilen.</li>
-                    <li>Flytta bilen till New York.</li>
-                    <li>Be att bilden ska vara realistisk.</li>
-                </ul>
-                <p><strong>Del B: Ljussättning</strong></p>
-                <p><strong>Scenario:</strong> En mäklarfirma vill förbättra en bostadsbild.</p>
-                <ul>
-                    <li>Uppgiften är att göra vädret ljusare utomhus.</li>
-                    <li>Justera ljussättningen i ett kök så att det ser mer ljust och inbjudande ut.</li>
-                </ul>
-            </details>
+            <!-- Kort 4 -->
+            <div class="scene">
+                <div class="flip-card">
+                    <div class="card-shadow"></div>
+                    <div class="face face-cover">
+                        <h3>Övning 4</h3>
+                        <span>Klicka för att visa</span>
+                    </div>
+                    <div class="face face-content">
+                        <h4>Bildredigering & förbättring</h4>
+                        <p><strong>Syfte:</strong> Visa hur AI justerar befintligt material.</p>
+                        <p><strong>Del A: Objekt och miljö</strong></p>
+                        <ul>
+                            <li>Utgå från bilen från tidigare övning.</li>
+                            <li>Ändra färg på bilen.</li>
+                            <li>Flytta bilen till New York.</li>
+                            <li>Gör bilden realistisk.</li>
+                        </ul>
+                        <p><strong>Del B: Ljussättning</strong></p>
+                        <p><strong>Scenario:</strong> En mäklarfirma vill förbättra en bild.</p>
+                        <ul>
+                            <li>Gör vädret ljusare utomhus.</li>
+                            <li>Justera ljuset i ett kök så det ser inbjudande ut.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
-            <details class="task-dropdown">
-                <summary>Övning 5 - Porträtt och personredigering</summary>
-                <p><strong>Syfte:</strong> Lära sig skapa professionella porträtt.</p>
-                <ul>
-                    <li>Ladda upp ett foto på en person.</li>
-                    <li>Be AI göra bilden till ett stilrent svartvitt porträtt.</li>
-                    <li>Be AI byta kläder på personen.</li>
-                    <li>Justera ljus och kontrast för ett professionellt uttryck.</li>
-                </ul>
-            </details>
+            <!-- Kort 5 -->
+            <div class="scene">
+                <div class="flip-card">
+                    <div class="card-shadow"></div>
+                    <div class="face face-cover">
+                        <h3>Övning 5</h3>
+                        <span>Klicka för att visa</span>
+                    </div>
+                    <div class="face face-content">
+                        <h4>Porträtt & personredigering</h4>
+                        <p><strong>Syfte:</strong> Lära sig skapa professionella porträtt.</p>
+                        <ul>
+                            <li>Ladda upp ett foto på en person.</li>
+                            <li>Be AI göra bilden till ett stilrent svartvitt porträtt.</li>
+                            <li>Be AI byta kläder på personen.</li>
+                            <li>Justera ljus och kontrast för ett professionellt uttryck.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
-            <details class="task-dropdown">
-                <summary>Övning 6 - Bild till text och idé</summary>
-                <p><strong>Syfte:</strong> Koppla samman textinnehåll och bild.</p>
-                <ul>
-                    <li>Be AI skriva en artikel på cirka 300 ord om AI-utvecklingen och datacenter i rymden.</li>
-                    <li>Texten ska vara så enkel att en 12-åring kan förstå den.</li>
-                    <li>När texten är klar, be AI skapa en bild som passar till artikeln.</li>
-                    <li>Reflektera över hur väl bilden förstärker innehållet.</li>
-                </ul>
-            </details>
+            <!-- Kort 6 -->
+            <div class="scene">
+                <div class="flip-card">
+                    <div class="card-shadow"></div>
+                    <div class="face face-cover">
+                        <h3>Övning 6</h3>
+                        <span>Klicka för att visa</span>
+                    </div>
+                    <div class="face face-content">
+                        <h4>Bild till text och idé</h4>
+                        <p><strong>Syfte:</strong> Koppla samman textinnehåll och bild.</p>
+                        <ul>
+                            <li>Be AI skriva en artikel på cirka 300 ord om AI-utvecklingen och datacenter i rymden.</li>
+                            <li>Texten ska vara så enkel att en 12-åring kan förstå den.</li>
+                            <li>När texten är klar, be AI skapa en bild som passar till artikeln.</li>
+                            <li>Reflektera över hur väl bilden förstärker innehållet.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
-            <details class="task-dropdown">
-                <summary>Övning 7 - Skiss till färdig bild</summary>
-                <p><strong>Syfte:</strong> Visa att teckningskunskaper inte krävs.</p>
-                <ul>
-                    <li>Ladda upp en enkel skiss, till exempel streckgubbar.</li>
-                    <li>Be AI tolka skissen och skapa en färdig bild.</li>
-                    <li>Justera stil, miljö eller uttryck vid behov.</li>
-                </ul>
-            </details>
+            <!-- Kort 7 -->
+            <div class="scene">
+                <div class="flip-card">
+                    <div class="card-shadow"></div>
+                    <div class="face face-cover">
+                        <h3>Övning 7</h3>
+                        <span>Klicka för att visa</span>
+                    </div>
+                    <div class="face face-content">
+                        <h4>Skiss till färdig bild</h4>
+                        <p><strong>Syfte:</strong> Visa att teckningskunskaper inte krävs.</p>
+                        <ul>
+                            <li>Ladda upp en enkel skiss, till exempel streckgubbar.</li>
+                            <li>Be AI tolka skissen och skapa en färdig bild.</li>
+                            <li>Justera stil, miljö eller uttryck vid behov.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
-            <details class="task-dropdown">
-                <summary>Övning 8 - Format och anpassning för sociala medier</summary>
-                <p><strong>Syfte:</strong> Förstå format, proportioner och praktisk användning.</p>
-                <p><strong>Genomgång av format:</strong></p>
-                <ul>
-                    <li>Facebook: 1:1 (1080x1080), 1.91:1 (1200x630)</li>
-                    <li>Instagram: 1:1, 4:5, 9:16</li>
-                    <li>TikTok: 9:16</li>
-                </ul>
-                <p><strong>Scenario:</strong> Marits Blommor i Stockholm har anlitat er.</p>
-                <ul>
-                    <li>Skapa en Facebook-banner som marknadsför rea på gula tulpaner.</li>
-                    <li>Anpassa bilden till rätt format.</li>
-                    <li>Reflektera över hur format påverkar bildens uttryck.</li>
-                </ul>
-            </details>
+            <!-- Kort 8 -->
+            <div class="scene">
+                <div class="flip-card">
+                    <div class="card-shadow"></div>
+                    <div class="face face-cover">
+                        <h3>Övning 8</h3>
+                        <span>Klicka för att visa</span>
+                    </div>
+                    <div class="face face-content">
+                        <h4>Format för sociala medier</h4>
+                        <p><strong>Syfte:</strong> Förstå format och proportioner.</p>
+                        <p><strong>Genomgång av format:</strong></p>
+                        <ul>
+                            <li>Facebook: 1:1, 1.91:1</li>
+                            <li>Instagram: 1:1, 4:5, 9:16</li>
+                            <li>TikTok: 9:16</li>
+                        </ul>
+                        <p><strong>Scenario:</strong> Marits Blommor</p>
+                        <ul>
+                            <li>Skapa en Facebook-banner som marknadsför rea på gula tulpaner.</li>
+                            <li>Anpassa bilden till rätt format.</li>
+                            <li>Reflektera över hur formatet påverkar uttrycket.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -597,15 +704,14 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
+    // 1. Sid-navigeringen
     const nodes = document.querySelectorAll('.node');
     let currentIndex = 0;
 
-    // Funktion för att uppdatera fokus på skärmen
     function updateFocus() {
         nodes.forEach((node, index) => {
             if (index === currentIndex) {
                 node.classList.add('active');
-                // Skrolla mjukt så noden hamnar i mitten av skärmen
                 node.scrollIntoView({ behavior: 'smooth', block: 'center' });
             } else {
                 node.classList.remove('active');
@@ -613,16 +719,15 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Tangentbordsnavigering (Piltangenter)
     document.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowDown') {
-            e.preventDefault(); // Hindrar standardskroll
+            e.preventDefault(); 
             if (currentIndex < nodes.length - 1) {
                 currentIndex++;
                 updateFocus();
             }
         } else if (e.key === 'ArrowUp') {
-            e.preventDefault(); // Hindrar standardskroll
+            e.preventDefault(); 
             if (currentIndex > 0) {
                 currentIndex--;
                 updateFocus();
@@ -630,47 +735,22 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Tillåt även musklick för att hoppa till en specifik nod
     nodes.forEach((node, index) => {
-        node.addEventListener('click', () => {
-            currentIndex = index;
-            updateFocus();
-        });
-    });
-
-    // Enkel funktionalitet för Quiz (klicka för rätt/fel)
-    const quizBtns = document.querySelectorAll('.quiz-btn');
-    quizBtns.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation(); // Se till att klicket inte triggar nodens klick-event
-            
-            const isCorrect = btn.getAttribute('data-correct') === "true";
-            
-            // Återställ färg på knappar i samma quiz först
-            const siblings = btn.parentElement.querySelectorAll('.quiz-btn');
-            siblings.forEach(sib => {
-                sib.classList.remove('correct', 'wrong');
-            });
-
-            // Sätt färg baserat på svar
-            if(isCorrect) {
-                btn.classList.add('correct');
-            } else {
-                btn.classList.add('wrong');
+        node.addEventListener('click', (e) => {
+            // Gör så att man inte byter nod om man bara klickar på ett övningskort
+            if(!e.target.closest('.flip-card')) {
+                currentIndex = index;
+                updateFocus();
             }
         });
     });
 
-    // Endast en övnings-dropdown öppen åt gången
-    const taskDropdowns = document.querySelectorAll('.task-dropdown');
-    taskDropdowns.forEach(dropdown => {
-        dropdown.addEventListener('toggle', () => {
-            if (!dropdown.open) return;
-            taskDropdowns.forEach(other => {
-                if (other !== dropdown) {
-                    other.open = false;
-                }
-            });
+    // 2. Korten (3D Flip Logic)
+    const flipCards = document.querySelectorAll('.flip-card');
+    flipCards.forEach(card => {
+        card.addEventListener('click', (e) => {
+            e.stopPropagation(); // Hindrar klicket från att byta "Slide" ovan
+            card.classList.toggle('is-flipped');
         });
     });
 });
