@@ -264,7 +264,7 @@
 
     .ai-learning-frame {
         width: 100%;
-        height: 620px;
+        height: 560px;
         border: 1px solid var(--border-color);
         border-radius: 10px;
         background: #0f172a;
@@ -547,7 +547,7 @@
         }
 
         .ai-learning-frame {
-            height: 520px;
+            height: 620px;
         }
         
         .node { padding: 30px 20px; }
@@ -1165,9 +1165,21 @@ document.addEventListener("DOMContentLoaded", () => {
         aiLearningFrame.addEventListener('load', () => {
             resizeAiLearningFrame();
             setTimeout(resizeAiLearningFrame, 250);
+            setTimeout(resizeAiLearningFrame, 700);
         });
         window.addEventListener('resize', resizeAiLearningFrame);
     }
+
+    window.addEventListener('message', (event) => {
+        if (event?.data?.type !== 'learning-height') {
+            return;
+        }
+        const height = Number(event.data.height);
+        if (!aiLearningFrame || !Number.isFinite(height) || height <= 0) {
+            return;
+        }
+        aiLearningFrame.style.height = `${Math.ceil(height)}px`;
+    });
 
     if (arenaVideo) {
         arenaVideo.muted = true;

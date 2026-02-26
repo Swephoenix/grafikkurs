@@ -20,26 +20,28 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
+            padding: 10px 12px;
+            overflow: hidden;
         }
 
         h1 {
             text-align: center;
-            margin: 0 0 20px 0;
+            margin: 0 0 10px 0;
+            font-size: 1.25rem;
         }
 
         .layout {
             display: grid;
-            grid-template-columns: 300px 1fr 300px;
-            gap: 20px;
-            max-width: 1100px;
+            grid-template-columns: 220px 1fr 220px;
+            gap: 10px;
+            max-width: 920px;
             width: 100%;
         }
 
         .panel {
             background: var(--card);
-            border-radius: 12px;
-            padding: 20px;
+            border-radius: 10px;
+            padding: 12px;
             border: 1px solid #334155;
             display: flex;
             flex-direction: column;
@@ -50,13 +52,13 @@
         .dataset-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-top: 10px;
+            gap: 6px;
+            margin-top: 6px;
         }
         .data-item {
-            font-size: 24px;
+            font-size: 18px;
             background: #0f172a;
-            padding: 10px;
+            padding: 6px;
             border-radius: 4px;
             opacity: 0.3;
             transition: all 0.2s;
@@ -70,7 +72,7 @@
         /* Latent Space / Vektordatabas */
         #vector-space {
             width: 100%;
-            height: 300px;
+            height: 180px;
             background: #000;
             border-radius: 8px;
             position: relative;
@@ -101,50 +103,51 @@
 
         /* Diffusion / Output */
         #output-canvas {
-            width: 200px;
-            height: 200px;
+            width: 140px;
+            height: 140px;
             background: #111;
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 80px;
+            font-size: 58px;
             border: 2px dashed #444;
         }
 
         .status {
             grid-column: span 3;
             background: #1e1b4b;
-            padding: 15px;
+            padding: 10px;
             border-radius: 8px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             font-family: monospace;
             border-left: 5px solid var(--primary);
+            font-size: 12px;
         }
 
         button {
-            padding: 15px 30px;
-            font-size: 16px;
+            padding: 9px 14px;
+            font-size: 13px;
             font-weight: bold;
             cursor: pointer;
             border-radius: 8px;
             border: none;
-            margin: 10px;
+            margin: 6px 4px 0;
             transition: 0.3s;
         }
         .btn-train { background: var(--primary); color: white; }
         .btn-gen { background: var(--accent); color: white; }
         button:disabled { opacity: 0.2; cursor: not-allowed; }
 
-        h2 { font-size: 14px; text-transform: uppercase; margin-bottom: 20px; color: #94a3b8; }
+        h2 { font-size: 11px; text-transform: uppercase; margin: 0 0 10px 0; color: #94a3b8; }
 
         @media (max-width: 980px) {
             .layout {
-                grid-template-columns: 1fr;
+                grid-template-columns: 180px 1fr 180px;
             }
 
             .status {
-                grid-column: span 1;
+                grid-column: span 3;
             }
         }
     </style>
@@ -159,11 +162,11 @@
         <!-- 1. DATASET -->
         <div class="panel">
             <h2>1. Dataset (Indata)</h2>
-            <p style="font-size: 12px; color: #64748b;">Många exempel lär AI:n vad en "katt" är oavsett färg eller form.</p>
+            <p style="font-size: 10px; color: #64748b; margin: 0 0 6px 0;">Många exempel lär AI:n vad en "katt" är oavsett färg eller form.</p>
             <div class="dataset-grid" id="dataset">
                 <!-- Katter genereras av JS -->
             </div>
-            <div id="label-input" style="margin-top:20px; font-weight: bold; color: var(--primary);">Etikett: "Katt"</div>
+            <div id="label-input" style="margin-top:10px; font-weight: bold; color: var(--primary); font-size: 12px;">Etikett: "Katt"</div>
         </div>
 
         <!-- 2. VEKTORDATABAS -->
@@ -172,14 +175,14 @@
             <div id="vector-space">
                 <div id="cat-label" class="cluster-label" style="top: 20%; left: 65%;">KLUSTER: KATT</div>
             </div>
-            <p style="font-size: 11px; margin-top: 10px; color: #94a3b8;">Här lagras matematiska mönster. Ju mer AI:n ser, desto tätare blir klustret.</p>
+            <p style="font-size: 10px; margin-top: 8px; color: #94a3b8; text-align: center;">Här lagras matematiska mönster. Ju mer AI:n ser, desto tätare blir klustret.</p>
         </div>
 
         <!-- 3. GENERERING -->
         <div class="panel">
             <h2>3. Generering (Utdata)</h2>
             <div id="output-canvas">?</div>
-            <div id="prompt-display" style="margin-top:20px; font-style: italic; color: #94a3b8;">Ingen prompt...</div>
+            <div id="prompt-display" style="margin-top:10px; font-style: italic; color: #94a3b8; font-size: 11px;">Ingen prompt...</div>
         </div>
     </div>
 
@@ -196,6 +199,18 @@
         const btnTrain = document.getElementById('btnTrain');
         const btnGen = document.getElementById('btnGen');
         const outputCanvas = document.getElementById('output-canvas');
+
+        function notifyParentHeight() {
+            const root = document.documentElement;
+            const body = document.body;
+            const height = Math.max(
+                root.scrollHeight,
+                root.offsetHeight,
+                body.scrollHeight,
+                body.offsetHeight
+            );
+            window.parent.postMessage({ type: 'learning-height', height }, '*');
+        }
 
         // Skapa datasetet visuellt
         cats.forEach((cat, i) => {
@@ -219,6 +234,7 @@
         btnTrain.addEventListener('click', async () => {
             btnTrain.disabled = true;
             statusText.innerText = "> Startar batch-processering av 9 bilder...";
+            notifyParentHeight();
 
             for(let i=0; i < cats.length; i++) {
                 // Markera bilden som bearbetas
@@ -236,11 +252,13 @@
 
                 await new Promise(r => setTimeout(r, 600));
                 item.className = 'data-item'; // Avmarkera
+                notifyParentHeight();
             }
 
             statusText.innerText = "> Träning klar. Konceptet 'Katt' har nu ett tydligt koordinat-kluster.";
             document.getElementById('cat-label').style.opacity = "1";
             btnGen.disabled = false;
+            notifyParentHeight();
         });
 
         // GENERERINGSSIMULERING
@@ -248,6 +266,7 @@
             btnGen.disabled = true;
             document.getElementById('prompt-display').innerText = '"Skapa en bild på en katt"';
             statusText.innerText = "> Söker i vektordatabasen... Hittar matchning i 'Felin-klustret'.";
+            notifyParentHeight();
             
             // Animera vektorsökning
             const searchRing = document.createElement('div');
@@ -261,6 +280,7 @@
                 searchRing.style.height = "60px";
                 searchRing.style.transform = "translate(-30px, -30px)";
                 statusText.innerText = "> Diffusion startad: Rekonstruerar bild utifrån klustrets genomsnittsvärden...";
+                notifyParentHeight();
             }, 500);
 
             // Simulera diffusion (brus till bild)
@@ -274,9 +294,17 @@
                 if(steps >= 10) {
                     clearInterval(interval);
                     statusText.innerText = "> Generering klar. Resultatet är en syntetisk bild baserad på tusentals inlärda exempel.";
+                    notifyParentHeight();
                 }
             }, 150);
         });
+
+        window.addEventListener('load', () => {
+            notifyParentHeight();
+            setTimeout(notifyParentHeight, 250);
+            setTimeout(notifyParentHeight, 700);
+        });
+        window.addEventListener('resize', notifyParentHeight);
     </script>
 </body>
 </html>
