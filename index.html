@@ -943,17 +943,53 @@ document.addEventListener("DOMContentLoaded", () => {
     const lightboxImage = document.getElementById('lightboxImage');
     const lightboxClose = document.getElementById('lightboxClose');
     const lightboxDownload = document.getElementById('lightboxDownload');
-    let currentIndex = 0;
+    let currentIndex = Math.max(Array.from(nodes).findIndex((node) => node.classList.contains('active')), 0);
+    let isAutoScrolling = false;
+    let autoScrollTimer = null;
+    let scrollTicking = false;
 
-    function updateFocus() {
+    function updateFocus(options = {}) {
+        const shouldScroll = options.scroll !== false;
         nodes.forEach((node, index) => {
             if (index === currentIndex) {
                 node.classList.add('active');
-                node.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                if (shouldScroll) {
+                    isAutoScrolling = true;
+                    node.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    clearTimeout(autoScrollTimer);
+                    autoScrollTimer = setTimeout(() => {
+                        isAutoScrolling = false;
+                    }, 450);
+                }
             } else {
                 node.classList.remove('active');
             }
         });
+    }
+
+    function focusNodeClosestToCenter() {
+        if (isAutoScrolling || lightbox.classList.contains('is-open')) {
+            return;
+        }
+
+        const viewportCenter = window.innerHeight / 2;
+        let closestIndex = currentIndex;
+        let closestDistance = Number.POSITIVE_INFINITY;
+
+        nodes.forEach((node, index) => {
+            const rect = node.getBoundingClientRect();
+            const nodeCenter = rect.top + (rect.height / 2);
+            const distance = Math.abs(nodeCenter - viewportCenter);
+            if (distance < closestDistance) {
+                closestDistance = distance;
+                closestIndex = index;
+            }
+        });
+
+        if (closestIndex !== currentIndex) {
+            currentIndex = closestIndex;
+            updateFocus({ scroll: false });
+        }
     }
 
     document.addEventListener('keydown', (e) => {
@@ -988,6 +1024,21 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     });
+
+    function onViewportChange() {
+        if (scrollTicking) {
+            return;
+        }
+        scrollTicking = true;
+        requestAnimationFrame(() => {
+            focusNodeClosestToCenter();
+            scrollTicking = false;
+        });
+    }
+
+    window.addEventListener('scroll', onViewportChange, { passive: true });
+    window.addEventListener('resize', onViewportChange);
+    updateFocus({ scroll: false });
 
     // 2. Korten (3D Flip Logic)
     const flipCards = document.querySelectorAll('.flip-card');
