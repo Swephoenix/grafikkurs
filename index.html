@@ -237,7 +237,29 @@
         border-radius: 10px;
         border: 1px solid var(--border-color);
         background: #000;
-        cursor: zoom-in;
+        cursor: default;
+    }
+
+    .arena-video-actions {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    .arena-video-restart {
+        border: 1px solid #3f3f46;
+        background: #1f2937;
+        color: #f4f4f5;
+        font-size: 0.9rem;
+        font-weight: 600;
+        border-radius: 8px;
+        padding: 8px 14px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+    .arena-video-restart:hover {
+        background: #374151;
     }
 
     @keyframes arena-image-reveal {
@@ -694,8 +716,11 @@
             <div class="content-media">
                 <img src="arenaai.png" alt="Skärmbild från Arena AI leaderboard">
                 <div class="arena-video-block">
-                    <p class="arena-video-note">Klicka på videon för att förstora.</p>
-                    <video class="arena-video preview-video" src="Grafikkurs-arena.ai.mp4" autoplay muted loop playsinline preload="metadata"></video>
+                    <p class="arena-video-note">Använd kontrollerna för att spela/pausa och klicka i timeline för att hoppa i videon.</p>
+                    <video id="arenaVideo" class="arena-video" src="Grafikkurs-arena.ai.mp4" autoplay muted controls playsinline preload="metadata"></video>
+                    <div class="arena-video-actions">
+                        <button id="arenaVideoRestart" class="arena-video-restart" type="button">Börja om från början</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1093,22 +1118,26 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    const previewVideos = document.querySelectorAll('.preview-video');
-    previewVideos.forEach((video) => {
-        video.muted = true;
-        video.addEventListener('click', async (e) => {
+    const arenaVideo = document.getElementById('arenaVideo');
+    const arenaVideoRestart = document.getElementById('arenaVideoRestart');
+    if (arenaVideo) {
+        arenaVideo.muted = true;
+        arenaVideo.addEventListener('click', (e) => e.stopPropagation());
+        arenaVideo.addEventListener('pointerdown', (e) => e.stopPropagation());
+    }
+
+    if (arenaVideo && arenaVideoRestart) {
+        arenaVideoRestart.addEventListener('click', async (e) => {
             e.preventDefault();
             e.stopPropagation();
+            arenaVideo.currentTime = 0;
             try {
-                if (document.fullscreenElement !== video && video.requestFullscreen) {
-                    await video.requestFullscreen();
-                }
-                await video.play();
+                await arenaVideo.play();
             } catch (err) {
-                // Ignorera fullscreen-fel i webbläsare som blockerar anropet.
+                // Vissa webbläsare kan blockera autoplay efter manuell paus.
             }
         });
-    });
+    }
 
     lightboxClose.addEventListener('click', closeLightbox);
     lightbox.addEventListener('click', (e) => {
