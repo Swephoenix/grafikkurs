@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kursflöde – Kreativ AI</title>
+<title>Designa bilder och grafik med hjälp av AI </title>
 <style>
     /* DESIGN SYSTEM - Modern Dark Mode (Inga Gradients) */
     :root {
@@ -171,9 +171,18 @@
         display: block;
     }
 
+    .profile-media {
+        padding-top: 26px;
+    }
+
     .profile-media img {
-        aspect-ratio: 3 / 4;
-        object-fit: contain;
+        width: min(360px, 100%);
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        object-position: center 20%;
+        border-radius: 50%;
+        margin: 0 auto 20px;
+        border: 2px solid #3f3f46;
         background: #111;
     }
 
@@ -188,6 +197,73 @@
         border-radius: 8px;
         aspect-ratio: 16 / 9;
         display: block;
+    }
+
+    .arena-slide .content-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .arena-slide .content-media {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .arena-slide .content-media img {
+        width: 100%;
+        height: auto;
+        max-height: min(78vh, 980px);
+        aspect-ratio: auto;
+        object-fit: contain;
+        background: #050505;
+        animation: arena-image-reveal 900ms cubic-bezier(0.2, 0.8, 0.2, 1) both,
+                   arena-image-float 7s ease-in-out 900ms infinite;
+    }
+
+    .arena-video-block {
+        margin-top: 18px;
+    }
+
+    .arena-video-note {
+        margin: 0 0 8px 0;
+        font-size: 0.92rem;
+        color: #d4d4d8;
+        text-align: center;
+    }
+
+    .arena-video {
+        width: 100%;
+        display: block;
+        border-radius: 10px;
+        border: 1px solid var(--border-color);
+        background: #000;
+        cursor: zoom-in;
+    }
+
+    @keyframes arena-image-reveal {
+        from {
+            opacity: 0;
+            transform: translateY(18px) scale(0.98);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    @keyframes arena-image-float {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-8px);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .arena-slide .content-media img {
+            animation: none;
+        }
     }
 
     /* Bindestreck mellan noder */
@@ -320,6 +396,104 @@
         color: var(--text-muted);
     }
 
+    .exercise-reference {
+        margin: 14px 0;
+    }
+
+    .exercise-reference p {
+        margin: 0 0 8px 0;
+        font-size: 0.88rem;
+        color: var(--text-main);
+    }
+
+    .exercise-reference img {
+        width: 100%;
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+        display: block;
+        cursor: context-menu;
+    }
+
+    .portrait-options {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin: 12px 0 16px 0;
+    }
+
+    .portrait-options img {
+        width: 100%;
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+        display: block;
+    }
+
+    .preview-image {
+        cursor: zoom-in;
+    }
+
+    .image-lightbox {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.88);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        z-index: 9999;
+    }
+
+    .image-lightbox.is-open {
+        display: flex;
+    }
+
+    .lightbox-inner {
+        max-width: min(92vw, 1200px);
+        max-height: 90vh;
+        position: relative;
+    }
+
+    .lightbox-image {
+        display: block;
+        max-width: 100%;
+        max-height: 90vh;
+        width: auto;
+        height: auto;
+        border-radius: 10px;
+        border: 1px solid #3f3f46;
+        box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6);
+    }
+
+    .lightbox-close {
+        position: absolute;
+        top: -12px;
+        right: -12px;
+        width: 36px;
+        height: 36px;
+        border: 0;
+        border-radius: 999px;
+        background: #f4f4f5;
+        color: #0a0a0c;
+        font-size: 1.4rem;
+        line-height: 1;
+        cursor: pointer;
+    }
+
+    .lightbox-download {
+        position: absolute;
+        left: 12px;
+        bottom: 12px;
+        display: inline-block;
+        text-decoration: none;
+        background: #10b981;
+        color: #052e24;
+        font-weight: 700;
+        font-size: 0.9rem;
+        padding: 8px 12px;
+        border-radius: 6px;
+        border: 1px solid #34d399;
+    }
+
     /* Responsivitet */
     @media (max-width: 900px) {
         .content-grid {
@@ -330,6 +504,10 @@
         /* Gå till 2 kolumner för korten på surfplatta */
         .cards-grid {
             grid-template-columns: repeat(2, 1fr);
+        }
+
+        .portrait-options {
+            grid-template-columns: 1fr;
         }
 
         .content-media img,
@@ -347,12 +525,29 @@
             grid-template-columns: 1fr;
         }
     }
+
+    .fun-reminder {
+        text-align: center;
+        font-family: "Comic Sans MS", "Chalkboard SE", "Marker Felt", cursive;
+        font-size: 2rem;
+        color: #34d399;
+        margin: 50px 20px 8px;
+        letter-spacing: 0.5px;
+    }
+
+    .fun-reminder-sub {
+        text-align: center;
+        font-family: "Comic Sans MS", "Chalkboard SE", "Marker Felt", cursive;
+        font-size: 2.4rem;
+        color: #facc15;
+        margin: 0 20px 30px;
+    }
 </style>
 </head>
 <body>
 
 <header>
-    <h1>Kreativ AI</h1>
+    <h1>Designa bilder och grafik med hjälp av AI</h1>
     <div class="instructions">Använd pilarna (↓ / ↑) för att navigera</div>
 </header>
 
@@ -425,7 +620,7 @@
     <div class="connector"></div>
 
     <!-- 5. FÖRELÄSNING -->
-    <div class="node lecture">
+    <div class="node lecture arena-slide">
         <span class="badge">Föreläsning</span>
         <div class="content-grid">
             <div class="content-text">
@@ -497,7 +692,11 @@
                 <p><strong>Vill att alla surfar in på denna nu om ni har möjlighet så ska ni få göra tester själva sen.</strong></p>
             </div>
             <div class="content-media">
-                <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800&auto=format&fit=crop" alt="Laptop med AI-verktyg och dashboards">
+                <img src="arenaai.png" alt="Skärmbild från Arena AI leaderboard">
+                <div class="arena-video-block">
+                    <p class="arena-video-note">Klicka på videon för att förstora.</p>
+                    <video class="arena-video preview-video" src="Grafikkurs-arena.ai.mp4" autoplay muted loop playsinline preload="metadata"></video>
+                </div>
             </div>
         </div>
     </div>
@@ -610,6 +809,10 @@
                         </ul>
                         <p><strong>Del B: Ljussättning</strong></p>
                         <p><strong>Scenario:</strong> En mäklarfirma vill förbättra en bild.</p>
+                        <div class="exercise-reference">
+                            <p><strong>Arbetssteg:</strong> Högerklicka på bilden nedan, välj <em>Kopiera bild</em> och klistra in den i AI-chatten för att modifiera den.</p>
+                            <img src="maklarbild.png" alt="Referensbild för mäklarövningen: kök i kvällsljus">
+                        </div>
                         <ul>
                             <li>Gör vädret ljusare utomhus.</li>
                             <li>Justera ljuset i ett kök så det ser inbjudande ut.</li>
@@ -629,8 +832,13 @@
                     <div class="face face-content">
                         <h4>Porträtt & personredigering</h4>
                         <p><strong>Syfte:</strong> Lära sig skapa professionella porträtt.</p>
+                        <p><strong>Välj referensbild:</strong> Ladda ner valfri bild nedan och använd den i övningen.</p>
+                        <div class="portrait-options">
+                            <img src="portraittochange.png" alt="Referensporträtt 1 för personredigering">
+                            <img src="portraittochange2.jpg" alt="Referensporträtt 2 för personredigering">
+                        </div>
                         <ul>
-                            <li>Ladda upp ett foto på en person.</li>
+                            <li>Ladda upp den bild du valde.</li>
                             <li>Be AI göra bilden till ett stilrent svartvitt porträtt.</li>
                             <li>Be AI byta kläder på personen.</li>
                             <li>Justera ljus och kontrast för ett professionellt uttryck.</li>
@@ -671,8 +879,12 @@
                     <div class="face face-content">
                         <h4>Skiss till färdig bild</h4>
                         <p><strong>Syfte:</strong> Visa att teckningskunskaper inte krävs.</p>
+                        <div class="exercise-reference">
+                            <p><strong>Referens:</strong> Titta på skissen nedan. Den visas som exempel och behöver inte laddas ner.</p>
+                            <img src="stickman.png" alt="En enkel streckgubbe som referensskiss">
+                        </div>
                         <ul>
-                            <li>Ladda upp en enkel skiss, till exempel streckgubbar.</li>
+                            <li>Använd skissen ovan som visuell referens.</li>
                             <li>Be AI tolka skissen och skapa en färdig bild.</li>
                             <li>Justera stil, miljö eller uttryck vid behov.</li>
                         </ul>
@@ -712,10 +924,25 @@
 
 </div>
 
+<p class="fun-reminder">Kom ihåg att ha kul och experimentera!</p>
+<p class="fun-reminder-sub">That's an order! (-:</p>
+
+<div id="imageLightbox" class="image-lightbox" aria-hidden="true">
+    <div class="lightbox-inner">
+        <button id="lightboxClose" class="lightbox-close" type="button" aria-label="Stäng förhandsvisning">×</button>
+        <img id="lightboxImage" class="lightbox-image" src="" alt="">
+        <a id="lightboxDownload" class="lightbox-download" href="#" download>Ladda ner</a>
+    </div>
+</div>
+
 <script>
 document.addEventListener("DOMContentLoaded", () => {
     // 1. Sid-navigeringen
     const nodes = document.querySelectorAll('.node');
+    const lightbox = document.getElementById('imageLightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxClose = document.getElementById('lightboxClose');
+    const lightboxDownload = document.getElementById('lightboxDownload');
     let currentIndex = 0;
 
     function updateFocus() {
@@ -730,6 +957,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     document.addEventListener('keydown', (e) => {
+        if (lightbox.classList.contains('is-open')) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+            return;
+        }
+
         if (e.key === 'ArrowDown') {
             e.preventDefault(); 
             if (currentIndex < nodes.length - 1) {
@@ -759,9 +993,120 @@ document.addEventListener("DOMContentLoaded", () => {
     const flipCards = document.querySelectorAll('.flip-card');
     flipCards.forEach(card => {
         card.addEventListener('click', (e) => {
+            if (e.target.closest('.preview-image')) {
+                return;
+            }
             e.stopPropagation(); // Hindrar klicket från att byta "Slide" ovan
             card.classList.toggle('is-flipped');
         });
+    });
+
+    // 3. Bild-preview (Lightbox)
+    const previewImages = document.querySelectorAll('img');
+
+    function openLightbox(src, altText) {
+        let filename = 'bild';
+        try {
+            const url = new URL(src, window.location.href);
+            const fromPath = url.pathname.split('/').pop();
+            if (fromPath) {
+                filename = decodeURIComponent(fromPath);
+            }
+        } catch (err) {
+            // Fallback: behåll standardnamn om URL inte kan tolkas
+        }
+
+        lightboxImage.src = src;
+        lightboxImage.alt = altText || 'Förhandsvisning';
+        lightboxDownload.href = src;
+        lightboxDownload.setAttribute('download', filename);
+        lightbox.classList.add('is-open');
+        lightbox.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeLightbox() {
+        lightbox.classList.remove('is-open');
+        lightbox.setAttribute('aria-hidden', 'true');
+        lightboxImage.src = '';
+        lightboxImage.alt = '';
+        lightboxDownload.href = '#';
+        lightboxDownload.setAttribute('download', 'bild');
+    }
+
+    previewImages.forEach((img) => {
+        img.classList.add('preview-image');
+        img.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            openLightbox(img.currentSrc || img.src, img.alt);
+        });
+    });
+
+    const previewVideos = document.querySelectorAll('.preview-video');
+    previewVideos.forEach((video) => {
+        video.muted = true;
+        video.addEventListener('click', async (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            try {
+                if (document.fullscreenElement !== video && video.requestFullscreen) {
+                    await video.requestFullscreen();
+                }
+                await video.play();
+            } catch (err) {
+                // Ignorera fullscreen-fel i webbläsare som blockerar anropet.
+            }
+        });
+    });
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+            closeLightbox();
+        }
+    });
+
+    lightboxDownload.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const src = lightboxImage.currentSrc || lightboxImage.src;
+        if (!src) {
+            return;
+        }
+
+        let filename = lightboxDownload.getAttribute('download') || 'bild';
+        try {
+            const url = new URL(src, window.location.href);
+            const fromPath = url.pathname.split('/').pop();
+            if (fromPath) {
+                filename = decodeURIComponent(fromPath);
+            }
+        } catch (err) {
+            // Behåll befintligt filnamn
+        }
+
+        try {
+            const response = await fetch(src, { mode: 'cors' });
+            if (!response.ok) {
+                throw new Error('Kunde inte hämta bildfilen.');
+            }
+            const blob = await response.blob();
+            const blobUrl = URL.createObjectURL(blob);
+            const tempLink = document.createElement('a');
+            tempLink.href = blobUrl;
+            tempLink.download = filename;
+            document.body.appendChild(tempLink);
+            tempLink.click();
+            tempLink.remove();
+            URL.revokeObjectURL(blobUrl);
+        } catch (err) {
+            // Fallback om CORS blockerar fetch: försök ändå med native download-attribut.
+            const tempLink = document.createElement('a');
+            tempLink.href = src;
+            tempLink.download = filename;
+            document.body.appendChild(tempLink);
+            tempLink.click();
+            tempLink.remove();
+        }
     });
 });
 </script>
