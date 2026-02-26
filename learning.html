@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <title>AI-Träning: Från Dataset till Vektor</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --accent: #f43f5e;
+            --bg: #0f172a;
+            --card: #1e293b;
+            --text: #f8fafc;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 0 0 20px 0;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 300px 1fr 300px;
+            gap: 20px;
+            max-width: 1100px;
+            width: 100%;
+        }
+
+        .panel {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #334155;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Dataset-vyn */
+        .dataset-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .data-item {
+            font-size: 24px;
+            background: #0f172a;
+            padding: 10px;
+            border-radius: 4px;
+            opacity: 0.3;
+            transition: all 0.2s;
+        }
+        .data-item.processing {
+            opacity: 1;
+            transform: scale(1.2);
+            background: var(--primary);
+        }
+
+        /* Latent Space / Vektordatabas */
+        #vector-space {
+            width: 100%;
+            height: 300px;
+            background: #000;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #444;
+        }
+        .vector-dot {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #334155;
+            border-radius: 50%;
+            transition: all 0.5s ease-out;
+        }
+        .vector-dot.cat {
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--accent);
+        }
+        .cluster-label {
+            position: absolute;
+            color: var(--accent);
+            font-size: 10px;
+            font-weight: bold;
+            pointer-events: none;
+            opacity: 0;
+            transition: 1s;
+        }
+
+        /* Diffusion / Output */
+        #output-canvas {
+            width: 200px;
+            height: 200px;
+            background: #111;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            border: 2px dashed #444;
+        }
+
+        .status {
+            grid-column: span 3;
+            background: #1e1b4b;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-family: monospace;
+            border-left: 5px solid var(--primary);
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 8px;
+            border: none;
+            margin: 10px;
+            transition: 0.3s;
+        }
+        .btn-train { background: var(--primary); color: white; }
+        .btn-gen { background: var(--accent); color: white; }
+        button:disabled { opacity: 0.2; cursor: not-allowed; }
+
+        h2 { font-size: 14px; text-transform: uppercase; margin-bottom: 20px; color: #94a3b8; }
+
+        @media (max-width: 980px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            .status {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>AI-Inlärning: Från Dataset till Bild</h1>
+
+    <div class="status" id="status-text">Redo att påbörja träning på dataset "Felin-v1"...</div>
+
+    <div class="layout">
+        <!-- 1. DATASET -->
+        <div class="panel">
+            <h2>1. Dataset (Indata)</h2>
+            <p style="font-size: 12px; color: #64748b;">Många exempel lär AI:n vad en "katt" är oavsett färg eller form.</p>
+            <div class="dataset-grid" id="dataset">
+                <!-- Katter genereras av JS -->
+            </div>
+            <div id="label-input" style="margin-top:20px; font-weight: bold; color: var(--primary);">Etikett: "Katt"</div>
+        </div>
+
+        <!-- 2. VEKTORDATABAS -->
+        <div class="panel">
+            <h2>2. Vektordatabas (Latent Space)</h2>
+            <div id="vector-space">
+                <div id="cat-label" class="cluster-label" style="top: 20%; left: 65%;">KLUSTER: KATT</div>
+            </div>
+            <p style="font-size: 11px; margin-top: 10px; color: #94a3b8;">Här lagras matematiska mönster. Ju mer AI:n ser, desto tätare blir klustret.</p>
+        </div>
+
+        <!-- 3. GENERERING -->
+        <div class="panel">
+            <h2>3. Generering (Utdata)</h2>
+            <div id="output-canvas">?</div>
+            <div id="prompt-display" style="margin-top:20px; font-style: italic; color: #94a3b8;">Ingen prompt...</div>
+        </div>
+    </div>
+
+    <div>
+        <button class="btn-train" id="btnTrain">Starta Träning (Processa Dataset)</button>
+        <button class="btn-gen" id="btnGen" disabled>Skapa bild: "En katt"</button>
+    </div>
+
+    <script>
+        const cats = ["🐱", "🐈", "🐈‍⬛", "🦁", "🐯", "😻", "😸", "😽", "😼"];
+        const datasetDiv = document.getElementById('dataset');
+        const vectorSpace = document.getElementById('vector-space');
+        const statusText = document.getElementById('status-text');
+        const btnTrain = document.getElementById('btnTrain');
+        const btnGen = document.getElementById('btnGen');
+        const outputCanvas = document.getElementById('output-canvas');
+
+        // Skapa datasetet visuellt
+        cats.forEach((cat, i) => {
+            const div = document.createElement('div');
+            div.className = 'data-item';
+            div.id = `cat-${i}`;
+            div.innerText = cat;
+            datasetDiv.appendChild(div);
+        });
+
+        // Skapa bakgrundsvektorer (brus)
+        for(let i=0; i<60; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'vector-dot';
+            dot.style.left = Math.random() * 95 + '%';
+            dot.style.top = Math.random() * 95 + '%';
+            vectorSpace.appendChild(dot);
+        }
+
+        // TRÄNINGSSIMULERING
+        btnTrain.addEventListener('click', async () => {
+            btnTrain.disabled = true;
+            statusText.innerText = "> Startar batch-processering av 9 bilder...";
+
+            for(let i=0; i < cats.length; i++) {
+                // Markera bilden som bearbetas
+                const item = document.getElementById(`cat-${i}`);
+                item.className = 'data-item processing';
+                statusText.innerText = `> Analyserar bild ${i+1}: Extraherar särdrag (öron, svans, morrhår)...`;
+
+                // Skapa en ny vektorpunkt i "katt-klustret"
+                const dot = document.createElement('div');
+                dot.className = 'vector-dot cat';
+                // Sprid ut dem lite i ett specifikt område (kluster)
+                dot.style.left = (65 + Math.random() * 15) + '%';
+                dot.style.top = (20 + Math.random() * 15) + '%';
+                vectorSpace.appendChild(dot);
+
+                await new Promise(r => setTimeout(r, 600));
+                item.className = 'data-item'; // Avmarkera
+            }
+
+            statusText.innerText = "> Träning klar. Konceptet 'Katt' har nu ett tydligt koordinat-kluster.";
+            document.getElementById('cat-label').style.opacity = "1";
+            btnGen.disabled = false;
+        });
+
+        // GENERERINGSSIMULERING
+        btnGen.addEventListener('click', () => {
+            btnGen.disabled = true;
+            document.getElementById('prompt-display').innerText = '"Skapa en bild på en katt"';
+            statusText.innerText = "> Söker i vektordatabasen... Hittar matchning i 'Felin-klustret'.";
+            
+            // Animera vektorsökning
+            const searchRing = document.createElement('div');
+            searchRing.style.cssText = "position:absolute; border:2px solid white; border-radius:50%; transition:1s;";
+            searchRing.style.left = "72%"; searchRing.style.top = "27%";
+            searchRing.style.width = "0px"; searchRing.style.height = "0px";
+            vectorSpace.appendChild(searchRing);
+            
+            setTimeout(() => {
+                searchRing.style.width = "60px";
+                searchRing.style.height = "60px";
+                searchRing.style.transform = "translate(-30px, -30px)";
+                statusText.innerText = "> Diffusion startad: Rekonstruerar bild utifrån klustrets genomsnittsvärden...";
+            }, 500);
+
+            // Simulera diffusion (brus till bild)
+            let steps = 0;
+            const interval = setInterval(() => {
+                steps++;
+                outputCanvas.style.opacity = steps / 10;
+                outputCanvas.style.filter = `blur(${10 - steps}px)`;
+                outputCanvas.innerText = "🐈";
+                
+                if(steps >= 10) {
+                    clearInterval(interval);
+                    statusText.innerText = "> Generering klar. Resultatet är en syntetisk bild baserad på tusentals inlärda exempel.";
+                }
+            }, 150);
+        });
+    </script>
+</body>
+</html>
