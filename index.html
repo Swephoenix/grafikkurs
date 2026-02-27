@@ -221,7 +221,7 @@
     }
 
     .arena-video-block {
-        margin-top: 18px;
+        margin-top: 30px;
     }
 
     .arena-video-note {
@@ -590,7 +590,7 @@
 
     <!-- 1. INTROVIDEO -->
     <div class="node lecture active intro-slide">
-        <video src="intro.mp4" autoplay muted loop playsinline preload="auto"></video>
+        <video src="course-intro-loop.mp4" autoplay muted loop playsinline preload="auto"></video>
     </div>
     <div class="connector"></div>
 
@@ -605,7 +605,7 @@
                 <p>Har tidigare föreläst hos bl.a. ALMI Företagspartner, Folkuniversitetet, Medborgarskolan och Vuxenskolan.</p>
             </div>
             <div class="content-media profile-media">
-                <img src="Andreas.png" alt="Porträtt av Andreas Jansson">
+                <img src="andreas-portrait.png" alt="Porträtt av Andreas Jansson">
             </div>
         </div>
     </div>
@@ -648,7 +648,7 @@
                 <p style="font-size: 1.3rem; margin-top: 20px;"><strong>Vad vill ni lära er?</strong></p>
             </div>
             <div class="content-media">
-                <img src="teamwork.png" alt="Teamwork illustration">
+                <img src="teamwork-illustration.png" alt="Teamwork illustration">
             </div>
         </div>
     </div>
@@ -727,10 +727,9 @@
                 <p><strong>Vill att alla surfar in på denna nu om ni har möjlighet så ska ni få göra tester själva sen.</strong></p>
             </div>
             <div class="content-media">
-                <img src="arenaai.png" alt="Skärmbild från Arena AI leaderboard">
+                <img src="arena-ai-leaderboard.png" alt="Skärmbild från Arena AI leaderboard">
                 <div class="arena-video-block">
-                    <p class="arena-video-note">Använd kontrollerna för att spela/pausa och klicka i timeline för att hoppa i videon.</p>
-                    <video id="arenaVideo" class="arena-video" src="Grafikkurs-arena.ai.mp4" autoplay muted controls playsinline preload="metadata"></video>
+                    <video id="arenaVideo" class="arena-video" src="arena-ai-platform-walkthrough.mp4" autoplay muted controls playsinline preload="metadata"></video>
                     <div class="arena-video-actions">
                         <button id="arenaVideoRestart" class="arena-video-restart" type="button">Börja om från början</button>
                     </div>
@@ -740,7 +739,25 @@
     </div>
     <div class="connector"></div>
 
-    <!-- 9. ÖVNINGAR (3D Flip Grid) -->
+    <!-- 9. FÖRELÄSNING -->
+    <div class="node lecture">
+        <span class="badge">Föreläsning</span>
+        <div class="content-grid">
+            <div class="content-text">
+                <h2>7. Byta modell kostnadsfritt</h2>
+                <p>På <a href="https://arena.ai/" target="_blank" rel="noopener noreferrer"><strong>arena.ai</strong></a> kan vi kostnadsfritt byta mellan modeller när våra kostnadsfria prompts för en modell förbrukats.</p>
+                <p>Det gör att ni kan fortsätta arbeta utan avbrott: växla bara modell och fortsätt med samma uppgift.</p>
+            </div>
+            <div class="content-media">
+                <div class="arena-video-block">
+                    <video class="arena-video" src="arena-ai-model-switching-timeline.mp4" autoplay muted controls playsinline preload="metadata"></video>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="connector"></div>
+
+    <!-- 10. ÖVNINGAR (3D Flip Grid) -->
     <div class="node exercise">
         <span class="badge">Praktik</span>
         <h2>Praktiska övningar</h2>
@@ -849,7 +866,7 @@
                         <p><strong>Scenario:</strong> En mäklarfirma vill förbättra en bild.</p>
                         <div class="exercise-reference">
                             <p><strong>Arbetssteg:</strong> Högerklicka på bilden nedan, välj <em>Kopiera bild</em> och klistra in den i AI-chatten för att modifiera den.</p>
-                            <img src="maklarbild.png" alt="Referensbild för mäklarövningen: kök i kvällsljus">
+                            <img src="real-estate-kitchen-reference.png" alt="Referensbild för mäklarövningen: kök i kvällsljus">
                         </div>
                         <ul>
                             <li>Gör vädret ljusare utomhus.</li>
@@ -872,8 +889,8 @@
                         <p><strong>Syfte:</strong> Lära sig skapa professionella porträtt.</p>
                         <p><strong>Välj referensbild:</strong> Ladda ner valfri bild nedan och använd den i övningen.</p>
                         <div class="portrait-options">
-                            <img src="portraittochange.png" alt="Referensporträtt 1 för personredigering">
-                            <img src="portraittochange2.jpg" alt="Referensporträtt 2 för personredigering">
+                            <img src="portrait-reference-1.png" alt="Referensporträtt 1 för personredigering">
+                            <img src="portrait-reference-2.jpg" alt="Referensporträtt 2 för personredigering">
                         </div>
                         <ul>
                             <li>Ladda upp den bild du valde.</li>
@@ -921,7 +938,7 @@
                         <p><strong>Syfte:</strong> Visa att teckningskunskaper inte krävs.</p>
                         <div class="exercise-reference">
                             <p><strong>Referens:</strong> Titta på skissen nedan. Den visas som exempel och behöver inte laddas ner.</p>
-                            <img src="stickman.png" alt="En enkel streckgubbe som referensskiss">
+                            <img src="stickman-reference-sketch.png" alt="En enkel streckgubbe som referensskiss">
                         </div>
                         <ul>
                             <li>Använd skissen ovan som visuell referens.</li>
