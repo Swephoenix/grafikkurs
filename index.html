@@ -72,7 +72,7 @@
     /* Huvudnoder (Föreläsningar etc) */
     .node {
         width: 100%;
-        max-width: 1000px;
+        max-width: 1400px;
         background-color: var(--bg-card);
         border: 1px solid var(--border-color);
         border-radius: 12px;
@@ -82,8 +82,24 @@
         
         opacity: 0.25;
         transform: scale(0.92);
-        transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+        transition:
+            opacity 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+            transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+            background-color 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+            border-color 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+            box-shadow 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
         cursor: pointer;
+    }
+
+    .slide-number {
+        position: absolute;
+        right: 14px;
+        bottom: 10px;
+        font-size: 0.72rem;
+        color: #9ca3af;
+        letter-spacing: 0.3px;
+        pointer-events: none;
+        user-select: none;
     }
 
     .node.active {
@@ -154,6 +170,10 @@
         min-width: 0;
     }
 
+    .comparison-slide .content-grid {
+        align-items: center;
+    }
+
     .content-media {
         width: 100%;
         border-radius: 8px;
@@ -171,30 +191,404 @@
         display: block;
     }
 
+    .ai-attitude-slide .content-media {
+        background: #050505;
+    }
+
+    .ai-attitude-slide .content-media.video-sequence {
+        position: relative;
+        aspect-ratio: 4 / 3;
+        min-height: 320px;
+    }
+
+    .ai-attitude-slide .content-media img,
+    .ai-attitude-slide .content-media video {
+        object-fit: contain;
+        object-position: center;
+    }
+
+    .ai-attitude-slide .content-media.video-sequence video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        aspect-ratio: auto;
+        opacity: 0;
+        transition: opacity 320ms ease;
+    }
+
+    .ai-attitude-slide .content-media.video-sequence video.is-visible {
+        opacity: 1;
+    }
+
+    .magic-appear-image {
+        opacity: 0;
+        transform: scale(0.95);
+        filter: saturate(1.2) brightness(0.78) blur(1.6px);
+        object-fit: contain;
+        object-position: center 58%;
+        background: #050505;
+        border-radius: 12px;
+    }
+
+    .magic-image-frame {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+    }
+
+    .color-principle-slide .magic-image-frame {
+        margin-top: 78px;
+    }
+
+    .color-principle-media-column {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .color-principle-media-column .magic-image-frame {
+        margin-top: 0;
+    }
+
+    .color-principle-detail-transition {
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+    }
+
+    .flip-demo-slide .content-grid {
+        grid-template-columns: 0.9fr 1.1fr;
+        align-items: center;
+        gap: 42px;
+    }
+
+    .flip-demo-panel {
+        padding: 0;
+        background: transparent;
+        border: 0;
+        overflow: visible;
+    }
+
+    .contrast-comparison {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+    }
+
+    .contrast-card {
+        position: relative;
+        min-height: 200px;
+        border-radius: 18px;
+        padding: 24px 22px 20px;
+        border: 1px solid #1f2937;
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.05),
+            0 18px 44px rgba(0, 0, 0, 0.28);
+        overflow: hidden;
+    }
+
+    .contrast-card::after {
+        content: "";
+        position: absolute;
+        inset: 14px;
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        pointer-events: none;
+    }
+
+    .contrast-card-label {
+        position: relative;
+        z-index: 1;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 18px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .contrast-card-label::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: currentColor;
+    }
+
+    .contrast-card.is-bad {
+        background:
+            radial-gradient(circle at top left, rgba(255, 255, 255, 0.08), transparent 34%),
+            linear-gradient(135deg, #cbd5e1 0%, #dbe4ef 55%, #eef2f7 100%);
+    }
+
+    .contrast-card.is-bad .contrast-card-label {
+        background: rgba(148, 163, 184, 0.22);
+        color: #475569;
+    }
+
+    .contrast-card.is-good {
+        background:
+            radial-gradient(circle at top left, rgba(59, 130, 246, 0.18), transparent 38%),
+            linear-gradient(135deg, #0f172a 0%, #111827 52%, #1e293b 100%);
+    }
+
+    .contrast-card.is-good .contrast-card-label {
+        background: rgba(56, 189, 248, 0.16);
+        color: #7dd3fc;
+    }
+
+    .contrast-demo {
+        color: #d1d5db;
+        text-transform: uppercase;
+        font-size: clamp(1.85rem, 3.2vw, 2.7rem);
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-align: center;
+        line-height: 1.15;
+    }
+
+    .contrast-card.is-bad .contrast-demo {
+        color: #cbd5e1;
+        opacity: 0.78;
+    }
+
+    .contrast-demo-prefix,
+    .contrast-demo-suffix {
+        display: block;
+    }
+
+    .contrast-flip {
+        height: 68px;
+        overflow: hidden;
+        margin: 14px 0 12px;
+    }
+
+    .contrast-flip-track {
+        animation: contrast-word-cycle 6s linear infinite;
+    }
+
+    .contrast-flip-item {
+        height: 68px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    .contrast-flip-item span {
+        display: inline-block;
+        padding: 8px 20px;
+        border-radius: 999px;
+        color: #f8fafc;
+        box-shadow: 0 10px 20px rgba(15, 23, 42, 0.24);
+    }
+
+    .contrast-flip-item.is-blue span {
+        background: #38bdf8;
+    }
+
+    .contrast-flip-item.is-green span {
+        background: #22c55e;
+    }
+
+    .contrast-flip-item.is-red span {
+        background: #f43f5e;
+    }
+
+    .contrast-demo-note {
+        display: block;
+        margin-top: 24px;
+        color: #94a3b8;
+        font-size: 0.82rem;
+        letter-spacing: 0.22em;
+    }
+
+    .contrast-card.is-bad .contrast-demo-note {
+        color: #94a3b8;
+        opacity: 0.9;
+    }
+
+    .contrast-card.is-bad .contrast-flip-item span {
+        color: #e2e8f0;
+        box-shadow: none;
+    }
+
+    .contrast-card.is-bad .contrast-flip-item.is-blue span {
+        background: #93c5fd;
+    }
+
+    .contrast-card.is-bad .contrast-flip-item.is-green span {
+        background: #86efac;
+    }
+
+    .contrast-card.is-bad .contrast-flip-item.is-red span {
+        background: #fda4af;
+    }
+
+    .contrast-card-caption {
+        position: relative;
+        z-index: 1;
+        margin-top: 12px;
+        font-size: 0.88rem;
+        line-height: 1.4;
+    }
+
+    .contrast-card.is-bad .contrast-card-caption {
+        color: #64748b;
+    }
+
+    .contrast-card.is-good .contrast-card-caption {
+        color: #cbd5e1;
+    }
+
+    .contrast-principles {
+        display: grid;
+        gap: 14px;
+        margin-top: 24px;
+    }
+
+    .contrast-principle {
+        background: #101826;
+        border: 1px solid #243041;
+        border-radius: 14px;
+        padding: 16px 18px;
+    }
+
+    .contrast-principle strong {
+        display: block;
+        margin-bottom: 6px;
+    }
+
+    .photopea-media {
+        background: #111827;
+    }
+
+    .photopea-image {
+        width: 100%;
+        height: auto;
+        max-height: none;
+        aspect-ratio: auto;
+        object-fit: contain;
+        background: #111827;
+        display: block;
+    }
+
+    .legal-book-cover-slide {
+        text-align: center;
+    }
+
+    .legal-book-cover-wrap {
+        margin: 28px auto 6px;
+        width: min(520px, 92%);
+        perspective: 1200px;
+    }
+
+    .legal-book-cover-image {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 16px;
+        box-shadow:
+            0 22px 48px rgba(0, 0, 0, 0.5),
+            0 8px 18px rgba(0, 0, 0, 0.35);
+        transform: translateY(6px) scale(0.97);
+        opacity: 0.2;
+    }
+
+    .node.active .legal-book-cover-image {
+        animation: legal-cover-reveal 1100ms cubic-bezier(0.2, 0.8, 0.2, 1) both,
+                   legal-cover-float 4800ms ease-in-out 1100ms infinite;
+    }
+
+    .content-media .finetune-step-image {
+        width: 100%;
+        height: auto;
+        max-height: none;
+        aspect-ratio: auto;
+        object-fit: contain;
+        display: block;
+        background: #050505;
+        border-radius: 12px;
+    }
+
+    .finetune-sunlight-frame {
+        position: relative;
+        overflow: visible;
+        perspective: 1400px;
+    }
+
+    .node.active .finetune-sunlight-frame .finetune-step-image {
+        animation: finetune-card-tilt 5200ms ease-in-out infinite;
+        transform-style: preserve-3d;
+        box-shadow:
+            0 18px 34px rgba(0, 0, 0, 0.48),
+            0 4px 10px rgba(0, 0, 0, 0.34);
+    }
+
+    .node.active .magic-appear-image {
+        animation: magic-image-appear 1350ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    }
+
     .profile-media {
         padding-top: 26px;
     }
 
-    .profile-media img {
+    .profile-transition {
         width: min(360px, 100%);
         aspect-ratio: 1 / 1;
-        object-fit: cover;
-        object-position: center 20%;
-        border-radius: 50%;
         margin: 0 auto 20px;
+        position: relative;
+        border-radius: 50%;
+        overflow: hidden;
         border: 2px solid #3f3f46;
         background: #111;
     }
 
-    .intro-slide {
-        padding: 20px;
-        max-width: 900px;
-        background: #000;
-        border-color: #222;
+    .profile-transition img,
+    .profile-transition video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        border-radius: 50%;
     }
+
+    .profile-transition img {
+        object-position: center 20%;
+        opacity: 1;
+    }
+
+    .profile-transition video {
+        display: none;
+    }
+
+    .intro-slide {
+        padding: 0;
+        max-width: 1400px;
+        background: transparent;
+        border-color: transparent;
+        border-top: 0;
+        box-shadow: none;
+    }
+
+    .intro-slide.active {
+        background: transparent;
+        border-color: transparent;
+        border-top: 0;
+        box-shadow: none;
+    }
+
     .intro-slide video {
         width: 100%;
-        border-radius: 8px;
+        border-radius: 0;
         aspect-ratio: 16 / 9;
         display: block;
     }
@@ -238,6 +632,18 @@
         border: 1px solid var(--border-color);
         background: #000;
         cursor: default;
+    }
+
+    .image-to-video-slide .content-media video {
+        height: auto;
+        aspect-ratio: auto;
+        object-fit: contain;
+        background: #000;
+    }
+
+    .image-to-video-slide .content-media {
+        width: min(520px, 100%);
+        justify-self: center;
     }
 
     .arena-video-actions {
@@ -291,8 +697,278 @@
         }
     }
 
+    @keyframes magic-image-appear {
+        0% {
+            opacity: 0;
+            transform: scale(0.93);
+            filter: saturate(1.35) brightness(0.55) blur(4px);
+        }
+        55% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1);
+            filter: saturate(1) brightness(1) blur(0);
+        }
+    }
+
+    @keyframes finetune-card-tilt {
+        0%, 100% {
+            transform: rotateX(5deg) rotateY(-7deg) translateY(0);
+        }
+        50% {
+            transform: rotateX(5deg) rotateY(7deg) translateY(-4px);
+        }
+    }
+
+    @keyframes legal-cover-reveal {
+        0% {
+            opacity: 0;
+            transform: translateY(24px) scale(0.93) rotateX(7deg);
+            filter: brightness(0.78) saturate(1.08);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0) scale(1) rotateX(0deg);
+            filter: brightness(1) saturate(1);
+        }
+    }
+
+    @keyframes legal-cover-float {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-6px);
+        }
+    }
+
+    @keyframes contrast-word-cycle {
+        0% {
+            transform: translateY(-234px);
+        }
+        5%,
+        30% {
+            transform: translateY(-156px);
+        }
+        35%,
+        63% {
+            transform: translateY(-78px);
+        }
+        68%,
+        96% {
+            transform: translateY(0);
+        }
+        100% {
+            transform: translateY(-234px);
+        }
+    }
+
     @media (prefers-reduced-motion: reduce) {
         .arena-slide .content-media img {
+            animation: none;
+        }
+
+        .magic-appear-image {
+            opacity: 1;
+            transform: none;
+            filter: none;
+        }
+
+        .node.active .magic-appear-image {
+            animation: none;
+        }
+
+        .node.active .finetune-sunlight-frame .finetune-step-image {
+            animation: none;
+            transform: none;
+        }
+
+        .legal-book-cover-image {
+            animation: none;
+            opacity: 1;
+            transform: none;
+            filter: none;
+        }
+
+        .contrast-flip-track {
+            animation: none;
+            transform: translateY(-156px);
+        }
+    }
+
+    .comparison-transition {
+        position: relative;
+        aspect-ratio: 16 / 9;
+        background: #050505;
+        overflow: hidden;
+        contain: layout paint;
+    }
+
+    .comparison-transition .transition-layer {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+        background: #050505;
+        transform-origin: center center;
+        backface-visibility: hidden;
+        will-change: opacity, transform;
+    }
+
+    .comparison-transition .transition-base {
+        transform: scale(1);
+        z-index: 1;
+    }
+
+    .comparison-transition .transition-target {
+        opacity: 1;
+        clip-path: inset(0 100% 0 0);
+        transform: scale(1);
+        z-index: 2;
+    }
+
+    .comparison-transition .transition-return {
+        opacity: 0;
+        transform: scale(1);
+        z-index: 3;
+        display: none;
+    }
+
+    .comparison-transition .transition-sheen {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            100deg,
+            transparent 44%,
+            rgba(255, 255, 255, 0.22) 50%,
+            transparent 56%
+        );
+        transform: translate3d(-130%, 0, 0);
+        opacity: 0;
+        pointer-events: none;
+        will-change: transform, opacity;
+        z-index: 4;
+    }
+
+    .comparison-caption-image {
+        width: 100%;
+        display: block;
+        margin-top: 10px;
+        border-radius: 8px;
+        border: 0;
+        opacity: 0;
+    }
+
+    .comparison-media-column {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .node.active .comparison-transition .transition-base {
+        animation: none;
+    }
+
+    .node.active .comparison-transition .transition-target {
+        animation: target-scrape-reveal-loop 12000ms linear infinite;
+    }
+
+    .node.active .comparison-transition .transition-return {
+        animation: none;
+    }
+
+    .node.active .comparison-transition .transition-sheen {
+        animation: comparison-sheen-lite 12000ms linear infinite;
+    }
+
+    .node.active .comparison-caption-image {
+        animation: caption-reveal-after-first-wipe 12000ms linear both,
+                   caption-subtle-float 6500ms ease-in-out 4400ms infinite;
+    }
+
+    @keyframes target-scrape-reveal-loop {
+        0%, 18% {
+            clip-path: inset(0 100% 0 0);
+        }
+        34% {
+            clip-path: inset(0 0% 0 0);
+        }
+        82% {
+            clip-path: inset(0 0% 0 0);
+        }
+        100% {
+            clip-path: inset(0 100% 0 0);
+        }
+    }
+
+    @keyframes comparison-sheen-lite {
+        0%, 18% {
+            transform: translate3d(-130%, 0, 0);
+            opacity: 0;
+        }
+        24% {
+            opacity: 0.55;
+        }
+        34% {
+            transform: translate3d(130%, 0, 0);
+            opacity: 0;
+        }
+        100% {
+            transform: translate3d(130%, 0, 0);
+            opacity: 0;
+        }
+    }
+
+    @keyframes caption-subtle-float {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-3px);
+        }
+    }
+
+    @keyframes caption-reveal-after-first-wipe {
+        0%, 36% {
+            opacity: 0;
+        }
+        42%, 100% {
+            opacity: 1;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .comparison-transition .transition-base {
+            transform: scale(1);
+        }
+
+        .comparison-transition .transition-target {
+            opacity: 1;
+            clip-path: inset(0 0 0 0);
+            transform: scale(1);
+        }
+
+        .comparison-transition .transition-return {
+            opacity: 0;
+            transform: scale(1);
+        }
+
+        .comparison-transition .transition-sheen {
+            display: none;
+        }
+
+        .node.active .comparison-transition .transition-base,
+        .node.active .comparison-transition .transition-target,
+        .node.active .comparison-transition .transition-return,
+        .node.active .comparison-transition .transition-sheen {
+            animation: none;
+        }
+
+        .comparison-caption-image {
+            opacity: 1;
             animation: none;
         }
     }
@@ -445,6 +1121,32 @@
         cursor: context-menu;
     }
 
+    .precedent-section {
+        margin-top: 14px;
+        margin-bottom: 6px;
+        padding: 16px 18px;
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        background: #101014;
+    }
+
+    .precedent-section h3 {
+        margin: 0 0 10px 0;
+        color: var(--text-main);
+        font-size: 1.15rem;
+    }
+
+    .precedent-section ul {
+        margin: 0;
+        padding-left: 20px;
+    }
+
+    .precedent-section li {
+        margin-bottom: 8px;
+        font-size: 0.98rem;
+        color: var(--text-muted);
+    }
+
     .portrait-options {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -549,6 +1251,18 @@
         .ai-learning-frame {
             height: 620px;
         }
+
+        .flip-demo-slide .content-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .contrast-comparison {
+            grid-template-columns: 1fr;
+        }
+
+        .contrast-card {
+            min-height: 200px;
+        }
         
         .node { padding: 30px 20px; }
         h1 { font-size: 2.2rem; }
@@ -590,7 +1304,7 @@
 
     <!-- 1. INTROVIDEO -->
     <div class="node lecture active intro-slide">
-        <video src="course-intro-loop.mp4" autoplay muted loop playsinline preload="auto"></video>
+        <video src="course-intro-loop.mp4" autoplay muted loop playsinline preload="metadata"></video>
     </div>
     <div class="connector"></div>
 
@@ -605,7 +1319,9 @@
                 <p>Har tidigare föreläst hos bl.a. ALMI Företagspartner, Folkuniversitetet, Medborgarskolan och Vuxenskolan.</p>
             </div>
             <div class="content-media profile-media">
-                <img src="andreas-portrait.png" alt="Porträtt av Andreas Jansson">
+                <div class="profile-transition">
+                    <img class="no-preview" src="andreas-portrait.png" alt="Porträtt av Andreas Jansson">
+                </div>
             </div>
         </div>
     </div>
@@ -671,7 +1387,7 @@
     <div class="connector"></div>
 
     <!-- 6. FÖRELÄSNING -->
-    <div class="node lecture">
+    <div class="node lecture ai-attitude-slide">
         <span class="badge">Föreläsning</span>
         <div class="content-grid">
             <div class="content-text">
@@ -679,8 +1395,9 @@
                 <p>AI ska ses som ett verktyg, inte som något som ersätter människan. Precis som en grävmaskin inte ersätter grävmaskinisten, utan förstärker dennes förmåga att forma och skapa, är AI ett redskap som hjälper er att skulptera fram era idéer snabbare och mer precist.</p>
                 <p>Det är fortfarande ni som står för kreativiteten, intentionen och omdömet. AI är kraften som gör det möjligt att genomföra det ni redan kan föreställa er.</p>
             </div>
-            <div class="content-media">
-                <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=800&auto=format&fit=crop" alt="Människa och digitalt verktyg i samarbete">
+            <div class="content-media video-sequence">
+                <video id="aiAttitudeVideoPrimary" class="is-visible" src="skulptera-verkligheten.mp4" autoplay muted playsinline preload="metadata" aria-label="Video som visualiserar hur AI hjälper till att skulptera fram idéer"></video>
+                <video id="aiAttitudeVideoSecondary" src="botpaintingandcontroller.mp4" muted playsinline preload="metadata" aria-label="Video som fortsätter visualiseringen av att skulptera fram idéer med AI"></video>
             </div>
         </div>
     </div>
@@ -707,7 +1424,7 @@
                 <p><em>Bra exempel:</em> "En glad golden retriever-valp som springer i en solig park, mjukt ljus, fotorealistisk stil."</p>
             </div>
             <div class="content-media">
-                <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=800&auto=format&fit=crop" alt="Anteckningar och textarbete för prompting">
+                <video src="promptmastering.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Loopande video som illustrerar prompting och textarbete"></video>
             </div>
         </div>
     </div>
@@ -757,7 +1474,148 @@
     </div>
     <div class="connector"></div>
 
-    <!-- 10. ÖVNINGAR (3D Flip Grid) -->
+    <!-- 10. FÖRELÄSNING -->
+    <div class="node lecture">
+        <span class="badge">Föreläsning</span>
+        <div class="content-grid">
+            <div class="content-text">
+                <h2>Photopea - bildredigering direkt i webbläsaren</h2>
+                <p>Photopea är ett kraftfullt, kostnadsfritt verktyg för bildredigering som fungerar direkt i webbläsaren. Ni kan använda det för att justera färg, retuschera, lägga till text och arbeta i lager.</p>
+                <p>Det är särskilt användbart när ni vill finjustera AI-genererade bilder efter att de skapats.</p>
+                <p>I denna del ska vi titta på hur vi använder klonverktyget för att ta bort oönskade delar av en bild.</p>
+                <p>Vi kommer även att använda Auto-Blend Smart för att få en mjukare och mer naturlig sammanslagning i redigeringen.</p>
+                <p><strong>Öppna verktyget på:</strong> <a href="https://www.photopea.com" target="_blank" rel="noopener noreferrer">https://www.photopea.com</a></p>
+            </div>
+            <div class="content-media photopea-media">
+                <img class="photopea-image" src="photopea.png" alt="Skärmbild av Photopea med redigeringsverktyg och lagerpanel">
+            </div>
+        </div>
+    </div>
+    <div class="connector"></div>
+
+    <!-- 11. FÖRELÄSNING -->
+    <div class="node lecture">
+        <span class="badge">Föreläsning</span>
+        <div class="content-grid">
+            <div class="content-text">
+                <h2>Var inte rädd för att använda färger!</h2>
+                <p>Här ser vi hur en tydlig accentfärg snabbt kan flytta fokus i bilden och skapa en starkare visuell signal.</p>
+                <p>Små färgval kan ge stor effekt: prova dig fram stegvis tills bildens hierarki känns rätt.</p>
+            </div>
+            <div class="content-media comparison-transition">
+                <img class="transition-layer transition-base" src="women-blue-blue.png" alt="Kvinna i blå skjorta med blå bakgrund och färgprover till höger">
+                <img class="transition-layer transition-target" src="women-orange.png" alt="Samma bild men med orange skjorta och rosa accent i färgproverna">
+                <img class="transition-layer transition-return" src="women-blue-blue.png" alt="" aria-hidden="true">
+                <span class="transition-sheen" aria-hidden="true"></span>
+            </div>
+        </div>
+    </div>
+    <div class="connector"></div>
+
+    <!-- 12. FÖRELÄSNING -->
+    <div class="node lecture color-principle-slide">
+        <span class="badge">Föreläsning</span>
+        <div class="content-grid">
+            <div class="content-text">
+                <h2>Enkel färgprincip för bättre AI-genererade bilder</h2>
+                <p>Vårt visuella system är utvecklat för att snabbt identifiera konturer, mönster, skillnader och hierarkier i omgivningen i överlevnadssyfte.</p>
+                <p>När en bild innehåller flera färger i tydliga färgproportioner, till exempel enligt 60% av en färg, 30% av en annan och 10% av en ytterliggare, uppstår en struktur där en färg fungerar som bakgrund, en annan skapar form och avgränsning, och en tredje fungerar som visuell signal. Detta gör att ögat snabbt kan orientera sig utifrån konturer och förstå vad som är viktigt.</p>
+                <p>Ur ett evolutionärt perspektiv har förmågan att upptäcka kontraster och variation haft överlevnadsvärde. Skillnader i färg och struktur i naturen kan signalera till exempel mogna frukter, vatten, vegetation eller rörelse. Miljöer med ordnad variation har därför ofta varit mer informationsrika än helt homogena miljöer.</p>
+                <p>När vi upplever något som vackert beror det ofta på att hjärnan uppfattar balans mellan variation och ordning. För lite variation upplevs som monotont, för mycket som kaotiskt. Färgfördelningar som 60, 30 och 10 skapar just denna balans, vilket gör bilden både tydligare och mer estetiskt tilltalande.</p>
+            </div>
+            <div class="color-principle-media-column">
+                <div class="content-media magic-image-frame">
+                    <img class="magic-appear-image" src="farghjulet.png" alt="Färghjul med strukturerad färgvariation">
+                </div>
+                <div class="content-media comparison-transition color-principle-detail-transition">
+                    <img class="transition-layer transition-base" src="kontur.png" alt="Stol i blå miljö">
+                    <img class="transition-layer transition-target" src="kontur2.png" alt="Samma stol med färgade konturmarkeringar runt formerna">
+                    <img class="transition-layer transition-return" src="kontur.png" alt="" aria-hidden="true">
+                    <span class="transition-sheen" aria-hidden="true"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="connector"></div>
+
+    <!-- 13. FÖRELÄSNING -->
+    <div class="node lecture comparison-slide">
+        <span class="badge">Föreläsning</span>
+        <div class="content-grid">
+            <div class="content-text">
+                <h2>Färgfördelningens effekt i praktiken</h2>
+                <p>Utifrån dessa två bilder ser vi tydligt hur färgfördelning påverkar hur en bild upplevs.</p>
+                <p>I den första bilden är nästan allt grönt. Formen på fåtöljen syns, men eftersom vägg, stol och kudde har samma färg smälter objekten ihop visuellt. Bilden blir lugn och ren, men också mer monoton. Ögat får få visuella signaler som hjälper det att snabbt förstå struktur, fokus och hierarki.</p>
+                <p>I den andra bilden används tre färger i ungefärliga proportioner 60, 30 och 10. Den gröna väggen fungerar som bakgrund, den gula stolen blir huvudobjektet och den blå kudden fungerar som accent. Detta skapar tydlig kontrast och en visuell hierarki. Ögat kan snabbt uppfatta vad som är bakgrund, vad som är huvudobjekt och vad som är detalj.</p>
+                <p>Resultatet blir en mer behaglig bild för våra ögon och hjärna att bearbeta. Tydlighet ger behaglighet. Kombinationen av variation och struktur gör att hjärnan lättare organiserar informationen, vilket ofta upplevs som mer estetiskt tilltalande i både design, UX och bildkomposition.</p>
+                <p>Neuroestetisk forskning visar att när människor upplever något som visuellt tilltalande aktiveras hjärnans belöningssystem, där dopamin är en viktig signal. Bilder med tydlig struktur och balanserad variation är lättare för hjärnan att bearbeta, vilket ofta upplevs som mer behagligt och estetiskt tilltalande.</p>
+            </div>
+            <div class="comparison-media-column">
+                <div class="content-media comparison-transition">
+                    <img class="transition-layer transition-base" src="green-only.png" alt="Enfärgad bild med grön fåtölj mot grön bakgrund och texten Enfärgat är fint, men...">
+                    <img class="transition-layer transition-target" src="greenyellowblue.png" alt="Samma scen med 60 30 10-färgfördelning: grön bakgrund, gul fåtölj och blå kudde">
+                    <img class="transition-layer transition-return" src="green-only.png" alt="" aria-hidden="true">
+                    <span class="transition-sheen" aria-hidden="true"></span>
+                </div>
+                <img class="comparison-caption-image" src="prop-text.png" alt="Proportionerligt strukturerad färgvariation kan lyfta dina AI-bilder">
+            </div>
+        </div>
+    </div>
+    <div class="connector"></div>
+
+    <!-- 14. FÖRELÄSNING -->
+    <div class="node lecture flip-demo-slide">
+        <span class="badge">Föreläsning</span>
+        <div class="content-grid">
+            <div class="content-text">
+                <h2>Kontrast gör budskapet läsbart direkt</h2>
+                <p>Kontrast mellan textfärg och bakgrund är avgörande för läsbarheten.</p>
+                <p><strong>Tumregel:</strong> mörk bakgrund = ljus text. Ljus bakgrund = mörk text.</p>
+                <p>Om text och bakgrund ligger för nära varandra i ljushet blir texten snabbt svår att läsa.</p>
+            </div>
+            <div class="content-media flip-demo-panel">
+                <div class="contrast-comparison">
+                    <div class="contrast-card is-bad">
+                        <span class="contrast-card-label">Låg kontrast</span>
+                        <div class="contrast-demo" aria-label="Exempel på låg kontrast">
+                            <span class="contrast-demo-prefix">Gör din</span>
+                            <div class="contrast-flip">
+                                <div class="contrast-flip-track">
+                                    <div class="contrast-flip-item is-red"><span>typografi</span></div>
+                                    <div class="contrast-flip-item is-blue"><span>kontrast</span></div>
+                                    <div class="contrast-flip-item is-green"><span>hierarki</span></div>
+                                    <div class="contrast-flip-item is-red"><span>budskap</span></div>
+                                </div>
+                            </div>
+                            <span class="contrast-demo-suffix">tydlig!</span>
+                            <span class="contrast-demo-note">bleka toner mot ljus bakgrund</span>
+                        </div>
+                        <p class="contrast-card-caption">Här måste ögat arbeta mer eftersom text och bakgrund ligger för nära varandra i ljushet.</p>
+                    </div>
+                    <div class="contrast-card is-good">
+                        <span class="contrast-card-label">Hög kontrast</span>
+                        <div class="contrast-demo" aria-label="Animerad text om kontrast">
+                            <span class="contrast-demo-prefix">Gör din</span>
+                            <div class="contrast-flip">
+                                <div class="contrast-flip-track">
+                                    <div class="contrast-flip-item is-red"><span>typografi</span></div>
+                                    <div class="contrast-flip-item is-blue"><span>kontrast</span></div>
+                                    <div class="contrast-flip-item is-green"><span>hierarki</span></div>
+                                    <div class="contrast-flip-item is-red"><span>budskap</span></div>
+                                </div>
+                            </div>
+                            <span class="contrast-demo-suffix">tydlig!</span>
+                            <span class="contrast-demo-note">kontrast mellan text och bakgrund styr läsbarheten</span>
+                        </div>
+                        <p class="contrast-card-caption">Här syns orden direkt. Mörk yta, ljus text och starka accentfärger gör animationen lätt att uppfatta.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="connector"></div>
+
+    <!-- 14. ÖVNINGAR (3D Flip Grid) -->
     <div class="node exercise">
         <span class="badge">Praktik</span>
         <h2>Praktiska övningar</h2>
@@ -976,7 +1834,244 @@
                 </div>
             </div>
 
+            <!-- Kort 9 -->
+            <div class="scene">
+                <div class="flip-card">
+                    <div class="card-shadow"></div>
+                    <div class="face face-cover">
+                        <h3>Övning 9</h3>
+                        <span>Klicka för att visa</span>
+                    </div>
+                    <div class="face face-content">
+                        <h4>Redigera vardagsrum med AI (60/30/10)</h4>
+                        <p><strong>Syfte:</strong> Träna bildredigering och färgbalans enligt 60/30/10-principen.</p>
+                        <div class="exercise-reference">
+                            <p><strong>Referensbild:</strong> Använd bilden nedan som startpunkt.</p>
+                            <img src="extra/messy-room.png" alt="Stökigt vardagsrum för redigeringsövning">
+                        </div>
+                        <ul>
+                            <li>Städa bort allt stök i bilden.</li>
+                            <li>Skapa en tydlig 60/30/10-fördelning i färgerna.</li>
+                            <li>Välj dominant färg för väggar.</li>
+                            <li>Välj secondary-färg för möbler.</li>
+                            <li>Lägg accentfärg på små detaljer.</li>
+                        </ul>
+                        <p><strong>Exempelprompt:</strong> "Clean and declutter the living room. Use a soft light blue as dominant wall color, warm beige furniture as secondary color, and a strong orange accent for pillows and small decor. Keep the room modern and balanced."</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kort 10 -->
+            <div class="scene">
+                <div class="flip-card">
+                    <div class="card-shadow"></div>
+                    <div class="face face-cover">
+                        <h3>Övning 10</h3>
+                        <span>Klicka för att visa</span>
+                    </div>
+                    <div class="face face-content">
+                        <h4>Designa hemsida med 60/30/10</h4>
+                        <p><strong>Syfte:</strong> Översätta färgprincipen till layout för webb.</p>
+                        <ul>
+                            <li>Välj dominant bakgrundsfärg (60 %).</li>
+                            <li>Välj secondary-färg för sektioner eller kort (30 %).</li>
+                            <li>Välj accentfärg för knappar och länkar (10 %).</li>
+                            <li>Säkerställ tydlig kontrast för text och CTA-knappar.</li>
+                        </ul>
+                        <p><strong>Exempelprompt:</strong> "Design a modern website layout. Use a soft green as dominant background, light beige for content sections, and a strong dark blue accent for buttons. Keep it clean and minimal with clear contrast."</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
+    </div>
+    <div class="connector"></div>
+
+    <div class="node lecture">
+        <span class="badge">Tips</span>
+        <div class="content-grid">
+            <div class="content-text">
+                <h2>Finetuning utan finetuning (smart hack)</h2>
+                <p>Du kan ofta få ett objekt att bli mer konsekvent utan riktig finetuning.</p>
+                <p>Ladda upp minst 5 bilder på samma objekt (gärna fler) från olika vinklar och i olika ljus.</p>
+                <p>Be t.ex. Gemini Nano Banana generera samma objekt i en ny scen, men behålla form, material och detaljer.</p>
+                <p>Iterera i små justeringar tills objektet känns konsekvent mellan bilderna.</p>
+                <p>Detta är ett praktiskt "smart hack" när du vill få liknande resultat snabbt utan att träna en egen modell.</p>
+            </div>
+            <div class="content-media finetune-sunlight-frame">
+                <img class="finetune-step-image" src="no-need-for-finetuning.png" alt="Exempel på finetuning utan finetuning med flera referensbilder och nytt AI-genererat resultat">
+            </div>
+        </div>
+    </div>
+    <div class="connector"></div>
+
+    <div class="node lecture">
+        <span class="badge">Karriär</span>
+        <div class="content-grid">
+            <div class="content-text">
+                <h2>Hitta arbete som frilansande grafiker</h2>
+                <p>Börja lokalt: gå in på hemsidor hos företag i din närhet och se vilka som behöver bättre grafik, bilder eller innehåll.</p>
+                <p>Kontakta dem kort och tydligt och erbjud hjälp med att skapa eller förbättra deras visuella material.</p>
+                <p>Vill ni få utländska klienter kan ni också använda plattformar som Upwork, Fiverr och Freelancer.</p>
+            </div>
+            <div class="content-media">
+                <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1200&auto=format&fit=crop" alt="Frilansare som arbetar med design vid laptop och anteckningar">
+            </div>
+        </div>
+    </div>
+    <div class="connector"></div>
+
+    <div class="node lecture">
+        <span class="badge">Avslutning</span>
+        <h2>Juridik kring AI-bilder</h2>
+        <p>Normalt behöver du inte kreditera ChatGPT eller Gemini om du använder en AI-genererad bild, till exempel som bokomslag. Enligt användarvillkoren får bilderna i regel användas kommersiellt.</p>
+        <p>Upphovsrättsligt är huvudfrågan verkshöjd: i svensk och EU-rätt krävs tillräcklig originalitet och mänskligt skapande för att en bild ska få upphovsrättsligt skydd.</p>
+        <p>Om en bild är helt AI-genererad utan kreativt mänskligt bidrag når den ofta inte verkshöjd. Då finns normalt ingen upphovsrätt i bilden, vilket innebär att ingen upphovsman kan göra upphovsrättsliga anspråk och att flera i praktiken kan använda samma bild.</p>
+        <p>Om en människa däremot styr, redigerar och bearbetar bilden kreativt kan den mänskliga insatsen nå verkshöjd, och då kan upphovsrätt uppstå till den bearbetade bilden.</p>
+        <p><strong>Kort sagt:</strong> Ingen kreditering krävs normalt, men AI-bilder saknar ofta upphovsrätt om de inte innehåller tillräckligt mänskligt skapande.</p>
+        <p><em>Informationen beskriver rättsläget i stora drag och är inte juridisk rådgivning.</em></p>
+    </div>
+    <div class="connector"></div>
+
+    <div class="node lecture legal-book-cover-slide">
+        <span class="badge">Exempel</span>
+        <h2>Bokomslag med AI - hur juridiken fungerar i praktiken</h2>
+        <p>Om du skapar ett bokomslag med AI behöver du normalt inte kreditera verktyget. Samtidigt avgör graden av mänskligt kreativt arbete om upphovsrätt kan uppstå i det slutliga omslaget.</p>
+        <p>Slutsatserna i detta exempel utgår från användning av modeller från OpenAI och Google, exempelvis ChatGPT och Gemini. Andra AI-tjänster kan ha andra licensvillkor och regler.</p>
+        <div class="legal-book-cover-wrap">
+            <img class="legal-book-cover-image" src="book-cover.png" alt="AI-genererat bokomslag som exempel för juridisk bedömning">
+        </div>
+    </div>
+    <div class="connector"></div>
+
+    <div class="node exercise">
+        <span class="badge">Q&A</span>
+        <h2>Questions and Answers - upphovsrätt och AI-bilder</h2>
+        <p>Klicka på ett kort för att se svaret.</p>
+        <div class="precedent-section">
+            <h3>Prejudicerande domslut (internationellt, per 5 mars 2026)</h3>
+            <ul>
+                <li><strong>USA, D.C. Circuit (18 mars 2025):</strong> <em>Thaler v. Perlmutter</em> fastslår att upphovsrätt kräver mänsklig upphovsman när AI-systemet anges som ensam skapare.</li>
+                <li><strong>USA, Supreme Court (2 mars 2026):</strong> certiorari nekades i mål <em>25-449</em>, vilket lämnade D.C. Circuits linje gällande.</li>
+                <li><strong>EU-domstolen, C-5/08 Infopaq och C-145/10 Painer:</strong> etablerar originalitetskravet "author's own intellectual creation", dvs. mänskliga fria och kreativa val som grund för skydd.</li>
+            </ul>
+        </div>
+
+        <div class="cards-grid">
+            <div class="scene">
+                <div class="flip-card">
+                    <div class="card-shadow"></div>
+                    <div class="face face-cover">
+                        <h3>Fråga 1</h3>
+                        <span>Vem har upphovsrätten?</span>
+                    </div>
+                    <div class="face face-content">
+                        <h4>Vem har upphovsrätten om jag tar ett foto och sedan modifierar det med AI?</h4>
+                        <p>Upphovsrätten utgår normalt från originalfotot, alltså fotografen.</p>
+                        <p>Om du tog fotot själv och använder AI som redigeringsverktyg (som Photoshop) är det i regel du som har rättigheterna.</p>
+                        <p>Gör du egna kreativa bearbetningar kan även den nya versionen få skydd, om den når verkshöjd.</p>
+                        <p><strong>Vad gäller för AI-bilder 2026?</strong> I ChatGPT anger villkoren (1 januari 2026) att du äger outputen mellan dig och OpenAI. För Gemini/Google gäller att Google inte gör anspråk på äganderätt till genererat innehåll. Men i båda fallen måste du följa lag, tredje mans rättigheter och respektive licensvillkor.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scene">
+                <div class="flip-card">
+                    <div class="card-shadow"></div>
+                    <div class="face face-cover">
+                        <h3>Fråga 2</h3>
+                        <span>Vad betyder verkshöjd?</span>
+                    </div>
+                    <div class="face face-content">
+                        <h4>Vad betyder verkshöjd och hur påverkar AI upphovsrätten?</h4>
+                        <p>Verkshöjd = tillräckligt självständigt och kreativt mänskligt skapande.</p>
+                        <p>Ren AI-output utan mänskliga kreativa val saknar ofta upphovsrätt.</p>
+                        <p>När du styr processen (promptar, väljer, redigerar) kan upphovsrätt uppstå genom din insats.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scene">
+                <div class="flip-card">
+                    <div class="card-shadow"></div>
+                    <div class="face face-cover">
+                        <h3>Fråga 3</h3>
+                        <span>Licensvillkor i AI-tjänster</span>
+                    </div>
+                    <div class="face face-content">
+                        <h4>Vad händer om en AI skapar en bättre bild men inte ger bort rättigheterna?</h4>
+                        <p>Licensvillkoren styr användningen. Om rättigheter inte överlåts får du inte använda bilden fritt.</p>
+                        <p>Det gäller även om bilden i sig saknar klassisk upphovsrätt.</p>
+                        <p>Redigering i exempelvis Photoshop tar normalt inte bort avtalsvillkoren.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scene">
+                <div class="flip-card">
+                    <div class="card-shadow"></div>
+                    <div class="face face-cover">
+                        <h3>Fråga 4</h3>
+                        <span>Ny bild i annan AI?</span>
+                    </div>
+                    <div class="face face-content">
+                        <h4>Kan man lösa problemet genom att mata bilden i en annan AI och generera en ny version?</h4>
+                        <p>Inte automatiskt. Om den nya bilden tydligt bygger på originalet kan den räknas som en bearbetning eller ett härlett verk.</p>
+                        <p>Då kan originalets rättigheter fortfarande påverka vad du får göra.</p>
+                        <p><strong>Tumregel (2026):</strong> Ren AI-bild kan sakna upphovsrätt, men licensvillkor gäller fortfarande. AI som kreativt verktyg kan ge rättigheter till den som gör de kreativa valen.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scene">
+                <div class="flip-card">
+                    <div class="card-shadow"></div>
+                    <div class="face face-cover">
+                        <h3>Exempel</h3>
+                        <span>Bokomslag med AI</span>
+                    </div>
+                    <div class="face face-content">
+                        <h4>Exempel: bokomslag skapat med AI</h4>
+                        <p>Du kan ofta använda AI-bilder kommersiellt i bokomslag om tjänstens licens tillåter det.</p>
+                        <p><strong>OpenAI/ChatGPT och Google/Gemini (2026):</strong> normalt får du sälja materialet och tjäna pengar om du följer respektive villkor, och kreditering av OpenAI eller Google krävs normalt inte som standardkrav.</p>
+                        <p>Kreditering av AI-tjänsten krävs ofta inte, men kan variera mellan plattformar.</p>
+                        <p>AI-genererat material kan ibland likna befintliga verk. Därför bör materialet granskas och vid behov bearbetas för att minska risken för upphovsrättsintrång.</p>
+                        <p>Kontrollera alltid villkoren för tjänsten innan publicering.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  <div class="node lecture">
+    <span class="badge">Avslutning</span>
+    <h2>Prompt engineering för bilder</h2>
+
+    <p>När man skriver prompts för AI-genererade bilder fungerar en <strong>enkel struktur</strong> ofta bäst. En praktisk checklista är att tänka i sex delar: <strong>motiv</strong>, <strong>handling eller form</strong>, <strong>miljö</strong>, <strong>stil</strong>, <strong>ljus</strong> och <strong>perspektiv</strong>.</p>
+
+    <p>Börja med <strong>motivet</strong>, alltså vad bilden ska föreställa. Beskriv därefter vad motivet gör eller hur det är placerat i scenen. Lägg sedan till <strong>miljön</strong> där bilden utspelar sig. Ange därefter <strong>stil eller medium</strong>, till exempel illustration, fotorealistisk bild eller akvarell. Fortsätt med <strong>ljussättning</strong>, som mjukt studioljus, morgonljus eller kvällsljus. Avsluta med <strong>perspektiv eller bildvinkel</strong>, till exempel närbild, vidvinkel, ovanifrån eller från låg vinkel.</p>
+
+    <p>Ett effektivt arbetssätt är att börja med en <strong>kort prompt</strong> som innehåller dessa delar i enkel form. Justera sedan <strong>en detalj i taget</strong> om resultatet behöver styras mer.</p>
+
+    <p><strong>Exempel på en kort och öppen prompt:</strong><br>
+    “A modern city skyline at sunset.”</p>
+
+    <p>Denna typ av prompt ger modellen <strong>stor frihet</strong> att tolka scenen, välja arkitektur, färger och komposition.</p>
+
+    <p><strong>Exempel på en mer detaljerad prompt:</strong><br>
+    “A modern coastal city skyline with glass skyscrapers and busy streets, evening atmosphere, photorealistic style, warm sunset light reflecting in the buildings, wide-angle view from a rooftop overlooking the harbor.”</p>
+
+    <p>Här styrs bilden tydligare genom att beskriva <strong>motiv</strong>, <strong>miljö</strong>, <strong>stil</strong>, <strong>ljus</strong> och <strong>perspektiv</strong> mer exakt.</p>
+
+    <p>Om du har en <strong>tydlig vision</strong> kan en mer detaljerad prompt fungera bäst. Om idén är mer <strong>öppen</strong> fungerar ofta en kortare prompt bättre, eftersom modellen då får större frihet att föreslå visuella lösningar. Därefter kan bilden <strong>förfinas stegvis</strong> genom att lägga till eller ändra detaljer i nya prompts.</p>
+</div>
+
+<div class="connector"></div>
+    <div class="node lecture">
+        <span class="badge">Avslutning</span>
+        <h2>Materialet uppdateras löpande</h2>
+        <p>Jag kommer successivt att uppdatera materialet ovan efter hand.</p>
+        <p>Mejla mig på <a href="mailto:a.jansson.2025@proton.me">a.jansson.2025@proton.me</a> vid frågor och funderingar.</p>
     </div>
 
 </div>
@@ -995,57 +2090,93 @@
 <script>
 document.addEventListener("DOMContentLoaded", () => {
     // 1. Sid-navigeringen
-    const nodes = document.querySelectorAll('.node');
+    const nodes = Array.from(document.querySelectorAll('.node'));
     const lightbox = document.getElementById('imageLightbox');
     const lightboxImage = document.getElementById('lightboxImage');
     const lightboxClose = document.getElementById('lightboxClose');
     const lightboxDownload = document.getElementById('lightboxDownload');
-    let currentIndex = Math.max(Array.from(nodes).findIndex((node) => node.classList.contains('active')), 0);
+    const arenaVideo = document.getElementById('arenaVideo');
+    const arenaVideoRestart = document.getElementById('arenaVideoRestart');
+    const aiLearningFrame = document.getElementById('aiLearningFrame');
+    const aiAttitudeVideoPrimary = document.getElementById('aiAttitudeVideoPrimary');
+    const aiAttitudeVideoSecondary = document.getElementById('aiAttitudeVideoSecondary');
+    let currentIndex = Math.max(nodes.findIndex((node) => node.classList.contains('active')), 0);
+    let lastActiveIndex = -1;
     let isAutoScrolling = false;
     let autoScrollTimer = null;
-    let scrollTicking = false;
+    const visibleNodeRatios = new Map();
+
+    nodes.forEach((node, index) => {
+        node.dataset.slideIndex = `${index}`;
+        const slideNumber = document.createElement('span');
+        slideNumber.className = 'slide-number';
+        slideNumber.textContent = `${index + 1}`;
+        node.appendChild(slideNumber);
+    });
+
+    function syncActiveSlideMedia(activeNode) {
+        nodes.forEach((node) => {
+            const videos = node.querySelectorAll('video');
+            const isActiveNode = node === activeNode;
+            videos.forEach((video) => {
+                if (!isActiveNode) {
+                    video.pause();
+                    return;
+                }
+
+                if (video.id === 'aiAttitudeVideoPrimary' || video.id === 'aiAttitudeVideoSecondary') {
+                    return;
+                }
+
+                const playPromise = video.play();
+                if (playPromise && typeof playPromise.catch === 'function') {
+                    playPromise.catch(() => {
+                        // Ignorera autoplay-blockeringar för aktiv slide.
+                    });
+                }
+            });
+        });
+
+        if (activeNode?.classList.contains('ai-attitude-slide') && aiAttitudeVideoPrimary && aiAttitudeVideoSecondary) {
+            const activeSequenceVideo = aiAttitudeVideoSecondary.classList.contains('is-visible')
+                ? aiAttitudeVideoSecondary
+                : aiAttitudeVideoPrimary;
+            const hiddenSequenceVideo = activeSequenceVideo === aiAttitudeVideoPrimary
+                ? aiAttitudeVideoSecondary
+                : aiAttitudeVideoPrimary;
+
+            hiddenSequenceVideo.pause();
+            const playPromise = activeSequenceVideo.play();
+            if (playPromise && typeof playPromise.catch === 'function') {
+                playPromise.catch(() => {
+                    // Ignorera autoplay-blockeringar för aktiv slide.
+                });
+            }
+        }
+    }
 
     function updateFocus(options = {}) {
         const shouldScroll = options.scroll !== false;
-        nodes.forEach((node, index) => {
-            if (index === currentIndex) {
-                node.classList.add('active');
-                if (shouldScroll) {
-                    isAutoScrolling = true;
-                    node.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    clearTimeout(autoScrollTimer);
-                    autoScrollTimer = setTimeout(() => {
-                        isAutoScrolling = false;
-                    }, 450);
-                }
-            } else {
-                node.classList.remove('active');
-            }
-        });
-    }
-
-    function focusNodeClosestToCenter() {
-        if (isAutoScrolling || lightbox.classList.contains('is-open')) {
+        const nextNode = nodes[currentIndex];
+        if (!nextNode) {
             return;
         }
 
-        const viewportCenter = window.innerHeight / 2;
-        let closestIndex = currentIndex;
-        let closestDistance = Number.POSITIVE_INFINITY;
+        const previousNode = nodes[lastActiveIndex];
+        if (previousNode && previousNode !== nextNode) {
+            previousNode.classList.remove('active');
+        }
+        nextNode.classList.add('active');
+        lastActiveIndex = currentIndex;
+        syncActiveSlideMedia(nextNode);
 
-        nodes.forEach((node, index) => {
-            const rect = node.getBoundingClientRect();
-            const nodeCenter = rect.top + (rect.height / 2);
-            const distance = Math.abs(nodeCenter - viewportCenter);
-            if (distance < closestDistance) {
-                closestDistance = distance;
-                closestIndex = index;
-            }
-        });
-
-        if (closestIndex !== currentIndex) {
-            currentIndex = closestIndex;
-            updateFocus({ scroll: false });
+        if (shouldScroll) {
+            isAutoScrolling = true;
+            nextNode.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            clearTimeout(autoScrollTimer);
+            autoScrollTimer = setTimeout(() => {
+                isAutoScrolling = false;
+            }, 450);
         }
     }
 
@@ -1072,45 +2203,48 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    nodes.forEach((node, index) => {
-        node.addEventListener('click', (e) => {
-            // Gör så att man inte byter nod om man bara klickar på ett övningskort
-            if(!e.target.closest('.flip-card')) {
-                currentIndex = index;
-                updateFocus();
-            }
-        });
-    });
-
-    function onViewportChange() {
-        if (scrollTicking) {
+    const nodeObserver = new IntersectionObserver((entries) => {
+        if (isAutoScrolling || lightbox.classList.contains('is-open')) {
             return;
         }
-        scrollTicking = true;
-        requestAnimationFrame(() => {
-            focusNodeClosestToCenter();
-            scrollTicking = false;
-        });
-    }
 
-    window.addEventListener('scroll', onViewportChange, { passive: true });
-    window.addEventListener('resize', onViewportChange);
-    updateFocus({ scroll: false });
-
-    // 2. Korten (3D Flip Logic)
-    const flipCards = document.querySelectorAll('.flip-card');
-    flipCards.forEach(card => {
-        card.addEventListener('click', (e) => {
-            if (e.target.closest('.preview-image')) {
+        entries.forEach((entry) => {
+            const index = Number(entry.target.dataset.slideIndex);
+            if (!Number.isFinite(index)) {
                 return;
             }
-            e.stopPropagation(); // Hindrar klicket från att byta "Slide" ovan
-            card.classList.toggle('is-flipped');
+
+            if (entry.isIntersecting) {
+                visibleNodeRatios.set(index, entry.intersectionRatio);
+            } else {
+                visibleNodeRatios.delete(index);
+            }
         });
+
+        let nextIndex = currentIndex;
+        let bestRatio = -1;
+
+        visibleNodeRatios.forEach((ratio, index) => {
+            if (ratio > bestRatio) {
+                bestRatio = ratio;
+                nextIndex = index;
+            }
+        });
+
+        if (nextIndex !== currentIndex) {
+            currentIndex = nextIndex;
+            updateFocus({ scroll: false });
+        }
+    }, {
+        threshold: [0.2, 0.35, 0.5, 0.65, 0.8],
+        rootMargin: '-18% 0px -18% 0px',
     });
 
-    // 3. Bild-preview (Lightbox)
-    const previewImages = document.querySelectorAll('img');
+    nodes.forEach((node) => nodeObserver.observe(node));
+    updateFocus({ scroll: false });
+
+    // 2. Bild-preview (Lightbox)
+    const previewImages = document.querySelectorAll('img:not(#lightboxImage):not(.no-preview)');
 
     function openLightbox(src, altText) {
         let filename = 'bild';
@@ -1141,18 +2275,49 @@ document.addEventListener("DOMContentLoaded", () => {
         lightboxDownload.setAttribute('download', 'bild');
     }
 
-    previewImages.forEach((img) => {
+    previewImages.forEach((img, index) => {
         img.classList.add('preview-image');
-        img.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            openLightbox(img.currentSrc || img.src, img.alt);
-        });
+        if (!img.hasAttribute('loading') && index > 1) {
+            img.loading = 'lazy';
+        }
+        if (!img.hasAttribute('decoding')) {
+            img.decoding = 'async';
+        }
     });
 
-    const arenaVideo = document.getElementById('arenaVideo');
-    const arenaVideoRestart = document.getElementById('arenaVideoRestart');
-    const aiLearningFrame = document.getElementById('aiLearningFrame');
+    // Delegera klick till en lyssnare i stället för en per nod/kort/bild.
+    document.addEventListener('click', (e) => {
+        const target = e.target;
+        if (!(target instanceof Element)) {
+            return;
+        }
+
+        const previewImage = target.closest('img.preview-image');
+        if (previewImage) {
+            e.preventDefault();
+            e.stopPropagation();
+            openLightbox(previewImage.currentSrc || previewImage.src, previewImage.alt);
+            return;
+        }
+
+        const flipCard = target.closest('.flip-card');
+        if (flipCard) {
+            e.stopPropagation();
+            flipCard.classList.toggle('is-flipped');
+            return;
+        }
+
+        const clickedNode = target.closest('.node');
+        if (!clickedNode) {
+            return;
+        }
+        const nextIndex = Number(clickedNode.dataset.slideIndex);
+        if (nextIndex === -1 || nextIndex === currentIndex) {
+            return;
+        }
+        currentIndex = nextIndex;
+        updateFocus();
+    });
 
     function resizeAiLearningFrame() {
         if (!aiLearningFrame) {
@@ -1213,6 +2378,30 @@ document.addEventListener("DOMContentLoaded", () => {
                 await arenaVideo.play();
             } catch (err) {
                 // Vissa webbläsare kan blockera autoplay efter manuell paus.
+            }
+        });
+    }
+
+    if (aiAttitudeVideoPrimary && aiAttitudeVideoSecondary) {
+        aiAttitudeVideoPrimary.addEventListener('ended', async () => {
+            aiAttitudeVideoPrimary.classList.remove('is-visible');
+            aiAttitudeVideoSecondary.classList.add('is-visible');
+            aiAttitudeVideoSecondary.currentTime = 0;
+            try {
+                await aiAttitudeVideoSecondary.play();
+            } catch (err) {
+                // Ignorera autoplay-blockering om webbläsaren vägrar starta.
+            }
+        });
+
+        aiAttitudeVideoSecondary.addEventListener('ended', async () => {
+            aiAttitudeVideoSecondary.classList.remove('is-visible');
+            aiAttitudeVideoPrimary.classList.add('is-visible');
+            aiAttitudeVideoPrimary.currentTime = 0;
+            try {
+                await aiAttitudeVideoPrimary.play();
+            } catch (err) {
+                // Ignorera autoplay-blockering om webbläsaren vägrar starta.
             }
         });
     }
