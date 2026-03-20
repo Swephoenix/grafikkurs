@@ -1161,6 +1161,86 @@
         display: block;
     }
 
+    .prompt-json-slide .content-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0;
+    }
+
+    .prompt-json-slideshow {
+        margin-top: 24px;
+        padding: 18px;
+        border: 1px solid var(--border-color);
+        border-radius: 14px;
+        background: #0f1014;
+    }
+
+    .prompt-json-slideshow-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 14px;
+    }
+
+    .prompt-json-slideshow-title {
+        margin: 0;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--text-main);
+    }
+
+    .prompt-json-slideshow-step {
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #93c5fd;
+    }
+
+    .prompt-json-slideshow-stage {
+        position: relative;
+        aspect-ratio: 16 / 9;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid var(--border-color);
+        background: #050505;
+    }
+
+    .prompt-json-slideshow-image {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        opacity: 0;
+        transform: scale(1.01);
+        transition: opacity 420ms ease, transform 420ms ease;
+    }
+
+    .prompt-json-slideshow-image.is-visible {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    .prompt-json-slideshow-dots {
+        display: flex;
+        gap: 8px;
+        margin-top: 12px;
+    }
+
+    .prompt-json-slideshow-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: #374151;
+        transition: transform 220ms ease, background-color 220ms ease;
+    }
+
+    .prompt-json-slideshow-dot.is-active {
+        background: #60a5fa;
+        transform: scale(1.18);
+    }
+
     .preview-image {
         cursor: zoom-in;
     }
@@ -2043,29 +2123,86 @@
         </div>
     </div>
 
-  <div class="node lecture">
+ <div class="node lecture prompt-json-slide">
     <span class="badge">Avslutning</span>
-    <h2>Prompt engineering för bilder</h2>
+    <div class="content-grid">
+        <div class="content-text">
+            <h2>Prompt engineering för bilder</h2>
 
-    <p>När man skriver prompts för AI-genererade bilder fungerar en <strong>enkel struktur</strong> ofta bäst. En praktisk checklista är att tänka i sex delar: <strong>motiv</strong>, <strong>handling eller form</strong>, <strong>miljö</strong>, <strong>stil</strong>, <strong>ljus</strong> och <strong>perspektiv</strong>.</p>
+            <p>När man skriver prompts för AI-genererade bilder fungerar en <strong>enkel struktur</strong> ofta bäst. En praktisk checklista är att tänka i sex delar: <strong>motiv</strong>, <strong>handling eller form</strong>, <strong>miljö</strong>, <strong>stil</strong>, <strong>ljus</strong> och <strong>perspektiv</strong>.</p>
 
-    <p>Börja med <strong>motivet</strong>, alltså vad bilden ska föreställa. Beskriv därefter vad motivet gör eller hur det är placerat i scenen. Lägg sedan till <strong>miljön</strong> där bilden utspelar sig. Ange därefter <strong>stil eller medium</strong>, till exempel illustration, fotorealistisk bild eller akvarell. Fortsätt med <strong>ljussättning</strong>, som mjukt studioljus, morgonljus eller kvällsljus. Avsluta med <strong>perspektiv eller bildvinkel</strong>, till exempel närbild, vidvinkel, ovanifrån eller från låg vinkel.</p>
+            <p>Börja med <strong>motivet</strong>, alltså vad bilden ska föreställa. Beskriv därefter vad motivet gör eller hur det är placerat i scenen. Lägg sedan till <strong>miljön</strong> där bilden utspelar sig. Ange därefter <strong>stil eller medium</strong>, till exempel illustration, fotorealistisk bild eller akvarell. Fortsätt med <strong>ljussättning</strong>, som mjukt studioljus, morgonljus eller kvällsljus. Avsluta med <strong>perspektiv eller bildvinkel</strong>, till exempel närbild, vidvinkel, ovanifrån eller från låg vinkel.</p>
 
-    <p>Ett effektivt arbetssätt är att börja med en <strong>kort prompt</strong> som innehåller dessa delar i enkel form. Justera sedan <strong>en detalj i taget</strong> om resultatet behöver styras mer.</p>
+            <p>Ett effektivt arbetssätt är att börja med en <strong>kort prompt</strong> som innehåller dessa delar i enkel form. Justera sedan <strong>en detalj i taget</strong> om resultatet behöver styras mer.</p>
 
-    <p><strong>Exempel på en kort och öppen prompt:</strong><br>
-    “A modern city skyline at sunset.”</p>
+            <p><strong>Exempel på en kort och öppen prompt:</strong><br>
+            “A modern city skyline at sunset.”</p>
 
-    <p>Denna typ av prompt ger modellen <strong>stor frihet</strong> att tolka scenen, välja arkitektur, färger och komposition.</p>
+            <p>Denna typ av prompt ger modellen <strong>stor frihet</strong> att tolka scenen, välja arkitektur, färger och komposition.</p>
 
-    <p><strong>Exempel på en mer detaljerad prompt:</strong><br>
-    “A modern coastal city skyline with glass skyscrapers and busy streets, evening atmosphere, photorealistic style, warm sunset light reflecting in the buildings, wide-angle view from a rooftop overlooking the harbor.”</p>
+            <p><strong>Exempel på en mer detaljerad prompt:</strong><br>
+            “A modern coastal city skyline with glass skyscrapers and busy streets, evening atmosphere, photorealistic style, warm sunset light reflecting in the buildings, wide-angle view from a rooftop overlooking the harbor.”</p>
 
-    <p>Här styrs bilden tydligare genom att beskriva <strong>motiv</strong>, <strong>miljö</strong>, <strong>stil</strong>, <strong>ljus</strong> och <strong>perspektiv</strong> mer exakt.</p>
+            <p>Här styrs bilden tydligare genom att beskriva <strong>motiv</strong>, <strong>miljö</strong>, <strong>stil</strong>, <strong>ljus</strong> och <strong>perspektiv</strong> mer exakt.</p>
 
-    <p>Om du har en <strong>tydlig vision</strong> kan en mer detaljerad prompt fungera bäst. Om idén är mer <strong>öppen</strong> fungerar ofta en kortare prompt bättre, eftersom modellen då får större frihet att föreslå visuella lösningar. Därefter kan bilden <strong>förfinas stegvis</strong> genom att lägga till eller ändra detaljer i nya prompts.</p>
+            <p>Om du har en <strong>tydlig vision</strong> kan en mer detaljerad prompt fungera bäst. Om idén är mer <strong>öppen</strong> fungerar ofta en kortare prompt bättre, eftersom modellen då får större frihet att föreslå visuella lösningar. Därefter kan bilden <strong>förfinas stegvis</strong> genom att lägga till eller ändra detaljer i nya prompts.</p>
+
+            <p><strong>Avancerat moment för de som vill bli proffs på redigering:</strong><br>
+            Ett effektivt sätt att arbeta mer precist är att låta AI generera en strukturerad JSON-beskrivning av en bild, så att du slipper formulera alla detaljer själv. Genom att använda denna metod får du en teknisk beskrivning av perspektiv, objekt och relationer som du sedan kan justera för att styra redigeringen mer exakt.</p>
+
+            <p><strong>Arbetssteg:</strong></p>
+            <ul>
+                <li>Ta en bild du vill redigera och kör prompten nedan i en AI-modell, till exempel ChatGPT, Gemini eller en modell via Arena.ai.</li>
+                <li>Du får då ut en JSON-beskrivning av bilden med detaljer om perspektiv, objekt och struktur.</li>
+                <li>Be sedan AI:n att ändra själva JSON-beskrivningen, till exempel så att jeten i scenen byts ut mot en blå lastbil.</li>
+                <li>Justera innehållet i JSON-filen, till exempel position, storlek, material eller relationer mellan objekt.</li>
+                <li>Du kan också be AI:n skriva själva ändringen i JSON-metadatan åt dig, till exempel att byta ut jeten mot en blå lastbil.</li>
+                <li>Klistra sedan in den uppdaterade JSON:en tillsammans med originalbilden och be AI:n genomföra ändringarna.</li>
+                <li>Vill du ändra fler delar i bilden, uppdatera motsvarande beskrivning i JSON-texten och kör igen.</li>
+            </ul>
+
+            <p>På detta sätt ger du AI:n både en visuell referens i form av originalbilden och en strukturerad instruktion, vilket gör att ändringar kan göras mer kontrollerat samtidigt som övriga detaljer i bilden bevaras.</p>
+            <p>I praktiken kan du alltså först få ut JSON-strukturen, och sedan skriva något i stil med: <strong>"skriv så det istället för jet är en blå lastbil"</strong>. AI:n kan då hjälpa dig att formulera eller uppdatera metadata innan du ber den generera den nya bilden.</p>
+            <p>En annan effektiv prompt är att skriva <strong>"Behåll allt i bilden och ändra bara XYZ"</strong>. Det är ofta ett bra sätt att signalera att övriga detaljer ska lämnas orörda, så att du bara ändrar det du faktiskt vill påverka.</p>
+
+            <p><strong>Prompt:</strong></p>
+            <pre><code>Analyze the image and output structured JSON including:
+
+- camera perspective (angle, height, orientation)
+- lens estimation (wide, normal, telephoto)
+- depth structure (foreground, midground, background)
+- spatial relationships between objects
+- object-level metadata:
+  - position (relative coordinates)
+  - size (relative scale)
+- material
+- occlusion relationships
+
+Focus on geometric and photographic interpretation, not just semantic description.</code></pre>
+
+            <div class="prompt-json-slideshow" id="promptJsonSlideshow">
+                <div class="prompt-json-slideshow-header">
+                    <p class="prompt-json-slideshow-title">Exempel på arbetsflöde</p>
+                    <span class="prompt-json-slideshow-step" id="promptJsonSlideshowStep">Steg 1: Originalbild</span>
+                </div>
+                <div class="prompt-json-slideshow-stage">
+                    <img class="prompt-json-slideshow-image is-visible preview-image" src="JasViggenFerrari.png" alt="Originalbild med Ferrari framför JAS Viggen" data-step-label="Steg 1: Originalbild">
+                    <img class="prompt-json-slideshow-image preview-image" src="bild på json metadata utskrift i chatgpt.png" alt="JSON-utskrift från bildanalys i ChatGPT" data-step-label="Steg 2: JSON-beskrivning">
+                    <img class="prompt-json-slideshow-image preview-image" src="beraiändraijson.png" alt="Exempel där AI ombeds att ändra JSON-beskrivningen så att jeten byts ut mot en blå lastbil" data-step-label="Steg 3: Be AI ändra JSON">
+                    <img class="prompt-json-slideshow-image preview-image" src="prompttochangeimagejson.png" alt="Instruktion att ändra JSON-metadatan så att jeten byts ut mot en blå lastbil" data-step-label="Steg 4: Ändringsinstruktion">
+                    <img class="prompt-json-slideshow-image preview-image" src="ferrariandtruck.png" alt="Slutresultat där jeten har bytts ut mot en blå lastbil" data-step-label="Steg 5: Slutresultat">
+                </div>
+                <div class="prompt-json-slideshow-dots" id="promptJsonSlideshowDots" aria-hidden="true">
+                    <span class="prompt-json-slideshow-dot is-active"></span>
+                    <span class="prompt-json-slideshow-dot"></span>
+                    <span class="prompt-json-slideshow-dot"></span>
+                    <span class="prompt-json-slideshow-dot"></span>
+                    <span class="prompt-json-slideshow-dot"></span>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
 <div class="connector"></div>
     <div class="node lecture">
         <span class="badge">Avslutning</span>
@@ -2100,6 +2237,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const aiLearningFrame = document.getElementById('aiLearningFrame');
     const aiAttitudeVideoPrimary = document.getElementById('aiAttitudeVideoPrimary');
     const aiAttitudeVideoSecondary = document.getElementById('aiAttitudeVideoSecondary');
+    const promptJsonSlide = document.querySelector('.prompt-json-slide');
+    const promptJsonSlideshow = document.getElementById('promptJsonSlideshow');
+    const promptJsonSlideshowStep = document.getElementById('promptJsonSlideshowStep');
+    const promptJsonSlides = promptJsonSlideshow ? Array.from(promptJsonSlideshow.querySelectorAll('.prompt-json-slideshow-image')) : [];
+    const promptJsonDots = promptJsonSlideshow ? Array.from(document.querySelectorAll('#promptJsonSlideshowDots .prompt-json-slideshow-dot')) : [];
+    let promptJsonSlideIndex = 0;
+    let promptJsonTimer = null;
     let currentIndex = Math.max(nodes.findIndex((node) => node.classList.contains('active')), 0);
     let lastActiveIndex = -1;
     let isAutoScrolling = false;
@@ -2153,6 +2297,52 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
             }
         }
+
+        if (promptJsonSlide && promptJsonSlideshow && promptJsonSlides.length > 0) {
+            if (activeNode === promptJsonSlide) {
+                startPromptJsonSlideshow();
+            } else {
+                stopPromptJsonSlideshow();
+            }
+        }
+    }
+
+    function renderPromptJsonSlide(index) {
+        if (!promptJsonSlides.length) {
+            return;
+        }
+
+        promptJsonSlideIndex = ((index % promptJsonSlides.length) + promptJsonSlides.length) % promptJsonSlides.length;
+
+        promptJsonSlides.forEach((slide, slideIndex) => {
+            slide.classList.toggle('is-visible', slideIndex === promptJsonSlideIndex);
+        });
+
+        promptJsonDots.forEach((dot, dotIndex) => {
+            dot.classList.toggle('is-active', dotIndex === promptJsonSlideIndex);
+        });
+
+        if (promptJsonSlideshowStep) {
+            promptJsonSlideshowStep.textContent = promptJsonSlides[promptJsonSlideIndex].dataset.stepLabel || '';
+        }
+    }
+
+    function stopPromptJsonSlideshow() {
+        if (promptJsonTimer) {
+            clearInterval(promptJsonTimer);
+            promptJsonTimer = null;
+        }
+    }
+
+    function startPromptJsonSlideshow() {
+        renderPromptJsonSlide(promptJsonSlideIndex);
+        if (promptJsonTimer || promptJsonSlides.length <= 1) {
+            return;
+        }
+
+        promptJsonTimer = setInterval(() => {
+            renderPromptJsonSlide(promptJsonSlideIndex + 1);
+        }, 2600);
     }
 
     function updateFocus(options = {}) {
