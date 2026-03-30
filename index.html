@@ -677,6 +677,115 @@
         display: block;
     }
 
+    .intelligence-gap-slide .content-grid {
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 36px;
+        align-items: start;
+    }
+
+    .intelligence-gap-lead {
+        font-size: 1.22rem;
+        color: var(--text-main);
+        line-height: 1.55;
+    }
+
+    .intelligence-gap-points {
+        display: grid;
+        gap: 14px;
+        margin-top: 24px;
+    }
+
+    .intelligence-gap-point {
+        background: #10131a;
+        border: 1px solid #273244;
+        border-radius: 16px;
+        padding: 18px 20px;
+    }
+
+    .intelligence-gap-point strong {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 1rem;
+    }
+
+    .intelligence-gap-side {
+        display: grid;
+        gap: 18px;
+    }
+
+    .intelligence-gap-card {
+        background: linear-gradient(180deg, #101826 0%, #0d1320 100%);
+        border: 1px solid #243041;
+        border-radius: 18px;
+        padding: 22px 22px 20px;
+        box-shadow: 0 18px 36px rgba(0, 0, 0, 0.28);
+    }
+
+    .intelligence-gap-card h3 {
+        margin: 0 0 12px 0;
+        color: var(--text-main);
+        font-size: 1.05rem;
+        letter-spacing: -0.02em;
+    }
+
+    .intelligence-gap-card p {
+        margin: 0 0 10px 0;
+        font-size: 1rem;
+    }
+
+    .intelligence-gap-card p:last-child {
+        margin-bottom: 0;
+    }
+
+    .intelligence-gap-score {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 10px;
+        margin-bottom: 12px;
+        color: var(--text-main);
+    }
+
+    .intelligence-gap-score strong {
+        font-size: 2.4rem;
+        line-height: 1;
+        color: #fca5a5;
+    }
+
+    .intelligence-gap-score span {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: #fda4af;
+    }
+
+    .intelligence-gap-source {
+        font-size: 0.96rem;
+        color: #93c5fd;
+    }
+
+    .intelligence-gap-figure {
+        overflow: hidden;
+    }
+
+    .intelligence-gap-figure img {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 12px;
+        margin-bottom: 16px;
+        background: #f3efe4;
+    }
+
+    .intelligence-gap-caption p {
+        margin: 0 0 12px 0;
+    }
+
+    @media (max-width: 1100px) {
+        .intelligence-gap-slide .content-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
     @keyframes arena-image-reveal {
         from {
             opacity: 0;
@@ -1467,6 +1576,43 @@
     <div class="connector"></div>
 
     <!-- 6. FÖRELÄSNING -->
+    <div class="node lecture intelligence-gap-slide">
+        <span class="badge">Föreläsning</span>
+        <div class="content-grid">
+            <div class="content-text">
+                <h2>Varför AI inte är "intelligent"</h2>
+                <p class="intelligence-gap-lead">Idag pratar vi ofta om AI som om det vore en tänkande varelse, men ny forskning och nya tester som ARC AGI 3 visar att vi fortfarande är långt ifrån äkta intelligens. Här är en sammanfattning av varför dagens modeller, trots sin enorma kapacitet, i grunden är "dummare" än en människa när det kommer till att förstå verkligheten.</p>
+                <div class="intelligence-gap-points">
+                    <div class="intelligence-gap-point">
+                        <strong>1. Next token prediction</strong>
+                        <p>Dagens stora språkmodeller, LLMs, fungerar genom att förutsäga nästa ord eller token i en serie. De "tänker" inte på koncept, utan beräknar sannolikheter baserat på de enorma mängder data de har tränats på. När du ställer en fråga ser modellen inte din verklighet. Den ser en vektor, en serie siffror i ett matematiskt rum, och försöker hitta det mönster som statistiskt sett bör följa efter din input.</p>
+                    </div>
+                    <div class="intelligence-gap-point">
+                        <strong>2. Mönsterigenkänning är inte generalisering</strong>
+                        <p>Människor kan landa i en helt ny situation, som ett enkelt videospel vi aldrig sett förut, förstå reglerna genom intuition och logik, och lösa uppgiften på några minuter med 100 % framgång. AI misslyckas ofta kapitalt på sådana uppgifter. Varför? För att AI:n inte kan "lära sig verkligheten" på egen hand. Om mönstret inte finns i dess träningsdata kan den inte resonera sig fram till en lösning på samma sätt som ett barn kan. Den saknar generalisering, alltså förmågan att ta en liten mängd ny information och applicera den på ett helt nytt scenario.</p>
+                    </div>
+                    <div class="intelligence-gap-point">
+                        <strong>3. Siffror är inte verklighet</strong>
+                        <p>Tänker AI på verkligheten? Svaret är nej. För en AI existerar inte "pusslet", "färgen gul" eller "reglerna för ett spel" som fysiska eller logiska koncept. Allt är vektorer och sannolikheter. När en AI misslyckas med enkla logiska pussel som en människa löser direkt, beror det på att den försöker köra autocomplete på en situation där det inte finns tillräckligt med statistiskt underlag för att gissa rätt. Den ser inte målet. Den ser bara en sifferserie som den försöker matcha mot tidigare inlärda mönster.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="intelligence-gap-side">
+                <div class="intelligence-gap-card intelligence-gap-figure">
+                    <img src="Robothopparinteundan.png" alt="Serie som visar en människa och en robot bredvid ett fallande block där människan hoppar undan men roboten blir krossad">
+                    <div class="intelligence-gap-caption">
+                        <p>AI:n ser inte ett fallande block, utan en siffermatris som förändras över tid, till exempel [0.12, 0.98, 0.33, ...] som i nästa steg blir [0.12, 0.98, 0.40, ...]. För oss betyder förändringen att något rör sig nedåt och utgör en fara. För AI:n är det bara värden som ändras. Den försöker matcha mönstret mot tidigare data, och om just detta scenario inte finns där saknas grund för rätt handling. Den saknar begrepp som hot, gravitation och mål.</p>
+                        <p>Människan däremot tolkar direkt situationen som ett orsakssamband, block ovanför leder till fall, fall leder till fara, därför måste jag flytta mig. Denna slutsats kräver ingen tidigare exponering för exakt samma situation, utan bygger på generalisering och förståelse.</p>
+                        <p>Skillnaden är att AI arbetar med mönster i siffror utan innebörd, medan människan uppfattar världen som objekt, orsaker och konsekvenser. Därför kan AI bli stående, medan människan redan har hoppat undan.</p>
+                    </div>
+                    <p class="intelligence-gap-source">Källa: <a href="https://youtu.be/UkCfrNTzUMM?is=TGoO3Mo82tqOptDv" target="_blank" rel="noopener noreferrer">ARC AGI 3 just dropped, what it means for AGI</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="connector"></div>
+
+    <!-- 7. FÖRELÄSNING -->
     <div class="node lecture ai-attitude-slide">
         <span class="badge">Föreläsning</span>
         <div class="content-grid">
@@ -1483,7 +1629,7 @@
     </div>
     <div class="connector"></div>
 
-    <!-- 7. FÖRELÄSNING -->
+    <!-- 8. FÖRELÄSNING -->
     <div class="node lecture">
         <span class="badge">Föreläsning</span>
         <div class="content-grid">
