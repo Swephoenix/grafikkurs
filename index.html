@@ -758,6 +758,35 @@
         margin-bottom: 0;
     }
 
+    .intelligence-gap-embed {
+        margin-top: 22px;
+        padding: 18px;
+        border-radius: 18px;
+        border: 1px solid #2a4a63;
+        background: linear-gradient(180deg, rgba(14, 29, 43, 0.98) 0%, rgba(11, 22, 34, 0.98) 100%);
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.22);
+    }
+
+    .intelligence-gap-embed h3 {
+        margin: 0 0 10px 0;
+        color: var(--text-main);
+        font-size: 1.02rem;
+    }
+
+    .intelligence-gap-embed p {
+        margin: 0 0 14px 0;
+        font-size: 0.98rem;
+    }
+
+    .intelligence-gap-embed-frame {
+        width: 100%;
+        height: 360px;
+        border: 1px solid #243041;
+        border-radius: 14px;
+        background: #f8f9fa;
+        display: block;
+    }
+
     .intelligence-gap-score {
         display: inline-flex;
         align-items: baseline;
@@ -1620,6 +1649,11 @@
                 <div class="intelligence-gap-challenge">
                     <strong>Testa själv</strong>
                     <p>Gör testet som AI har problem att klara av här: <a href="https://arcprize.org/tasks/ls20" target="_blank" rel="noopener noreferrer">arcprize.org/tasks/ls20</a></p>
+                </div>
+                <div class="intelligence-gap-embed">
+                    <h3>Exempel: ord som vektorer i ett matematiskt rum</h3>
+                    <p>Här ser ni samma grundidé visuellt: för AI är ord inte begrepp i mänsklig mening, utan koordinater och relationer i ett vektorrum.</p>
+                    <iframe class="intelligence-gap-embed-frame" src="vectordb.html" title="Visualisering av ord i en vektordatabas" loading="lazy"></iframe>
                 </div>
             </div>
             <div class="intelligence-gap-side">

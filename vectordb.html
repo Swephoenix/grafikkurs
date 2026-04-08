@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vektordatabas - 3D Visualisering</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #f8f9fa; /* Ljust tema */
+            font-family: Arial, sans-serif;
+        }
+        #info {
+            position: absolute;
+            top: 10px;
+            width: 100%;
+            text-align: center;
+            color: #333;
+            pointer-events: none;
+            z-index: 100;
+        }
+        /* Styling för textetiketterna i 3D-rymden */
+        .vector-label {
+            font-weight: bold;
+            font-size: 14px;
+            padding: 2px 4px;
+            background: rgba(255, 255, 255, 0.6); /* Lätt genomskinlig bakgrund för läsbarhet */
+            border-radius: 4px;
+            pointer-events: none;
+            margin-top: -20px; /* Flytta upp texten lite från pilspetsen */
+        }
+    </style>
+    <!-- Importera Three.js och tillägg via CDN -->
+    <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.150.1/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.150.1/examples/jsm/"
+        }
+      }
+    </script>
+</head>
+<body>
+    <div id="info">
+        <h3>Hur ord lagras i en Vektordatabas (Word Embeddings)</h3>
+        <p>Klicka och dra för att rotera i 3D. Skrolla för att zooma.</p>
+    </div>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+
+        // 1. Uppsättning av scen, kamera och renderare
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xffffff); // Helt vit bakgrund för ljust tema
+
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+        camera.position.set(1.5, 1.2, 2.5); // Startposition för kameran
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Renderare för HTML-textetiketter ovanpå 3D-scenen
+        const labelRenderer = new CSS2DRenderer();
+        labelRenderer.setSize(window.innerWidth, window.innerHeight);
+        labelRenderer.domElement.style.position = 'absolute';
+        labelRenderer.domElement.style.top = '0px';
+        labelRenderer.domElement.style.pointerEvents = 'none';
+        document.body.appendChild(labelRenderer.domElement);
+
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.target.set(0, 0.5, 0);
+
+        // 2. Skapa de svarta koordinataxlarna (X, Y, Z)
+        const origin = new THREE.Vector3(0, 0, 0);
+        const axisLength = 1.2;
+        const axisColor = 0x000000;
+        
+        const xAxis = new THREE.ArrowHelper(new THREE.Vector3(1, 0, 0), origin, axisLength, axisColor, 0.05, 0.04);
+        const yAxis = new THREE.ArrowHelper(new THREE.Vector3(0, 1, 0), origin, axisLength, axisColor, 0.05, 0.04);
+        const zAxis = new THREE.ArrowHelper(new THREE.Vector3(0, 0, 1), origin, axisLength, axisColor, 0.05, 0.04);
+        
+        scene.add(xAxis);
+        scene.add(yAxis);
+        scene.add(zAxis);
+
+        // 3. Definiera vektorerna (orden) baserat på bilden
+        const vectors = {
+            man: { pos: new THREE.Vector3(-0.3, 0.85, 0.45), color: 0x2972b6, text: "man = [-0.3, 0.85, 0.45]" },
+            king: { pos: new THREE.Vector3(0.2, 0.72, 0.35), color: 0xe32332, text: "king = [0.2, 0.72, 0.35]" },
+            woman: { pos: new THREE.Vector3(0.3, 0.48, 0.29), color: 0x7e52a0, text: "woman = [0.3, 0.48, 0.29]" },
+            queen: { pos: new THREE.Vector3(0.89, 0.41, 0.2), color: 0x6eab9f, text: "queen = [0.89, 0.41, 0.2]" }
+        };
+
+        // Funktion för att rita en ord-vektor (pil) och lägga till text
+        function createWordVector(key, data) {
+            const dir = data.pos.clone().normalize();
+            const length = data.pos.length();
+            const hexColor = data.color;
+
+            // Skapa pilen
+            const arrow = new THREE.ArrowHelper(dir, origin, length, hexColor, 0.08, 0.05);
+            scene.add(arrow);
+
+            // Skapa textetiketten (HTML)
+            const div = document.createElement('div');
+            div.className = 'vector-label';
+            div.textContent = data.text;
+            // Konvertera hex till css färg
+            div.style.color = '#' + hexColor.toString(16).padStart(6, '0');
+
+            const label = new CSS2DObject(div);
+            label.position.copy(data.pos); // Placera vid spetsen av pilen
+            scene.add(label);
+        }
+
+        // Rita ut alla ord
+        for (const key in vectors) {
+            createWordVector(key, vectors[key]);
+        }
+
+        // 4. Skapa de streckade linjerna som visar relationen (man -> king, woman -> queen)
+        function createDashedLine(startVec, endVec) {
+            const points = [startVec, endVec];
+            const geometry = new THREE.BufferGeometry().setFromPoints(points);
+            
+            const material = new THREE.LineDashedMaterial({
+                color: 0x000000,
+                linewidth: 1,
+                scale: 1,
+                dashSize: 0.03,
+                gapSize: 0.03,
+            });
+
+            const line = new THREE.Line(geometry, material);
+            line.computeLineDistances(); // Krävs för att strecken ska fungera i Three.js
+            scene.add(line);
+        }
+
+        // Relation 1: man till king
+        createDashedLine(vectors.man.pos, vectors.king.pos);
+        
+        // Relation 2: woman till queen
+        createDashedLine(vectors.woman.pos, vectors.queen.pos);
+
+        // 5. Hantera fönsterstorlek (Responsivitet)
+        window.addEventListener('resize', onWindowResize, false);
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            labelRenderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        // 6. Animations-loop (för att möjliggöra rotation med musen)
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+            labelRenderer.render(scene, camera);
+        }
+
+        animate();
+    </script>
+</body>
+</html>
