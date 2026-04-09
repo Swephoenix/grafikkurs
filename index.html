@@ -772,6 +772,80 @@
         justify-self: center;
     }
 
+    .image-to-video-slide .content-grid {
+        grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
+        gap: 36px;
+        align-items: start;
+    }
+
+    .arena-workflow-steps {
+        display: grid;
+        gap: 14px;
+        margin-top: 26px;
+    }
+
+    .arena-workflow-step {
+        padding: 16px 18px;
+        border-radius: 16px;
+        background: linear-gradient(180deg, #101826 0%, #0d1320 100%);
+        border: 1px solid #243041;
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.22);
+    }
+
+    .arena-workflow-step strong {
+        display: block;
+        margin-bottom: 6px;
+    }
+
+    .arena-workflow-media {
+        display: grid;
+        gap: 18px;
+    }
+
+    .arena-workflow-card {
+        padding: 14px;
+        border-radius: 16px;
+        background: #0b0f17;
+        border: 1px solid #243041;
+        box-shadow: 0 18px 36px rgba(0, 0, 0, 0.24);
+    }
+
+    .arena-workflow-label {
+        display: inline-flex;
+        align-items: center;
+        margin-bottom: 10px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 0.74rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #e0f2fe;
+        background: rgba(56, 189, 248, 0.12);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+    }
+
+    .arena-workflow-card .content-media {
+        width: 100%;
+    }
+
+    .arena-workflow-card img,
+    .arena-workflow-card video {
+        width: 100%;
+        height: auto;
+        aspect-ratio: auto;
+        object-fit: contain;
+        background: #050505;
+        border-radius: 12px;
+        display: block;
+    }
+
+    .arena-workflow-caption {
+        margin: 10px 0 0;
+        font-size: 0.95rem;
+        color: #d4d4d8;
+    }
+
     .arena-video-actions {
         display: flex;
         justify-content: center;
@@ -958,6 +1032,10 @@
 
     @media (max-width: 1100px) {
         .intelligence-gap-slide .content-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .image-to-video-slide .content-grid {
             grid-template-columns: 1fr;
         }
     }
@@ -1879,7 +1957,7 @@
     </div>
     <div class="connector"></div>
 
-    <!-- 9. FÖRELÄSNING -->
+    <!-- 10. FÖRELÄSNING -->
     <div class="node lecture">
         <span class="badge">Föreläsning</span>
         <div class="content-grid">
@@ -2032,6 +2110,48 @@
                         </div>
                         <p class="contrast-card-caption">Här syns orden direkt. Mörk yta, ljus text och starka accentfärger gör animationen lätt att uppfatta.</p>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="connector"></div>
+
+    <div class="node lecture image-to-video-slide">
+        <span class="badge">Föreläsning</span>
+        <div class="content-grid">
+            <div class="content-text">
+                <h2>Från stillbild till video i Arena AI Battle Mode</h2>
+                <p>Ni kan också använda <a href="https://arena.ai/" target="_blank" rel="noopener noreferrer"><strong>Arena AI</strong></a> för att animera en befintlig bild till en kort video. Det här är användbart när ni redan har en stark stillbild och vill ge den rörelse i stället för att börja om från noll.</p>
+                <p><strong>Arbetsflöde:</strong> öppna Arena AI, välj <strong>Battle Mode</strong>, ladda upp bilden ni vill animera och be modellen skapa en kort video utifrån motivet.</p>
+                <div class="arena-workflow-steps">
+                    <div class="arena-workflow-step">
+                        <strong>1. Ladda upp bilden</strong>
+                        <p>Utgå från en färdig bild ni redan gillar. Här använder vi bokomslaget som startpunkt.</p>
+                    </div>
+                    <div class="arena-workflow-step">
+                        <strong>2. Kör i Battle Mode</strong>
+                        <p>Jämför gärna flera modeller mot varandra och välj den video som bäst bevarar känsla, komposition och motiv.</p>
+                    </div>
+                    <div class="arena-workflow-step">
+                        <strong>3. Animera till kort sekvens</strong>
+                        <p>Be modellen skapa subtil rörelse, till exempel lätt kamerarörelse, levande ansiktsuttryck eller mjuk rörelse i ljus och hår.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="arena-workflow-media">
+                <div class="arena-workflow-card">
+                    <span class="arena-workflow-label">Exempel: Inputbild</span>
+                    <div class="content-media">
+                        <img src="book-cover.png" alt="Bokomslaget Confidence at Work som används som inputbild i Arena AI Battle Mode">
+                    </div>
+                    <p class="arena-workflow-caption">Den här stillbilden laddas upp i Arena AI som utgångspunkt.</p>
+                </div>
+                <div class="arena-workflow-card">
+                    <span class="arena-workflow-label">Exempel: Animerad video</span>
+                    <div class="content-media">
+                        <video src="hailuo-2.3_b_Make_this_book_cover_0-5s.mp4" autoplay muted loop controls playsinline preload="metadata" aria-label="Animerad video skapad från bokomslaget i Arena AI Battle Mode"></video>
+                    </div>
+                    <p class="arena-workflow-caption">Här ser ni samma bokomslag efter att det har animerats till en kort video.</p>
                 </div>
             </div>
         </div>
