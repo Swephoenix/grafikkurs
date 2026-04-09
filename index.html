@@ -483,6 +483,132 @@
         text-align: center;
     }
 
+    .anti-ai-fatigue-slide {
+        background:
+            radial-gradient(circle at top right, rgba(239, 68, 68, 0.12), transparent 28%),
+            radial-gradient(circle at bottom left, rgba(56, 189, 248, 0.08), transparent 32%),
+            linear-gradient(145deg, #111318 0%, #161a22 52%, #0d1016 100%);
+        border-color: #2b3340;
+        overflow: hidden;
+    }
+
+    .anti-ai-fatigue-slide::before {
+        content: "";
+        position: absolute;
+        inset: 18px;
+        border-radius: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        pointer-events: none;
+    }
+
+    .anti-ai-fatigue-slide .content-grid {
+        grid-template-columns: minmax(0, 1.2fr) minmax(320px, 1fr);
+        gap: 32px;
+        align-items: start;
+    }
+
+    .anti-ai-fatigue-slide h2 {
+        max-width: 14ch;
+        font-size: clamp(2.5rem, 4vw, 4.15rem);
+        line-height: 0.95;
+        text-transform: uppercase;
+        letter-spacing: -0.04em;
+        margin-bottom: 28px;
+    }
+
+    .anti-ai-fatigue-slide p {
+        margin-bottom: 18px;
+        font-size: 1.05rem;
+    }
+
+    .anti-ai-section-title {
+        margin: 28px 0 12px;
+        color: var(--text-main);
+        font-size: 1.15rem;
+        letter-spacing: -0.02em;
+    }
+
+    .anti-ai-highlight {
+        margin-top: 28px;
+        padding: 24px 26px;
+        border-radius: 18px;
+        background: linear-gradient(160deg, rgba(20, 24, 33, 0.96), rgba(13, 17, 24, 0.92));
+        border: 1px solid rgba(125, 211, 252, 0.18);
+        box-shadow: 0 22px 44px rgba(0, 0, 0, 0.24);
+    }
+
+    .anti-ai-highlight p:last-child {
+        margin-bottom: 0;
+    }
+
+    .anti-ai-side {
+        position: sticky;
+        top: 120px;
+        display: grid;
+        gap: 18px;
+    }
+
+    .anti-ai-figure {
+        overflow: hidden;
+        background: #0b0e13;
+    }
+
+    .anti-ai-figure img {
+        width: 100%;
+        height: auto;
+        display: block;
+        aspect-ratio: auto;
+        object-fit: contain;
+        background: #0b0e13;
+    }
+
+    .anti-ai-quote,
+    .anti-ai-list,
+    .anti-ai-references {
+        position: relative;
+        padding: 22px 24px;
+        border-radius: 18px;
+        background: rgba(8, 11, 17, 0.88);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.24);
+    }
+
+    .anti-ai-quote::before,
+    .anti-ai-list::before,
+    .anti-ai-references::before {
+        content: "";
+        position: absolute;
+        inset: 10px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        pointer-events: none;
+    }
+
+    .anti-ai-quote p {
+        margin: 0;
+        color: var(--text-main);
+        font-size: 1.4rem;
+        line-height: 1.2;
+        letter-spacing: -0.03em;
+    }
+
+    .anti-ai-list ul,
+    .anti-ai-references ol {
+        margin: 0;
+        padding-left: 20px;
+    }
+
+    .anti-ai-list li,
+    .anti-ai-references li {
+        margin-bottom: 12px;
+        color: #d4d4d8;
+    }
+
+    .anti-ai-list li:last-child,
+    .anti-ai-references li:last-child {
+        margin-bottom: 0;
+    }
+
     .legal-book-cover-wrap {
         margin: 28px auto 6px;
         width: min(520px, 92%);
@@ -1472,6 +1598,18 @@
             grid-template-columns: 1fr;
             gap: 30px;
         }
+
+        .anti-ai-fatigue-slide .content-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .anti-ai-fatigue-slide h2 {
+            max-width: none;
+        }
+
+        .anti-ai-side {
+            position: static;
+        }
         
         /* Gå till 2 kolumner för korten på surfplatta */
         .cards-grid {
@@ -2168,6 +2306,29 @@
                 </div>
             </div>
 
+            <!-- Kort 11 -->
+            <div class="scene">
+                <div class="flip-card">
+                    <div class="card-shadow"></div>
+                    <div class="face face-cover">
+                        <h3>Övning 11</h3>
+                        <span>Klicka för att visa</span>
+                    </div>
+                    <div class="face face-content">
+                        <h4>Cartoon i tre rutor</h4>
+                        <p><strong>Syfte:</strong> Träna på att styra bildstil, humor och bildberättande i flera steg.</p>
+                        <ul>
+                            <li>Be AI skapa en cartoon i 3 rutor i samma ritstil som Dilbert.</li>
+                            <li>Bestäm ett enkelt tema, till exempel kontorsstress, möten eller teknikstrul.</li>
+                            <li>Be AI tydliggöra att alla tre rutorna ska höra ihop som en sammanhängande serie.</li>
+                            <li>Be AI lägga in en kort dialog eller punchline i sista rutan.</li>
+                            <li>Testa att justera ansiktsuttryck, kroppsspråk och bakgrund så att skämtet blir tydligare.</li>
+                            <li>Reflektera över hur stil, timing och text påverkar humorn.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
     <div class="connector"></div>
@@ -2201,6 +2362,65 @@
             </div>
             <div class="content-media">
                 <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1200&auto=format&fit=crop" alt="Frilansare som arbetar med design vid laptop och anteckningar">
+            </div>
+        </div>
+    </div>
+    <div class="connector"></div>
+
+    <div class="node lecture anti-ai-fatigue-slide">
+        <span class="badge">Fördjupning</span>
+        <div class="content-grid">
+            <div class="content-text">
+                <h2>Outsourca inte din kreativitet – bli rösten som bryter AI-bruset</h2>
+                <p>Vi ser det överallt nu. En diffus men växande mättnad inför AI-genererad grafik. Flödena svämmar över av glättiga, tekniskt perfekta bilder som vid en första anblick imponerar, men som snabbt lämnar en eftersmak av tomhet. De saknar nerv. De saknar den där mänskliga friktionen som gör att man stannar till.</p>
+                <p>Detta är AI fatigue.</p>
+                <p>När marknaden dränks i visuellt innehåll skapat enligt statistiska sannolikheter och standardmallar, lär sig kundens hjärna snabbt att känna igen mönstret. Den förutsägbara ljussättningen, de perfekta kompositionerna, de generiska ansiktsdragen. Det som nyss var "state of the art" har blivit visuellt brus.</p>
+
+                <h3 class="anti-ai-section-title">Din konkurrensfördel: Det unika i det imperfekta</h3>
+                <p>Redan innan AI blev en del av vår vardag visade Gary Provost hur rytm och variation är avgörande för att behålla en läsares uppmärksamhet. Samma princip gäller för grafik. Det är de subtila brotten mot mönstret – den oväntade detaljen, den personliga touchen, det som känns "skevt" på rätt sätt – som skapar värde.</p>
+                <p>I takt med att företag börjar tröttna på robotiserad estetik, kommer efterfrågan på grafik som känns tänkt och känd att explodera. Dina framtida kunder kommer inte betala för en knapptryckning; de kommer betala för din förmåga att skapa något som inte ser ut som allt annat.</p>
+
+                <h3 class="anti-ai-section-title">Dina prompts är din mentala styrketräning</h3>
+                <p>Att skriva egna, avancerade prompts är inte bara en teknisk genväg – det är en intellektuell process. När du tvingas bryta ner en vision i ord, strukturera ljus, material och känslor, tränar du din kognitiva förmåga. Du bygger en mental muskulatur som dina konkurrenter förlorar när de förlitar sig på färdiga mallar och enkla kommandon.</p>
+                <p>Hjärnan är ett utpräglat plastiskt organ som ständigt formas efter hur vi använder den, men den följer också den obarmhärtiga principen ”use it or lose it” [1][2]. Eftersom hjärnan förbrukar hela 20 % av kroppens energi är den extremt resurseffektiv; genom så kallad ”synaptisk pruning” monteras oanvända neurala kopplingar ner för att spara resurser, vilket vid långvarig inaktivitet kan leda till fysisk atrofi, alltså att hjärnvävnaden krymper.</p>
+                <p>Denna process blir tydlig vid kognitiv outsourcing: precis som studier på London-taxichaufförer visar att aktiv navigering fysiskt förstorar hippocampus [3], visar modern forskning att ett ensidigt beroende av GPS – eller digitala beslutsstöd – leder till minskad aktivitet och lägre volym av grå substans i samma område [4]. Enligt studier från bland annat MIT resulterar delegering av tänkande och skapande till AI-modeller i ett betydligt lägre neuralt engagemang där hjärnan går in i ett slags sparläge [5], vilket på sikt riskerar att försvaga prefrontala cortex där våra exekutiva funktioner och vårt kritiska omdöme sitter [6]. Att aktivt formulera egna komplexa prompts, lösa visuella problem och skissa fram egna idéer är därför inte bara en fråga om hantverk, utan nödvändig ”styrketräning” som motverkar kognitiv förtvining och håller din mentala kapacitet tät och voluminös i en värld av automatiserade lösningar.</p>
+
+                <div class="anti-ai-highlight">
+                    <h3 class="anti-ai-section-title">"Use it or lose it" i praktiken</h3>
+                    <p>Vi har sett detta tidigare genom den så kallade "Google-effekten" – hur vi minns mindre när vi vet att information finns tillgänglig online. Nu håller samma sak på att hända med själva skapandet. När AI gör jobbet får du resultatet, men du tränar inte förmågan. Medan andra frilansare blir beroende av AI-modeller och tappar sin unika röst, har du chansen att gå åt motsatt håll:</p>
+                    <p>Hjärnan är plastisk. Den anpassar sig efter hur du använder den. Använder du den mindre, blir den svagare. Använder du den aktivt, utvecklas den. I en värld av oändlig, själlös syntes är mänsklig autenticitet den enda verkliga bristvaran. När bruset blir för högt, är det de som vågar tänka själva som kommer att höras.</p>
+                    <p>Behåll din kreativitet. Utveckla den. Dominera bruset.</p>
+                </div>
+            </div>
+
+            <div class="anti-ai-side">
+                <div class="content-media anti-ai-figure">
+                    <img src="repeitive.png" alt="Illustration av en person som tycker AI-innehåll är tråkigt och repetitivt medan en robot upprepar mönster">
+                </div>
+
+                <div class="content-media anti-ai-figure">
+                    <img src="braindamage.png" alt="Illustration som jämför hjärnaktivitet mellan ChatGPT-användare och icke-användare enligt MIT-studie">
+                </div>
+
+                <div class="anti-ai-list">
+                    <ul>
+                        <li>Skriv egna, komplexa prompts. Se dem som ett hantverk, inte en beställning.</li>
+                        <li>Skissa och tänk analogt. Låt pennan och hjärnan styra AI:n, inte tvärtom.</li>
+                        <li>Behåll kontrollen. Använd AI som en pensel, men var alltid konstnären bakom den.</li>
+                    </ul>
+                </div>
+
+                <div class="anti-ai-references">
+                    <h3 class="anti-ai-section-title">Referenser:</h3>
+                    <ol>
+                        <li>Doidge, N. (2007). The Brain That Changes Itself.</li>
+                        <li>Shors, T. J. (2014). Use it or lose it: How neurogenesis keeps the brain fit.</li>
+                        <li>Maguire, E. A., et al. (2000). Navigation-related structural change in the hippocampi of taxi drivers. PNAS.</li>
+                        <li>Dahmani, L., &amp; Bohbot, V. D. (2020). Habitual use of GPS negatively impacts spatial memory. Scientific Reports.</li>
+                        <li>TIME / MIT (2024). AI’s Impact On Our Brains: Cognitive Offloading Study.</li>
+                        <li>ScienceDirect (2024). Learners' AI dependence and critical thinking.</li>
+                    </ol>
+                </div>
             </div>
         </div>
     </div>
