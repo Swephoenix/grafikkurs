@@ -45,7 +45,7 @@
 <body>
     <div id="info">
         <h3>Hur ord lagras i en Vektordatabas (Word Embeddings)</h3>
-        <p>Klicka och dra för att rotera i 3D. Skrolla för att zooma.</p>
+        <p>Rotaterar automatiskt. Klicka och dra för att vrida själv. Skrolla för att zooma.</p>
     </div>
 
     <script type="module">
@@ -75,6 +75,13 @@
         const controls = new OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
         controls.target.set(0, 0.5, 0);
+
+        // Automatisk rotation av kameran runt scenen
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 0.8; // Negativt värde roterar motsatt håll
+
+        // Klocka så att rotationshastigheten blir oberoende av bildfrekvensen
+        const clock = new THREE.Clock();
 
         // 2. Skapa de svarta koordinataxlarna (X, Y, Z)
         const origin = new THREE.Vector3(0, 0, 0);
@@ -160,7 +167,7 @@
         // 6. Animations-loop (för att möjliggöra rotation med musen)
         function animate() {
             requestAnimationFrame(animate);
-            controls.update();
+            controls.update(clock.getDelta());
             renderer.render(scene, camera);
             labelRenderer.render(scene, camera);
         }
