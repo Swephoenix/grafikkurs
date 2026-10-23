@@ -129,6 +129,19 @@
     .example .badge { background: rgba(245, 158, 11, 0.15); color: var(--accent-example); }
     .exercise .badge { background: rgba(16, 185, 129, 0.15); color: var(--accent-exercise); }
 
+    .under-construction-note {
+        margin-top: 22px;
+        padding: 16px 18px;
+        border: 1px dashed rgba(245, 158, 11, 0.55);
+        border-radius: 12px;
+        background: rgba(245, 158, 11, 0.08);
+    }
+
+    .under-construction-note p {
+        margin: 0;
+        color: #fcd34d;
+    }
+
     .node h2 {
         margin: 0 0 20px 0;
         font-size: 2rem;
@@ -874,6 +887,15 @@
         border: 1px solid var(--border-color);
         border-radius: 10px;
         background: #0f172a;
+        display: block;
+    }
+
+    .context-guide-frame {
+        width: 100%;
+        height: 720px;
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        background: #f2f5fa;
         display: block;
     }
 
@@ -1847,41 +1869,40 @@
         <span class="badge">Föreläsning</span>
         <div class="content-grid">
             <div class="content-text">
-                <h2>Varför AI inte är "intelligent"</h2>
-                <p class="intelligence-gap-lead">Vi talar ofta om AI som en tänkande varelse. Men ny forskning och tester som ARC AGI 3 visar att vi fortfarande är långt från äkta intelligens. Trots enorm kapacitet är dagens modeller i grunden "dummare" än människor när det gäller att förstå verkligheten.</p>
+                <h2>Vad visar ARC-AGI om AI:s förmåga?</h2>
+                <p class="intelligence-gap-lead">ARC-AGI-3 testar hur AI-agenter utforskar nya, abstrakta spel utan instruktioner och lär sig deras regler. Resultaten har förbättrats snabbt under 2026. Testet visar verkliga framsteg i problemlösning, men mäter inte allmän intelligens i den öppna verkligheten.</p>
                 <div class="intelligence-gap-points">
                     <div class="intelligence-gap-point">
-                        <strong>1. Next token prediction</strong>
-                        <p>Stora språkmodeller (LLM) förutsäger nästa ord eller token utifrån sannolikheter i träningsdata. De "tänker" inte på koncept. När du ställer en fråga ser modellen inte din verklighet utan vektorer, alltså siffror i ett matematiskt rum, och beräknar vilket mönster som statistiskt bör följa din input.</p>
+                        <strong>1. Vad mäter testet?</strong>
+                        <p>ARC-AGI-1 och 2 består av statiska uppgifter. I ARC-AGI-3 måste en agent i stället undersöka en okänd miljö, lista ut målet, pröva regler och planera sina handlingar. Poängen bygger både på om uppgifterna löses och på hur effektivt agenten använder sina handlingar.</p>
                     </div>
                     <div class="intelligence-gap-point">
-                        <strong>2. Mönsterigenkänning är inte generalisering</strong>
-                        <p>Människor kan hamna i ett okänt, enkelt videospel, förstå reglerna med intuition och logik och lösa uppgiften på några minuter med 100 % framgång. AI misslyckas ofta kapitalt med detta. Den kan inte "lära sig verkligheten" på egen hand och kan, om mönstret saknas i träningsdata, inte resonera fram en lösning som ett barn. Den saknar generalisering: förmågan att använda lite ny information i en helt ny situation.</p>
+                        <strong>2. Vad visar de nya resultaten?</strong>
+                        <p>I verifierade tester på ARC-AGI-3:s halvprivata uppgifter fick GPT-6 Astra 62,7 % med ett standardiserat testgränssnitt och 99,9 % med ett gränssnitt som bevarar modellens resonemang mellan stegen. Gemini 4 Argon nådde 97,5 % med det senare upplägget i oktober 2026. Resultaten visar att vissa AI-system kan lära sig regler och lösa nya spel, men också att testupplägget påverkar poängen kraftigt.</p>
                     </div>
                     <div class="intelligence-gap-point">
-                        <strong>3. Siffror är inte verklighet</strong>
-                        <p>Tänker AI på verkligheten? Nej. För AI existerar inte "pusslet", "färgen gul" eller "spelreglerna" som fysiska eller logiska koncept, bara vektorer och sannolikheter. Vid enkla logiska pussel som människor löser direkt försöker den i stället använda autocomplete utan tillräckligt statistiskt underlag. Den ser inte målet utan matchar siffror mot tidigare inlärda mönster.</p>
+                        <strong>3. Vad kan vi dra för slutsats?</strong>
+                        <p>AI-modeller bygger på statistiskt inlärda mönster – förenklat kan man kalla det avancerad mönsterupprepning. Men de upprepar inte bara färdiga svar: ARC Prize har sett hur en modell skapar egna anteckningar om föremål, regler och planer medan den spelar. Samtidigt är spelen avgränsade och har bestämda regler. En hög poäng är därför varken bevis för generell mänsklig intelligens eller en garanti för att AI förstår och hanterar öppna situationer i verkligheten.</p>
                     </div>
                 </div>
                 <div class="intelligence-gap-challenge">
                     <strong>Testa själv</strong>
-                    <p>Pröva ett test som AI har svårt med: <a href="https://arcprize.org/tasks/ls20" target="_blank" rel="noopener noreferrer">arcprize.org/tasks/ls20</a></p>
+                    <p>Pröva ett av ARC-AGI-3-spelen och fundera på hur du upptäcker reglerna: <a href="https://arcprize.org/tasks/ls20" target="_blank" rel="noopener noreferrer">arcprize.org/tasks/ls20</a></p>
                 </div>
                 <div class="intelligence-gap-embed">
                     <h3>Exempel: ord som vektorer i ett matematiskt rum</h3>
-                    <p>Visualiseringen visar samma idé: för AI är ord koordinater och relationer i ett vektorrum, inte begrepp i mänsklig mening.</p>
+                    <p>Visualiseringen förenklar hur ord kan representeras numeriskt. Den säger inte i sig vilka resonemang eller begrepp en modell kan bygga upp.</p>
                     <iframe class="intelligence-gap-embed-frame" src="vectordb.html" title="Visualisering av ord i en vektordatabas" loading="lazy"></iframe>
                 </div>
             </div>
             <div class="intelligence-gap-side">
                 <div class="intelligence-gap-card intelligence-gap-figure">
-                    <img src="Robothopparinteundan.png" alt="Serie som visar en människa och en robot bredvid ett fallande block där människan hoppar undan men roboten blir krossad">
+                    <img src="Robothopparinteundan.png" alt="Illustration där en människa hoppar undan ett fallande block medan en robot står kvar">
                     <div class="intelligence-gap-caption">
-                        <p>AI:n ser inte blocket falla utan en siffermatris som ändras, exempelvis från [0.12, 0.98, 0.33, ...] till [0.12, 0.98, 0.40, ...]. För oss betyder ändringen rörelse nedåt och fara. För AI:n är det värden som matchas mot tidigare data. Saknas scenariot där saknas också grund för rätt handling. Modellen saknar begrepp som hot, gravitation och mål.</p>
-                        <p>Människan ser däremot orsakssambandet: blocket ovanför faller, fallet innebär fara, alltså måste jag flytta mig. Slutsatsen bygger på generalisering och förståelse, inte på att tidigare ha sett exakt samma situation.</p>
-                        <p>AI arbetar med mönster i siffror utan innebörd; människan uppfattar objekt, orsaker och konsekvenser. Därför kan AI bli stående när människan redan har hoppat undan.</p>
+                        <p>Illustrationen ställer frågan om ett system kan upptäcka fara och dra slutsatser om orsak och verkan. Den visar inte hur en verklig AI-modell skulle agera.</p>
+                        <p>ARC-AGI-3 visar att vissa modeller kan bygga användbara modeller av nya spelvärldar och planera i dem. Hur väl det fungerar i öppna, fysiska miljöer är en annan fråga som testet inte besvarar.</p>
                     </div>
-                    <p class="intelligence-gap-source">Källa: <a href="https://youtu.be/UkCfrNTzUMM?is=TGoO3Mo82tqOptDv" target="_blank" rel="noopener noreferrer">ARC AGI 3 just dropped, what it means for AGI</a></p>
+                    <p class="intelligence-gap-source">Källor (kontrollerade 23 oktober 2026): <a href="https://arcprize.org/results" target="_blank" rel="noopener noreferrer">ARC Prize: verifierade resultat</a> och <a href="https://arcprize.org/blog/astra" target="_blank" rel="noopener noreferrer">analys av ARC-AGI-3</a>.</p>
                 </div>
             </div>
         </div>
@@ -1927,6 +1948,15 @@
                 <video src="promptmastering.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Loopande video som illustrerar prompting och textarbete"></video>
             </div>
         </div>
+    </div>
+    <div class="connector"></div>
+
+    <!-- GUIDE TILL LÅNGA AI-CHATTAR -->
+    <div class="node lecture">
+        <span class="badge">Föreläsning</span>
+        <h2>När AI tappar tråden</h2>
+        <p>Se hur långa chattar kan påverka resultatet och hur du kan fortsätta med en tydlig sammanfattning.</p>
+        <iframe class="context-guide-frame" src="context_compaction_guide.html" title="Interaktiv guide: När AI tappar tråden" loading="lazy"></iframe>
     </div>
     <div class="connector"></div>
 
@@ -2191,6 +2221,34 @@
     </div>
     <div class="connector"></div>
 
+    <div class="node example">
+        <span class="badge">Under uppbyggnad</span>
+        <h2>Skapa 3D-objekt i GLB och OBJ</h2>
+        <p>Du kan utgå från en vanlig 2D-bild och låta en AI-modell, till exempel <strong>ChatGPT</strong>, ta fram en 3D-version av motivet. Sedan exporterar du modellen som <strong>GLB</strong> eller <strong>OBJ</strong> och öppnar den i <strong>Blender</strong> för att justera form, lägga på material och texturer samt rigga eller animera.</p>
+        <div class="arena-workflow-steps">
+            <div class="arena-workflow-step">
+                <strong>1. Mata in en 2D-bild</strong>
+                <p>Välj en bild med ett tydligt avgränsat motiv och gärna en enkel bakgrund. Det gör det lättare för AI:n att förstå formen.</p>
+            </div>
+            <div class="arena-workflow-step">
+                <strong>2. Låt AI skapa 3D-versionen</strong>
+                <p>Beskriv motivet för ChatGPT och be om en 3D-modell. Var tydlig med stil, proportioner och vilken detaljnivå du vill ha.</p>
+            </div>
+            <div class="arena-workflow-step">
+                <strong>3. Exportera som GLB eller OBJ</strong>
+                <p>GLB passar bra för webb, spel och AR/VR. OBJ är ett brett format som fungerar i många 3D-program.</p>
+            </div>
+            <div class="arena-workflow-step">
+                <strong>4. Öppna i Blender</strong>
+                <p>Importera modellen, kontrollera geometrin, lägg på material och textur och rigga eller animera vid behov.</p>
+            </div>
+        </div>
+        <div class="under-construction-note">
+            <p><strong>Den här delen är under uppbyggnad.</strong> Här kommer en steg-för-steg-guide, exempelprompter och färdiga övningar för GLB och OBJ.</p>
+        </div>
+    </div>
+    <div class="connector"></div>
+
     <!-- 14. ÖVNINGAR (3D Flip Grid) -->
     <div class="node exercise">
         <span class="badge">Praktik</span>
@@ -2371,11 +2429,15 @@
                         <h4>Skiss till färdig bild</h4>
                         <p><strong>Syfte:</strong> Visa att teckningskunskaper inte krävs.</p>
                         <div class="exercise-reference">
-                            <p><strong>Referens:</strong> Titta på skissen nedan. Den visas som exempel och behöver inte laddas ner.</p>
-                            <img src="stickman-reference-sketch.png" alt="En enkel streckgubbe som referensskiss">
+                            <p><strong>Skiss att utgå från:</strong> Använd skissen nedan som visuell referens.</p>
+                            <img src="stickman-single.png" alt="En enkel streckgubbe att använda som skiss i övningen">
+                        </div>
+                        <div class="exercise-reference">
+                            <p><strong>Exempel:</strong> Så kan skissen tolkas som en färdig AI-bild.</p>
+                            <img src="stickman-reference-sketch.png" alt="Exempel där en streckgubbe har blivit en färdig AI-bild">
                         </div>
                         <ul>
-                            <li>Använd skissen ovan som visuell referens.</li>
+                            <li>Använd den fristående skissen som visuell referens.</li>
                             <li>Be AI tolka skissen och skapa en färdig bild.</li>
                             <li>Justera stil, miljö eller uttryck vid behov.</li>
                         </ul>
@@ -2486,6 +2548,51 @@
                 </div>
             </div>
 
+            <!-- Kort 12 -->
+            <div class="scene">
+                <div class="flip-card">
+                    <div class="card-shadow"></div>
+                    <div class="face face-cover">
+                        <h3>Övning 12</h3>
+                        <span>Klicka för att visa</span>
+                    </div>
+                    <div class="face face-content">
+                        <h4>Hitta den högst rankade bildmodellen</h4>
+                        <p><strong>Syfte:</strong> Lära dig hitta och läsa en aktuell topplista över AI-modeller för bildskapande.</p>
+                        <ul>
+                            <li>Öppna <a href="https://arena.ai/leaderboard/image/text-to-image" target="_blank" rel="noopener noreferrer">Arena.ai:s topplista för Text-to-Image</a>.</li>
+                            <li>Välj kategorin <strong>Overall</strong> och se vilken modell som ligger på plats 1.</li>
+                            <li>Anteckna modellens namn, vem som har utvecklat den, dess poäng och datumet då du tittade.</li>
+                            <li>Jämför med modellen på plats 2. Hur stor är skillnaden i poäng?</li>
+                            <li>Fundera på varför rankingen kan ändras när fler användare jämför modellerna.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kort 13 -->
+            <div class="scene">
+                <div class="flip-card">
+                    <div class="card-shadow"></div>
+                    <div class="face face-cover">
+                        <h3>Övning 13</h3>
+                        <span>Under uppbyggnad</span>
+                    </div>
+                    <div class="face face-content">
+                        <h4>Skapa 3D-objekt i GLB och OBJ</h4>
+                        <p><strong>Syfte:</strong> Träna på att gå från en 2D-bild till en 3D-modell som du kan arbeta vidare med i Blender.</p>
+                        <p><strong>Under uppbyggnad:</strong> Den här övningen är inte klar än. Här kommer en fullständig steg-för-steg-guide, exempelprompter och ett exempelprojekt.</p>
+                        <ul>
+                            <li>Välj en tydlig 2D-bild med ett avgränsat motiv och enkel bakgrund.</li>
+                            <li>Ladda upp bilden i ChatGPT och be om en 3D-version av motivet.</li>
+                            <li>Spara modellen som GLB eller OBJ.</li>
+                            <li>Öppna filen i Blender och kontrollera form, material och skala.</li>
+                            <li>Justera modellen och exportera den för webb, spel eller AR/VR.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
     <div class="connector"></div>
@@ -2544,7 +2651,7 @@
                 <div class="anti-ai-highlight">
                     <h3 class="anti-ai-section-title">"Use it or lose it" i praktiken</h3>
                     <p>”Google-effekten” visar hur vi minns mindre när information alltid finns online. Nu riskerar samma sak att ske med skapandet: AI ger resultatet, men du tränar inte din förmåga. Andra frilansare kan bli beroende av AI och tappa sin unika röst. Du kan gå åt motsatt håll:</p>
-                    <p>Använder du hjärnan mindre försvagas den; använder du den aktivt utvecklas den. I en värld av oändlig, själlös syntes är mänsklig autenticitet den enda verkliga bristvaran. När bruset blir för högt hörs de som vågar tänka själva.</p>
+                    <p>Använder du hjärnan mindre försvagas den; använder du den aktivt utvecklas den. I en värld av oändlig, själlös syntes är mänsklig autenticitet den enda verkliga bristvaran. Folk kommer värdesätta den mer och mer.</p>
                     <p>Behåll din kreativitet. Utveckla den. Dominera bruset.</p>
                 </div>
             </div>
